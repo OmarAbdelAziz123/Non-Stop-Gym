@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "680784927955",
+    "project_id": "non-stop-gym",
+    "storage_bucket": "non-stop-gym.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680784927955:android:5e5341e3d3ee0242c08826",
+        "android_client_info": {
+          "package_name": "com.non.stop.non_stop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkHEMRQsXWsPdXRF-hVLA1C7W9QA5KhbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
