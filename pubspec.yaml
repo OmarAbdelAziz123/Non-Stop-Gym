@@ -19,6 +19,7 @@ dependencies:
 
   dots_indicator: ^4.0.1
 
+  table_calendar: ^3.2.0
 
   # 🔹 Flutter screen util for responsive design
   flutter_screenutil: ^5.9.3

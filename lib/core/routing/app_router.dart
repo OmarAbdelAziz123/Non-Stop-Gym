@@ -7,6 +7,10 @@ import 'package:non_stop/features/auth/presentation/screens/forget_password_scre
 import 'package:non_stop/features/auth/presentation/screens/login_screen.dart';
 import 'package:non_stop/features/auth/presentation/screens/register_screen.dart';
 import 'package:non_stop/features/auth/presentation/screens/verify_otp_screen.dart';
+import 'package:non_stop/features/home/bloc/cubit/home_cubit.dart';
+import 'package:non_stop/features/home/presentation/screen/home_screen.dart';
+import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit.dart';
+import 'package:non_stop/features/main%20layout/presentation/main_layout.dart';
 import 'package:non_stop/features/onboarding/onBoarding/Bloc/on_boarding_cubit.dart';
 import 'package:non_stop/features/onboarding/onBoarding/screens/on_boarding_screen.dart';
 import 'package:non_stop/features/splash/screens/splash_screen.dart';
@@ -47,6 +51,8 @@ class AppRouter {
           screen: const OnBoardingScreen(),
           cubit: OnBoardingCubit(),
         );
+      case Routes.mainlayoutScreen:
+        return transition(screen: MainLayoutScreen(), cubit: MainLayoutCubit());
       case Routes.splashScreen:
         return transition(screen: const SplashScreen());
       case Routes.registerScreen:
@@ -54,4 +60,11 @@ class AppRouter {
     }
     return null;
   }
+
+  List<Widget> gymScreen = [
+    BlocProvider(create: (context) => HomeCubit(), child: HomeScreen()),
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+  ];
 }

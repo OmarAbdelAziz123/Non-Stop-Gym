@@ -30,7 +30,10 @@ void main() async {
       supportedLocales: const [Locale('ar', 'EG'), Locale('en', 'UK')],
       path: 'assets/languages',
       child: Phoenix(
-        child: MyApp(appRouter: AppRouter(), token: AppConstants.userToken),
+        child: NonStopApp(
+          appRouter: AppRouter(),
+          token: AppConstants.userToken,
+        ),
       ),
     ),
   );

@@ -36,4 +36,6 @@ class AppConstants {
 
   static double borderRadius = 6.r;
   static String? userToken;
+  static int mainLayoutInitialScreenIndex = 0;
+  
 }
