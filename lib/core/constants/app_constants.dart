@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// App-wide constants that do not depend on the environment.
 /// Use [EnvConfig] and [AppFlavor] for environment-specific values.
 class AppConstants {
   /// 🔹 Global navigator key for navigation or localization outside widget tree.
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
   /// 🔹 App info
   static const String appName = 'Non Stop';
   static const String appVersion = '1.0.0';
-
 
   /// 🔹 SharedPreferences / SecureStorage keys
   static const String accessTokenKey = 'ACCESS_TOKEN';
@@ -19,10 +20,7 @@ class AppConstants {
   static const String fcmTokenKey = 'FCM_TOKEN';
 
   /// 🔹 Supported locales
-  static const List<Locale> supportedLocales = [
-    Locale('en'),
-    Locale('ar'),
-  ];
+  static const List<Locale> supportedLocales = [Locale('en'), Locale('ar')];
 
   /// 🔹 Default locale
   static const Locale defaultLocale = Locale('ar');
@@ -35,4 +33,9 @@ class AppConstants {
 
   /// 🔹 Helper to check if current language is Arabic
   static bool get isArabic => currentLocale.languageCode == 'ar';
+
+  static double borderRadius = 6.r;
+  static String? userToken;
+  static int mainLayoutInitialScreenIndex = 0;
+  
 }
