@@ -1,0 +1,25 @@
+class CacheKeys {
+
+  /// User Cache Keys
+  static const String typeInOTP = 'typeInOTP';
+  static const String tokenInOTP = 'tokenInOTP';
+  static const String userToken = 'token';
+  static const String currentLanguage = 'currentLanguage';
+  static const String userName = 'userName';
+  static const String userEmail = 'userEmail';
+  static const String isFirstOpen = 'isFirstOpen';
+
+  static const String userImage = 'userImage';
+  static const String userPhone = 'userPhone';
+  static const String userAge = 'userAge';
+  static const String userGender = 'userGender';
+
+
+  static const String type = 'type';
+  static const String userAddressId = 'addressId';
+  static const String userAddressCity = 'addressCity';
+  static const String locale = 'locale';
+  static const String deviceToken = 'deviceToken';
+
+  
+}

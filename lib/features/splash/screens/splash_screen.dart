@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:non_stop/core/routing/routes_name.dart';
 import 'package:non_stop/features/splash/widgets/animated_logo_widget.dart';
-import 'package:non_stop/router/route_name.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -10,7 +10,7 @@ class SplashScreen extends StatelessWidget {
     /// Schedule navigation after first frame
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 3), () {
-        Navigator.pushReplacementNamed(context, RouteNames.onboarding);
+        Navigator.pushReplacementNamed(context, Routes.onBoardingScreen);
       });
     });
 

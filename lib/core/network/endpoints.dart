@@ -1,6 +1,8 @@
 /// All API endpoints should be defined here.
 /// This keeps your codebase consistent and centralized.
 class EndPoints {
+  static const String baseUrl = 'https://backend.truebalance.com.sa/';
+
   /// Auth
   static const String login = '/auth/login';
   static const String register = '/auth/register';
