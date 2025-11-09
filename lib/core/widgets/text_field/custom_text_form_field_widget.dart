@@ -6,7 +6,6 @@ import 'package:non_stop/core/constants/app_colors.dart';
 import 'package:non_stop/core/constants/app_constants.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
 
-
 class CustomTextFormFieldWidget extends StatelessWidget {
   final TextEditingController? controller;
   final String? labelText;
@@ -107,17 +106,15 @@ class CustomTextFormFieldWidget extends StatelessWidget {
         builder: (context) {
           final bool isFocused = Focus.of(context).hasFocus;
 
-          final Color currentBorderColor =
-              isFocused
-                  ? AppColors.neutralColor100
-                  : borderColor ?? AppColors.neutralColor100;
+          final Color currentBorderColor = isFocused
+              ? Color.fromRGBO(21, 21, 21, 0.41)
+              : borderColor ?? Color.fromRGBO(21, 21, 21, 0.41);
 
           final TextStyle currentHintStyle =
               (hintStyle ?? Styles.captionRegular).copyWith(
-                color:
-                    isFocused
-                        ? AppColors.neutralColor100
-                        : AppColors.neutralColor100,
+                color: isFocused
+                    ? AppColors.neutralColor100
+                    : AppColors.neutralColor100,
               );
 
           return Directionality(
@@ -127,10 +124,9 @@ class CustomTextFormFieldWidget extends StatelessWidget {
               focusNode: focusNode,
               controller: controller,
               obscureText: obscureText ?? false,
-              textAlign:
-                  CacheHelper.getCurrentLanguage() == "ar"
-                      ? TextAlign.end
-                      : TextAlign.start,
+              textAlign: CacheHelper.getCurrentLanguage() == "ar"
+                  ? TextAlign.end
+                  : TextAlign.start,
               autofocus: autofocus ?? false,
               autocorrect: autocorrect ?? true,
               enableSuggestions: enableSuggestions ?? true,
@@ -155,8 +151,9 @@ class CustomTextFormFieldWidget extends StatelessWidget {
                   Styles.contentEmphasis.copyWith(
                     color: AppColors.neutralColor100,
                   ),
-              onTapOutside:
-                  isChat ? null : (event) => FocusScope.of(context).unfocus(),
+              onTapOutside: isChat
+                  ? null
+                  : (event) => FocusScope.of(context).unfocus(),
               decoration: InputDecoration(
                 alignLabelWithHint: true,
                 border: OutlineInputBorder(
@@ -214,7 +211,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
                 prefixIcon: prefixIcon,
                 suffixIcon: suffixIcon,
                 filled: true,
-                fillColor: backgroundColor ?? AppColors.neutralColor100,
+                fillColor: backgroundColor ?? Color.fromRGBO(92, 92, 92, 0.07),
                 prefixIconColor: AppColors.neutralColor1000,
                 suffixIconColor: AppColors.neutralColor1000,
                 enabled: enabled ?? true,
@@ -222,7 +219,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
                     contentPadding ??
                     EdgeInsets.symmetric(
                       horizontal: width ?? 15.w,
-                      vertical: height ?? 15.h,
+                      vertical: height ?? 24.h,
                     ),
               ),
             ),
