@@ -13,6 +13,7 @@ import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit
 import 'package:non_stop/features/main%20layout/presentation/main_layout.dart';
 import 'package:non_stop/features/onboarding/onBoarding/Bloc/on_boarding_cubit.dart';
 import 'package:non_stop/features/onboarding/onBoarding/screens/on_boarding_screen.dart';
+import 'package:non_stop/features/photo%20gallery/presentation/screens/photo_gallery_screen.dart';
 import 'package:non_stop/features/profile/presentation/screen/edit_profile_screen.dart';
 import 'package:non_stop/features/profile/presentation/screen/profile_screen.dart';
 import 'package:non_stop/features/splash/screens/splash_screen.dart';
@@ -68,7 +69,9 @@ class AppRouter {
   List<Widget> gymScreen = [
     BlocProvider(create: (context) => HomeCubit(), child: HomeScreen()),
     SizedBox(),
-    SizedBox(),
+
+    // SizedBox(),
+    PhotoGalleryScreen(),
 
     ProfilePage(),
   ];

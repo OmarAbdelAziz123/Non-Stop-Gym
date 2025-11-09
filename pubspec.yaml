@@ -9,119 +9,57 @@ environment:
   sdk: ^3.9.2
 
 dependencies:
+  cached_network_image: ^3.4.1
+  connectivity_plus: ^7.0.0
+  cupertino_icons: ^1.0.8
+  dio: ^5.9.0
+  dots_indicator: ^4.0.1
+  easy_localization: ^3.0.8
+  firebase_core: ^4.2.0
+  firebase_messaging: ^16.0.3
   flutter:
     sdk: flutter
-  pinput: ^5.0.1
-
-  cached_network_image: ^3.4.1
-
-  cupertino_icons: ^1.0.8
-
-  dots_indicator: ^4.0.1
-
-  table_calendar: ^3.2.0
-
-  # 🔹 Flutter screen util for responsive design
-  flutter_screenutil: ^5.9.3
-
-  # 🔹 Google Fonts
-  google_fonts: ^6.3.2
-
-  # 🔹 Flutter Svg
-  flutter_svg: ^2.2.2
-
-  # 🔹 Firebase Core
-  firebase_core: ^4.2.0
-  # 🔹 Firebase Cloud Messaging
-  firebase_messaging: ^16.0.3
-
-  # 🔹 Top Snackbar Flutter for beautiful top snack bars
-  top_snackbar_flutter: ^3.3.0
-
-  # 🔹 Flutter Local Notifications
-  flutter_local_notifications: ^19.5.0
-
-  # 🔹 Get It Dependency Injection
-  get_it: ^8.2.0
-
-  # 🔹 Dio HTTP Client
-  dio: ^5.9.0
-
-  # 🔹 Retrofit
-  retrofit: ^4.9.0
-  retrofit_generator: ^10.1.3
-
-  # 🔹 Pretty Dio Logger
-  pretty_dio_logger: ^1.4.0
-
-  # 🔹 Shared Preferences
-  shared_preferences: ^2.5.3
-
-  # 🔹 Flutter Secure Storage
-  flutter_secure_storage: ^9.2.4
-
-  # 🔹 Share Plus
-  share_plus: ^12.0.0
-
-  # 🔹 Url Launcher
-  url_launcher: ^6.3.2
-
-  # 🔹 Jiffy Date Formatter
-  jiffy: ^6.4.3
-
-  # 🔹 Flutter Bloc (Cubit)
   flutter_bloc: ^9.1.1
-
-  # 🔹 Flutter Page Transition
-  page_transition: ^2.2.1
-
-  # 🔹 Freezed
+  flutter_dotenv: ^6.0.0
+  flutter_easyloading: ^3.0.5
+  flutter_local_notifications: ^19.5.0
+  flutter_phoenix: ^1.1.1
+  flutter_screenutil: ^5.9.3
+  flutter_secure_storage: ^9.2.4
+  flutter_svg: ^2.2.2
   freezed: ^3.2.3
   freezed_annotation: ^3.1.0
-
-  # 🔹 Iconsax
+  get_it: ^8.2.0
+  google_fonts: ^6.3.2
   iconsax: ^0.0.8
-
-  # 🔹 Json Annotation
+  image_picker: ^1.2.0
+  jiffy: ^6.4.3
   json_annotation: ^4.9.0
-
-  # 🔹 Loading Indicator
   loading_indicator: ^3.1.1
-
-  # 🔹 Lottie
   lottie: ^3.3.1
-
-  # 🔹 Skeletonizer
+  page_transition: ^2.2.1
+  pinput: ^5.0.1
+  pretty_dio_logger: ^1.4.0
+  retrofit: ^4.9.0
+  retrofit_generator: ^10.1.3
+  share_plus: ^12.0.0
+  shared_preferences: ^2.5.3
   skeletonizer: 1.4.2
-
-  # 🔹 Flutter Dotenv
-  flutter_dotenv: ^6.0.0
-
-  # 🔹 Connectivity Plus for network info
-  connectivity_plus: ^7.0.0
-
-  # 🔹 Easy Localization for multi-language support
-  easy_localization: ^3.0.8
-
-  # 🔹 Flutter EasyLoading for loading indicators
-  flutter_easyloading: ^3.0.5
-
-  # 🔹 Flutter Phoenix for hot reload
-  flutter_phoenix: ^1.1.1
+  table_calendar: ^3.2.0
+  top_snackbar_flutter: ^3.3.0
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   build_runner: ^2.4.14
-  flutter_test:
-    sdk: flutter
 
   flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
   json_serializable: ^6.9.3
 
 flutter:
 
-
   uses-material-design: true
-
 
   # assets:
   assets:
@@ -134,11 +72,9 @@ flutter:
     - family: Swissra
       fonts:
         - asset: assets/fonts/alfont_com_AlFont_com_Swissra-Normal-1.ttf
-
   # fonts:
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
-
