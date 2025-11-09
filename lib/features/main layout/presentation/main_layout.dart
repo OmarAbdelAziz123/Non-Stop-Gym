@@ -2,8 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:non_stop/core/constants/app_constants.dart';
 import 'package:non_stop/core/routing/app_router.dart';
+import 'package:non_stop/core/theme/text_colors.dart';
 import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit.dart';
 import 'package:non_stop/features/main%20layout/business_logic/main_layout_state.dart';
 
@@ -17,48 +19,48 @@ class MainLayoutScreen extends StatelessWidget {
         final cubit = MainLayoutCubit.get(context);
 
         return Scaffold(
-          body: AppRouter()
-              .gymScreen[AppConstants.mainLayoutInitialScreenIndex],
+          body:
+              AppRouter().gymScreen[AppConstants.mainLayoutInitialScreenIndex],
           bottomNavigationBar: _buildBottomNav(cubit),
         );
       },
     );
   }
 
-  /// 🔸 Custom Bottom Navigation Bar
   Widget _buildBottomNav(MainLayoutCubit cubit) {
     final currentIndex = AppConstants.mainLayoutInitialScreenIndex;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: const BoxDecoration(
-        color: Color(0xFF2A2535),
+        color: Color(0xFF02040B),
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
+
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildNavItem(
-            icon: Icons.home_rounded,
+            svgPath: 'assets/svgs/home.svg',
             label: 'home'.tr(),
             isActive: currentIndex == 0,
             onTap: () => cubit.changeBottomNavBar(0),
           ),
           _buildNavItem(
-            icon: Icons.apartment_rounded,
-            label: 'projects'.tr(),
+            svgPath: 'assets/svgs/packages.svg',
+            label: 'packages'.tr(),
             isActive: currentIndex == 1,
             onTap: () => cubit.changeBottomNavBar(1),
           ),
           _buildNavItem(
-            icon: Icons.calendar_today_rounded,
-            label: 'allMettings'.tr(),
+            svgPath: 'assets/svgs/gallery.svg',
+            label: 'Photogallery'.tr(),
             isActive: currentIndex == 2,
             onTap: () => cubit.changeBottomNavBar(2),
           ),
           _buildNavItem(
-            icon: Icons.more_horiz_rounded,
-            label: 'more'.tr(),
+            svgPath: 'assets/svgs/profile.svg',
+            label: 'profile'.tr(),
             isActive: currentIndex == 3,
             onTap: () => cubit.changeBottomNavBar(3),
           ),
@@ -67,29 +69,43 @@ class MainLayoutScreen extends StatelessWidget {
     );
   }
 
-  /// 🔸 Custom Nav Item Widget
   Widget _buildNavItem({
-    required IconData icon,
+    IconData? icon,
+    String? svgPath,
     required String label,
     required bool isActive,
     required VoidCallback onTap,
   }) {
+    Widget? iconWidget;
+
+    if (icon != null) {
+      iconWidget = Icon(
+        icon,
+        color: isActive ? const Color(0xFF9F5A5B) : const Color(0xFF8F8F8F),
+        size: 24.sp,
+      );
+    } else if (svgPath != null) {
+      iconWidget = SvgPicture.asset(
+        svgPath,
+        color: isActive ? const Color(0xFF9F5A5B) : const Color(0xFF8F8F8F),
+        width: 24.w,
+        height: 24.h,
+      );
+    }
+
     return GestureDetector(
       onTap: onTap,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            color: isActive ? const Color(0xFF8B6B6B) : Colors.white54,
-            size: 24.sp,
-          ),
-          const SizedBox(height: 4),
+          if (iconWidget != null) iconWidget,
+          SizedBox(height: 6.h),
           Text(
             label,
-            style: TextStyle(
-              color: isActive ? const Color(0xFF8B6B6B) : Colors.white54,
-              fontSize: 11.sp,
+            style: Styles.footnoteRegular.copyWith(
+              color: isActive
+                  ? const Color(0xFF9F5A5B)
+                  : const Color(0xFF8F8F8F),
             ),
           ),
         ],

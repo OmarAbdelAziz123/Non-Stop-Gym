@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:non_stop/core/cache_helper/cache_helper.dart';
 import 'package:non_stop/core/cache_helper/cache_keys.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
@@ -35,8 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
     ['3:5', '4'],
     ['1:5', '2'],
     ['11:5', '12'],
-    ['9:5', '10'],
-    ['7:5', '8'],
   ];
   @override
   Widget build(BuildContext context) {
@@ -44,17 +43,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xff160618), Color(0xff1C0617)],
-        ),
+        color: Color(0xff160618),
+        // gradient: LinearGradient(
+        //   begin: Alignment.topCenter,
+        //   end: Alignment.bottomCenter,
+        //   colors: [Color(0xff160618), Color(0xff1C0617)],
+        // ),
       ),
       child: Scaffold(
         body: SingleChildScrollView(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).padding.bottom + 10.h,
+          ),
+
           child: Column(
             children: [
-              // Massage Chair Image + Header
               Container(
                 height: 400.sp,
                 width: double.infinity,
@@ -102,6 +105,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "welcome".tr(),
                                   style: Styles.contentRegular.copyWith(
                                     fontSize: 12.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 Text(
@@ -110,6 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ) ??
                                       "mohamed hisham",
                                   style: Styles.contentRegular.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
                                     fontSize: 16.sp,
                                   ),
                                 ),
@@ -118,14 +125,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             const Spacer(),
                             IconButton(
                               icon: Container(
-                                padding: EdgeInsets.all(10.sp),
+                                padding: EdgeInsets.all(12.sp),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12.r),
                                   color: Colors.white.withOpacity(0.1),
                                 ),
-                                child: const Icon(
-                                  Icons.notifications,
-                                  color: Colors.white,
+                                child: SvgPicture.asset(
+                                  "assets/svgs/Notification.svg",
+                                  width: 20.w,
+                                  height: 20.h,
                                 ),
                               ),
                               onPressed: () {},
@@ -133,47 +141,48 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                         const Spacer(),
-                        const Text(
+                        Text(
                           'ريلاكس',
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: AppColors.neutralColor100,
                           ),
                         ),
                         const Text(
-                          'حرر نفسك وخذ لحظات من الهدوء',
-                          style: TextStyle(fontSize: 14, color: Colors.white60),
+                          'دع التوتر جانبًا: لحظات من الهدوء.',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-
               5.verticalSpace,
 
-              // Dots Indicator
               DotsIndicator(
                 dotsCount: 3,
                 position: 1.0,
                 decorator: DotsDecorator(
-                  activeColor: AppColors.primaryColor900,
-                  color: const Color(0xff7E7E7E),
-                  size: Size(30.r, 5.r),
+                  activeColor: Color(0xffD9D9D9).withValues(alpha: 0.21),
+                  color: const Color(0xffD9D9D9),
+                  size: Size(35.r, 4.r),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r),
                   ),
-                  activeSize: Size(30.r, 5.r),
+                  activeSize: Size(35.r, 4.r),
                   activeShape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r),
                   ),
                 ),
               ),
 
-              // Tabs
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 18),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -188,32 +197,43 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 24,
-                                vertical: 12,
+                                horizontal: 21,
+                                vertical: 18,
                               ),
                               decoration: BoxDecoration(
                                 color: selectedTab == i
-                                    ? const Color(0xff9f5a5b)
+                                    ? const Color(0xff9F5A5B)
                                     : const Color(0xff02040B),
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: Icon(
+                              child: Image.asset(
                                 i == 0
-                                    ? Icons.card_giftcard
+                                    ? 'assets/pngs/relax.png'
                                     : i == 1
-                                    ? Icons.discount
-                                    : Icons.chair,
+                                    ? 'assets/pngs/device.png'
+                                    : 'assets/pngs/offer2.png',
                                 color: Colors.white,
-                                size: 50,
+                                width: 50.w,
+                                height: 50.h,
                               ),
                             ),
+                            10.verticalSpace,
                             Text(
                               i == 0
-                                  ? 'الهدايا'
+                                  ? 'ريلاكس'
                                   : i == 1
-                                  ? 'التخفيض'
-                                  : 'ريلاكس',
-                              style: Styles.contentRegular,
+                                  ? 'اجهزة'
+                                  : 'العروض',
+                              style: Styles.contentRegular.copyWith(
+                                color: selectedTab == i
+                                    ? Colors.white
+                                    : const Color(
+                                        0xffFCFCFC,
+                                      ).withValues(alpha: 0.60),
+                                fontWeight: selectedTab == i
+                                    ? FontWeight.bold
+                                    : FontWeight.w400,
+                              ),
                             ),
                           ],
                         ),
@@ -221,13 +241,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+
               selectedTab == 0
-                  ? GiftsTap()
+                  ? RelaxTap(times: times, selectedTimeSlot: selectedTimeSlot)
                   : selectedTab == 1
                   ? const SizedBox.shrink()
-                  : RelaxTap(times: times, selectedTimeSlot: selectedTimeSlot),
-
-              // Availability Section
+                  : GiftsTap(),
             ],
           ),
         ),
