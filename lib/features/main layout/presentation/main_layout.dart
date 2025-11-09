@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:non_stop/core/constants/app_constants.dart';
 import 'package:non_stop/core/routing/app_router.dart';
 import 'package:non_stop/core/theme/text_colors.dart';
+import 'package:non_stop/core/theme/theme.dart';
 import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit.dart';
 import 'package:non_stop/features/main%20layout/business_logic/main_layout_state.dart';
 
@@ -18,10 +19,13 @@ class MainLayoutScreen extends StatelessWidget {
       builder: (BuildContext context, state) {
         final cubit = MainLayoutCubit.get(context);
 
-        return Scaffold(
-          body:
-              AppRouter().gymScreen[AppConstants.mainLayoutInitialScreenIndex],
-          bottomNavigationBar: _buildBottomNav(cubit),
+        return Container(
+          decoration: const BoxDecoration(gradient: linearGradient),
+          child: Scaffold(
+            body: AppRouter()
+                .gymScreen[AppConstants.mainLayoutInitialScreenIndex],
+            bottomNavigationBar: _buildBottomNav(cubit),
+          ),
         );
       },
     );
