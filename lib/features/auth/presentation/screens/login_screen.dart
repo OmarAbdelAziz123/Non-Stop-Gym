@@ -313,7 +313,14 @@ class LoginScreen extends StatelessWidget {
                           18.verticalSpace,
                           CustomButtonWidget(
                             onPressed: () {
-                              if (cubit.formKey.currentState!.validate()) {}
+                              context.pushNamedAndRemoveUntil(
+                                Routes.mainlayoutScreen,
+                              );
+                              // if (cubit.formKey.currentState!.validate()) {
+                              //   context.pushNamedAndRemoveUntil(
+                              //     Routes.mainlayoutScreen,
+                              //   );
+                              // }
                             },
                             text: 'تسجيل الدخول',
                             textStyle: Styles.contentRegular.copyWith(

@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:non_stop/core/constants/app_colors.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
 import 'package:non_stop/features/home/bloc/cubit/home_cubit.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -18,9 +17,102 @@ class CalenderWidget extends StatelessWidget {
       buildWhen: (previous, current) => current is BookChangeDateState,
       builder: (context, state) {
         return Container(
-          color: Colors.black.withOpacity(0.42),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+          ),
           child: Column(
             children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        final previousMonth = DateTime(
+                          homeCubit.focusedDay.year,
+                          homeCubit.focusedDay.month - 1,
+                        );
+                        homeCubit.updateFocusedDay(previousMonth);
+                      },
+                      child: Container(
+                        width: 36.w,
+                        height: 36.h,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFF9F5A5B),
+                        ),
+                        child: Icon(
+                          Icons.chevron_left,
+                          color: Colors.white,
+                          size: 24.sp,
+                        ),
+                      ),
+                    ),
+
+                    Text(
+                      DateFormat.yMMMM('ar').format(homeCubit.focusedDay),
+                      style: Styles.highlightEmphasis.copyWith(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+
+                    GestureDetector(
+                      onTap: () {
+                        final nextMonth = DateTime(
+                          homeCubit.focusedDay.year,
+                          homeCubit.focusedDay.month + 1,
+                        );
+                        homeCubit.updateFocusedDay(nextMonth);
+                      },
+                      child: Container(
+                        width: 36.w,
+                        height: 36.h,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFF9F5A5B).withOpacity(0.8),
+                        ),
+                        child: Icon(
+                          Icons.chevron_right,
+                          color: Colors.white,
+                          size: 24.sp,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.schedule,
+                      color: const Color(0xFFE57373),
+                      size: 20.sp,
+                    ),
+                    8.horizontalSpace,
+                    Text(
+                      'اضغط على اليوم لمعرفة الوقت المتاح',
+                      style: Styles.captionEmphasis.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              16.verticalSpace,
+
               TableCalendar(
                 daysOfWeekVisible: true,
                 focusedDay: homeCubit.focusedDay,
@@ -28,7 +120,7 @@ class CalenderWidget extends StatelessWidget {
                 lastDay: homeCubit.endDate,
                 currentDay: DateTime.now(),
                 calendarFormat: CalendarFormat.month,
-                locale: 'ar', // Force Arabic locale for Arabic month/day names
+                locale: 'ar',
                 onDaySelected: (selectedDay, focusedDay) {
                   homeCubit.chooseBookingDate(selectedDay);
                   homeCubit.updateFocusedDay(selectedDay);
@@ -36,81 +128,61 @@ class CalenderWidget extends StatelessWidget {
                 onPageChanged: homeCubit.updateFocusedDay,
                 selectedDayPredicate: (day) =>
                     isSameDay(day, homeCubit.selectedDate),
-                daysOfWeekHeight: 28.sp,
+                daysOfWeekHeight: 32.sp,
+                rowHeight: 48.sp,
+                headerVisible: false,
                 calendarStyle: CalendarStyle(
-                  todayDecoration: const BoxDecoration(shape: BoxShape.circle),
-                  selectedDecoration: BoxDecoration(
-                    color: const Color(0xff9F5A5B),
+                  todayDecoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: const Color(0xFF9F5A5B).withOpacity(0.3),
+                      width: 2,
+                    ),
+                  ),
+                  selectedDecoration: const BoxDecoration(
+                    color: Color(0xFF9F5A5B),
                     shape: BoxShape.circle,
                   ),
                   todayTextStyle: Styles.captionEmphasis.copyWith(
-                    color: AppColors.neutralColor900,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
                   ),
                   selectedTextStyle: Styles.captionEmphasis.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
+                    fontSize: 16.sp,
                   ),
-                  // 👇 Dark grey for disabled days
                   disabledTextStyle: Styles.captionEmphasis.copyWith(
-                    color: Colors.grey.shade700,
+                    color: const Color(0xFF4A4A4A),
                   ),
-                  // Optional: make weekends slightly faded
                   weekendTextStyle: Styles.captionEmphasis.copyWith(
-                    color: Colors.white70,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
                   ),
                   defaultTextStyle: Styles.captionEmphasis.copyWith(
                     color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  outsideTextStyle: Styles.captionEmphasis.copyWith(
+                    color: const Color(0xFF4A4A4A),
                   ),
                 ),
-                headerStyle: HeaderStyle(
-                  formatButtonVisible: false,
-                  titleCentered: true,
-                  leftChevronIcon: Container(
-                    padding: EdgeInsets.all(6.w),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.r),
-                      border: Border.all(color: AppColors.primaryColor900),
-                      color: Colors.white,
-                    ),
-                    child: Icon(
-                      Icons.chevron_left,
-                      size: 18.sp,
-                      color: Colors.black,
-                    ),
+                daysOfWeekStyle: DaysOfWeekStyle(
+                  weekdayStyle: Styles.captionEmphasis.copyWith(
+                    color: Colors.white70,
+                    fontSize: 13.sp,
                   ),
-                  rightChevronIcon: Container(
-                    padding: EdgeInsets.all(6.w),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.r),
-                      border: Border.all(color: AppColors.primaryColor900),
-                      color: Colors.white,
-                    ),
-                    child: Icon(
-                      Icons.chevron_right,
-                      size: 18.sp,
-                      color: Colors.black,
-                    ),
+                  weekendStyle: Styles.captionEmphasis.copyWith(
+                    color: Colors.white70,
+                    fontSize: 13.sp,
                   ),
-                  titleTextStyle: Styles.highlightEmphasis.copyWith(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primaryColor900,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: AppColors.primaryColor900,
-                        width: 1.sp,
-                      ),
-                    ),
-                  ),
-                  // 👇 Format month name in Arabic
-                  titleTextFormatter: (date, locale) =>
-                      DateFormat.yMMMM('ar').format(date),
                 ),
               ),
               16.verticalSpace,
-              Divider(color: AppColors.neutralColor300, thickness: 1),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.sp),
+                child: Divider(color: Colors.white, thickness: 1.sp),
+              ),
             ],
           ),
         );
