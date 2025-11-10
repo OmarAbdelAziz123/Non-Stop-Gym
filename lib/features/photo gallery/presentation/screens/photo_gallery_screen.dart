@@ -51,11 +51,7 @@ class PhotoGalleryScreen extends StatelessWidget {
                     ),
                     Text(
                       'معرض الصور',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Styles.heading2.copyWith(color: Colors.white),
                     ),
                     Container(
                       width: 44.w,

@@ -10,4 +10,6 @@ class Routes {
   static const String mainlayoutScreen = '/mainlayoutScreen';
   static const String editProfileScreen = '/editProfileScreen';
   static const String photoGalleryDetailsScreen = '/photoGalleryDetailsScreen';
+  static const String myPackagesScreen = '/myPackagesScreen';
+  static const String packagesScreen = '/packagesScreen';
 }
