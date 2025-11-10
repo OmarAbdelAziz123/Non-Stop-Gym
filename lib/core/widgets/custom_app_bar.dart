@@ -26,12 +26,14 @@ class CustomAppBar extends StatelessWidget {
           children: [
             if (hasLeading)
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
                 icon: Container(
                   padding: EdgeInsets.all(12.sp),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.r),
-                    color: Colors.white.withValues(alpha: 0.1),
+                    color: Colors.white.withOpacity(0.1),
                   ),
                   child: Icon(
                     Icons.arrow_back_ios,
@@ -59,7 +61,7 @@ class CustomAppBar extends StatelessWidget {
                 padding: EdgeInsets.all(12.sp),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.r),
-                  color: Colors.white.withValues(alpha: 0.1),
+                  color: Colors.white.withOpacity(0.1),
                 ),
                 child: SvgPicture.asset(
                   "assets/svgs/Notification.svg",

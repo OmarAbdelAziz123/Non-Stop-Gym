@@ -18,7 +18,7 @@ class ProfilePage extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            CustomAppBar(title: 'الملف الشخصي', hasLeading: false),
+            CustomAppBar(title: 'الملف الشخصي'),
 
             Expanded(
               child: SingleChildScrollView(
