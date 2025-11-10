@@ -7,6 +7,7 @@ import 'package:non_stop/features/auth/presentation/screens/forget_password_scre
 import 'package:non_stop/features/auth/presentation/screens/login_screen.dart';
 import 'package:non_stop/features/auth/presentation/screens/register_screen.dart';
 import 'package:non_stop/features/auth/presentation/screens/verify_otp_screen.dart';
+import 'package:non_stop/features/change%20password/presentation/change_password_screen.dart';
 import 'package:non_stop/features/home/bloc/cubit/home_cubit.dart';
 import 'package:non_stop/features/home/presentation/screen/home_screen.dart';
 import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit.dart';
@@ -24,6 +25,7 @@ import 'package:non_stop/features/profile/presentation/screen/edit_profile_scree
 import 'package:non_stop/features/profile/presentation/screen/my_booking_screen.dart';
 import 'package:non_stop/features/profile/presentation/screen/profile_screen.dart';
 import 'package:non_stop/features/splash/screens/splash_screen.dart';
+import 'package:non_stop/features/terms%20and%20condation/presenation/terms_and_condation.dart';
 import 'package:non_stop/features/welcome/presentation/screen/welcome_screen.dart';
 
 class AppRouter {
@@ -79,6 +81,10 @@ class AppRouter {
         );
       case Routes.myPackagesScreen:
         return transition(screen: const MyPackagesScreen());
+         case Routes.chagnePasswordScreen:
+        return transition(screen: const ChangePasswordScreen());
+          case Routes.termsAndConditionsScreen:
+        return transition(screen: const TermsConditionsScreen ());
       case Routes.packagesScreen:
         return transition(screen: const PackagesScreen());
       case Routes.moreAboutUsScreen:
