@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:non_stop/core/extensions/navigation_extension.dart';
+import 'package:non_stop/core/routing/routes_name.dart';
 import 'package:non_stop/core/theme/app_colors.dart';
 import 'package:non_stop/core/theme/text_colors.dart';
 import 'package:non_stop/core/widgets/button/custom_button_widget.dart';
@@ -68,7 +70,9 @@ class RelaxTap extends StatelessWidget {
         SizedBox(height: 15.h),
         CustomButtonWidget(
           margin: EdgeInsets.only(right: 17.sp),
-          onPressed: () {},
+          onPressed: () {
+            context.pushNamed(Routes.moreAboutUsScreen);
+          },
           text: 'المزيد عنا',
           textStyle: Styles.contentRegular.copyWith(
             color: AppColors.neutralColor100,

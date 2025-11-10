@@ -12,5 +12,6 @@ class Routes {
   static const String photoGalleryDetailsScreen = '/photoGalleryDetailsScreen';
   static const String myPackagesScreen = '/myPackagesScreen';
   static const String packagesScreen = '/packagesScreen';
+  static const String moreAboutUsScreen = '/moreAboutUsScreen';
   static const String myBookingScreen = '/myBookingScreen';
 }

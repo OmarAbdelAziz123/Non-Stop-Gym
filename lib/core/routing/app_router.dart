@@ -11,6 +11,7 @@ import 'package:non_stop/features/home/bloc/cubit/home_cubit.dart';
 import 'package:non_stop/features/home/presentation/screen/home_screen.dart';
 import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit.dart';
 import 'package:non_stop/features/main%20layout/presentation/main_layout.dart';
+import 'package:non_stop/features/more_about_us/presentation/screens/more_about_us_screen.dart';
 import 'package:non_stop/features/onboarding/onBoarding/Bloc/on_boarding_cubit.dart';
 import 'package:non_stop/features/onboarding/onBoarding/screens/on_boarding_screen.dart';
 import 'package:non_stop/features/packages/presentation/screens/my_packages_screen.dart';
@@ -80,6 +81,8 @@ class AppRouter {
         return transition(screen: const MyPackagesScreen());
       case Routes.packagesScreen:
         return transition(screen: const PackagesScreen());
+      case Routes.moreAboutUsScreen:
+        return transition(screen: const MoreAboutUsScreen());
       case Routes.myBookingScreen:
         return transition(screen: const MyBookingScreen(), cubit: ProfileCubit());
     }
