@@ -1,7 +1,7 @@
 name: non_stop
 description: "A None Stop."
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -15,6 +15,7 @@ dependencies:
   dio: ^5.9.0
   dots_indicator: ^4.0.1
   easy_localization: ^3.0.8
+  file_picker: ^10.3.3
   firebase_core: ^4.2.0
   firebase_messaging: ^16.0.3
   flutter:
@@ -58,7 +59,6 @@ dev_dependencies:
   json_serializable: ^6.9.3
 
 flutter:
-
   uses-material-design: true
 
   # assets:
