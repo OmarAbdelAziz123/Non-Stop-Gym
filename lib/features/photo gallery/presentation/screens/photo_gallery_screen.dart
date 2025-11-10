@@ -1,24 +1,23 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
+import 'package:non_stop/core/extensions/navigation_extension.dart';
+import 'package:non_stop/core/routing/app_router.dart';
+import 'package:non_stop/core/routing/routes_name.dart';
 import 'package:non_stop/core/theme/text_colors.dart';
-import 'package:non_stop/core/widgets/text_field/custom_text_form_field_widget.dart';
+import 'package:non_stop/core/widgets/button/custom_button_widget.dart';
+import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit.dart';
+import 'package:non_stop/features/photo%20gallery/bloc/cubit/gallery_cubit.dart';
+import 'package:non_stop/features/photo%20gallery/bloc/cubit/gallery_state.dart';
 
-class PhotoGalleryScreen extends StatefulWidget {
+class PhotoGalleryScreen extends StatelessWidget {
   const PhotoGalleryScreen({super.key});
 
   @override
-  State<PhotoGalleryScreen> createState() => _PhotoGalleryState();
-}
-
-class _PhotoGalleryState extends State<PhotoGalleryScreen> {
-  List<String> selectedImages = [];
-
-  @override
   Widget build(BuildContext context) {
+    final cubit = context.read<GalleryCubit>();
     return Container(
       decoration: const BoxDecoration(color: Color(0xff160618)),
       child: Scaffold(
@@ -31,18 +30,23 @@ class _PhotoGalleryState extends State<PhotoGalleryScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: 44.w,
-                      height: 44.h,
-                      decoration: BoxDecoration(
-                        color: const Color(0xff2A1A2C),
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: SvgPicture.asset(
-                        "assets/svgs/Back _con.svg",
-                        width: 24.w,
-                        height: 24.h,
-                        fit: BoxFit.scaleDown,
+                    InkWell(
+                      onTap: () {
+                        MainLayoutCubit.get(context).changeBottomNavBar(0);
+                      },
+                      child: Container(
+                        width: 44.w,
+                        height: 44.h,
+                        decoration: BoxDecoration(
+                          color: const Color(0xff2A1A2C),
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: SvgPicture.asset(
+                          "assets/svgs/Back _con.svg",
+                          width: 24.w,
+                          height: 24.h,
+                          fit: BoxFit.scaleDown,
+                        ),
                       ),
                     ),
                     Text(
@@ -80,13 +84,13 @@ class _PhotoGalleryState extends State<PhotoGalleryScreen> {
                       height: 100.h,
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
-                        itemCount: 5,
+                        itemCount: 6,
                         separatorBuilder: (context, index) =>
                             12.horizontalSpace,
                         itemBuilder: (context, index) {
                           final names = [
                             'ليلى حسن',
-                            'حارم رمزي',
+                            'حازم رمزي',
                             'أحمد عادل',
                             'يوسف سليم',
                             'سماء أحمد',
@@ -98,34 +102,46 @@ class _PhotoGalleryState extends State<PhotoGalleryScreen> {
                             "assets/pngs/image3.png",
                             "assets/pngs/image4.png",
                             "assets/pngs/image4.png",
+                            "assets/pngs/image4.png",
                           ];
-                          return Column(
-                            children: [
-                              Container(
-                                width: 64.w,
-                                height: 64.h,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: const Color(0xff9F5A5B),
-                                    width: 2,
-                                  ),
-                                  image: DecorationImage(
-                                    image: AssetImage(images[index]),
-                                    fit: BoxFit.cover,
+                          return InkWell(
+                            onTap: () {
+                              context.pushNamed(
+                                Routes.photoGalleryDetailsScreen,
+                                arguments: PhotoGalleryDetailsArgs(
+                                  image: images[index],
+                                  name: names[index],
+                                ),
+                              );
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 64.w,
+                                  height: 64.h,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: const Color(0xff9F5A5B),
+                                      width: 2,
+                                    ),
+                                    image: DecorationImage(
+                                      image: AssetImage(images[index]),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              6.verticalSpace,
-                              Text(
-                                names[index],
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w700,
+                                6.verticalSpace,
+                                Text(
+                                  names[index],
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           );
                         },
                       ),
@@ -147,113 +163,83 @@ class _PhotoGalleryState extends State<PhotoGalleryScreen> {
                         color: const Color(0xff2A1A2C),
                         borderRadius: BorderRadius.circular(12.r),
                       ),
-                      child: 
-                      CustomTextFormFieldWidget(
-                        
-                        onChanged: (value) {},
+                      child: TextFormField(
                         maxLines: 3,
-                        hintStyle: Styles.captionEmphasis.copyWith(
-                          color: AppColors.neutralColor400,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                        decoration: InputDecoration(
+                          hintText: 'قم بكتابة منشورتك الخاص بك هنا',
+                          hintStyle: Styles.footnoteSemiBold.copyWith(
+                            color: AppColors.neutralColor400,
+                          ),
+                          border: InputBorder.none,
                         ),
+                        onChanged: (value) {},
                       ),
-                      // TextField(
-                      //   maxLines: 3,
-                      //   textAlign: TextAlign.right,
-                      //   style: TextStyle(color: Colors.white, fontSize: 14.sp),
-                      //   decoration: InputDecoration(
-                      //     hintText: 'قم بكتابة منشورتك الخاص بك هنا',
-                      //     hintStyle: TextStyle(
-                      //       color: Colors.white38,
-                      //       fontSize: 14.sp,
-                      //     ),
-                      //     border: InputBorder.none,
-                      //   ),
-                      //   onChanged: (value) {},
-                      // ),
                     ),
 
                     16.verticalSpace,
 
-                    if (selectedImages.isNotEmpty)
-                      Container(
-                        height: 120.h,
-                        margin: EdgeInsets.only(bottom: 16.h),
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          reverse: true,
-                          itemCount: selectedImages.length,
-                          separatorBuilder: (context, index) =>
-                              8.horizontalSpace,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              width: 100.w,
-                              height: 120.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.r),
-                                image: DecorationImage(
-                                  image: FileImage(File(selectedImages[index])),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            );
+                    BlocBuilder<GalleryCubit, GalleryState>(
+                      buildWhen: (previous, current) =>
+                          current is PickImageErrorState ||
+                          current is PickImageSuccessState,
+                      builder: (context, state) {
+                        return InkWell(
+                          onTap: () {
+                            cubit.pickFile();
                           },
-                        ),
-                      ),
-
-                    GestureDetector(
-                      child: Container(
-                        padding: EdgeInsets.all(20.w),
-                        decoration: BoxDecoration(
-                          color: const Color(0xff2A1A2C),
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.image_outlined,
-                              color: Colors.white38,
-                              size: 40.sp,
+                          child: Container(
+                            padding: EdgeInsets.all(20.w),
+                            decoration: BoxDecoration(
+                              color: const Color(0xff2A1A2C),
+                              borderRadius: BorderRadius.circular(12.r),
                             ),
-                            12.verticalSpace,
-                            Text(
-                              'قم برفع الصورة الخاصة بك هنا',
-                              style: TextStyle(
-                                color: Colors.white38,
-                                fontSize: 14.sp,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                            child: cubit.selectedFile != null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                    child: Image.file(
+                                      cubit.selectedFile!,
+                                      width: double.infinity,
+                                      height: 200.h,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.image_outlined,
+                                        color: AppColors.neutralColor400,
+                                        size: 40.sp,
+                                      ),
+                                      12.verticalSpace,
+                                      Text(
+                                        'قم برفع الصورة الخاصة بك هنا',
+                                        style: Styles.footnoteSemiBold.copyWith(
+                                          color: AppColors.neutralColor400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ),
+                        );
+                      },
                     ),
 
                     24.verticalSpace,
-
-                    GestureDetector(
-                      onTap: () {
-                        ('Images: ${selectedImages.length}');
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 16.h),
-                        decoration: BoxDecoration(
-                          color: const Color(0xff9F5A5B),
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'نشر',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                    CustomButtonWidget(
+                      onPressed: () {},
+                      text: 'نشر',
+                      color: const Color(0xff9F5A5B),
+                      textStyle: Styles.highlightBold.copyWith(
+                        color: Colors.white,
                       ),
+                      borderRadius: 12.r,
+                      height: 56.h,
                     ),
 
-                    20.verticalSpace,
+                    // 20.verticalSpace,
                   ],
                 ),
               ),

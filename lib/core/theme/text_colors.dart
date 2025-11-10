@@ -132,7 +132,7 @@ abstract class Styles {
     fontSize: 10,
     fontWeight: FontWeight.bold,
   );
-  static TextStyle footnoteSemiboldBold = getLocalizedTextStyle(
+  static TextStyle footnoteSemiBold = getLocalizedTextStyle(
     fontSize: 10,
     fontWeight: FontWeight.w600,
   );
