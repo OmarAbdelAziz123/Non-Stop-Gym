@@ -18,7 +18,9 @@ import 'package:non_stop/features/packages/presentation/screens/packages_screen.
 import 'package:non_stop/features/photo%20gallery%20details/presentation/screens/photo_gallery_details_screen.dart';
 import 'package:non_stop/features/photo%20gallery/bloc/cubit/gallery_cubit.dart';
 import 'package:non_stop/features/photo%20gallery/presentation/screens/photo_gallery_screen.dart';
+import 'package:non_stop/features/profile/bloc/cubit/profile_cubit.dart';
 import 'package:non_stop/features/profile/presentation/screen/edit_profile_screen.dart';
+import 'package:non_stop/features/profile/presentation/screen/my_booking_screen.dart';
 import 'package:non_stop/features/profile/presentation/screen/profile_screen.dart';
 import 'package:non_stop/features/splash/screens/splash_screen.dart';
 import 'package:non_stop/features/welcome/presentation/screen/welcome_screen.dart';
@@ -78,19 +80,20 @@ class AppRouter {
         return transition(screen: const MyPackagesScreen());
       case Routes.packagesScreen:
         return transition(screen: const PackagesScreen());
+      case Routes.myBookingScreen:
+        return transition(screen: const MyBookingScreen(), cubit: ProfileCubit());
     }
     return null;
   }
 
   List<Widget> gymScreen = [
     BlocProvider(create: (context) => HomeCubit(), child: HomeScreen()),
-    MyPackagesScreen(),
+    PackagesScreen(),
     BlocProvider(
       create: (context) => GalleryCubit(),
       child: PhotoGalleryScreen(),
     ),
-
-    ProfilePage(),
+    BlocProvider(create: (context) => ProfileCubit(), child: ProfilePage()),
   ];
 }
 

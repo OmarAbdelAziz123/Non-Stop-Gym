@@ -48,6 +48,9 @@ class ProfilePage extends StatelessWidget {
                           ProfileTile(
                             title: 'حجوزاتي',
                             icon: Icons.event_note_outlined,
+                            onTap: () {
+                              context.pushNamed(Routes.myBookingScreen);
+                            },
                           ),
                           ProfileTile(
                             title: 'كلمة السر',

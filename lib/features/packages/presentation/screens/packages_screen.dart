@@ -5,11 +5,8 @@ import 'package:non_stop/common/extensions/build_context_extensions.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
 import 'package:non_stop/core/constants/hex_colors.dart';
-import 'package:non_stop/core/routing/routes_name.dart';
-import 'package:non_stop/core/widgets/button/custom_button_widget.dart';
 import 'package:non_stop/core/widgets/row/custom_row_with_check_widget.dart';
 import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit.dart';
-import 'package:non_stop/features/packages/presentation/screens/packages_screen.dart';
 
 class PackagesScreen extends StatelessWidget {
   const PackagesScreen({super.key});
@@ -42,8 +39,8 @@ class PackagesScreen extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        context.pop();
-                      },
+                        MainLayoutCubit.get(context).changeBottomNavBar(0);
+                        },
                       child: Container(
                         width: 44.w,
                         height: 44.h,
