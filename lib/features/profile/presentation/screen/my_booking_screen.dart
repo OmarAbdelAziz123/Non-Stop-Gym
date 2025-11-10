@@ -3,21 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:non_stop/common/extensions/build_context_extensions.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:non_stop/common/extensions/build_context_extensions.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
 import 'package:non_stop/core/constants/hex_colors.dart';
-import 'package:non_stop/core/widgets/button/custom_button_widget.dart';
-import 'package:non_stop/core/widgets/row/custom_row_with_check_widget.dart';
-import 'package:non_stop/features/home/presentation/widgets/calender_widget.dart';
 import 'package:non_stop/features/home/presentation/widgets/time_slots_widget.dart';
-import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit.dart';
-import 'package:non_stop/features/packages/presentation/screens/my_packages_screen.dart';
-import 'package:non_stop/features/packages/presentation/screens/packages_screen.dart';
 import 'package:non_stop/features/profile/bloc/cubit/profile_cubit.dart';
 import 'package:non_stop/features/profile/presentation/widgets/calender_widget.dart';
+
 import '../../../../core/theme/text_colors.dart';
 
 class MyBookingScreen extends StatefulWidget {

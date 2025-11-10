@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:non_stop/common/extensions/build_context_extensions.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
 import 'package:non_stop/core/constants/hex_colors.dart';
@@ -40,7 +39,7 @@ class PackagesScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         MainLayoutCubit.get(context).changeBottomNavBar(0);
-                        },
+                      },
                       child: Container(
                         width: 44.w,
                         height: 44.h,
@@ -83,7 +82,7 @@ class PackagesScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         42.verticalSpace,
-                    
+
                         Container(
                           padding: EdgeInsets.only(
                             left: 20.w,
@@ -95,7 +94,7 @@ class PackagesScreen extends StatelessWidget {
                             color: hexToColor('#02040B'),
                             borderRadius: BorderRadius.circular(10.r),
                             border: Border.all(
-                              color: Color(0xFF15151569).withOpacity(.5),
+                              color: Color(0xFF15151569).withValues(alpha: .5),
                               width: .5.w,
                             ),
                           ),
@@ -103,7 +102,8 @@ class PackagesScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     padding: EdgeInsets.all(8.sp),
@@ -117,7 +117,7 @@ class PackagesScreen extends StatelessWidget {
                                       height: 26.h,
                                     ),
                                   ),
-                    
+
                                   Row(
                                     children: [
                                       Text(
@@ -146,22 +146,31 @@ class PackagesScreen extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      margin: EdgeInsets.symmetric(horizontal: 20.w),
-                                      padding: EdgeInsets.symmetric(vertical: 10.h),
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 20.w,
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 10.h,
+                                      ),
                                       decoration: BoxDecoration(
                                         color: Colors.transparent,
-                                        borderRadius: BorderRadius.circular(5.r),
+                                        borderRadius: BorderRadius.circular(
+                                          5.r,
+                                        ),
                                         border: Border.all(
-                                          color: Color(0xFF9F5A5B).withOpacity(.5),
+                                          color: Color(
+                                            0xFF9F5A5B,
+                                          ).withValues(alpha: .5),
                                           width: .5.w,
                                         ),
                                       ),
                                       child: Center(
                                         child: Text(
                                           '6 شهور',
-                                          style: Styles.featureSemibold.copyWith(
-                                            color: hexToColor('#9F5A5B'),
-                                          ),
+                                          style: Styles.featureSemibold
+                                              .copyWith(
+                                                color: hexToColor('#9F5A5B'),
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -180,16 +189,20 @@ class PackagesScreen extends StatelessWidget {
                                 text: 'دخول كامل للجيم واستخدام جميع الأجهزة',
                               ),
                               6.verticalSpace,
-                    
-                              CustomRowWithCheckWidget(text: '2 حصة بيلاتس أسبوعيًا'),
+
+                              CustomRowWithCheckWidget(
+                                text: '2 حصة بيلاتس أسبوعيًا',
+                              ),
                               6.verticalSpace,
-                    
-                              CustomRowWithCheckWidget(text: 'خصم 20% على جلسات كراسي المساج'),
+
+                              CustomRowWithCheckWidget(
+                                text: 'خصم 20% على جلسات كراسي المساج',
+                              ),
                             ],
                           ),
                         ),
                         18.verticalSpace,
-                    
+
                         Container(
                           padding: EdgeInsets.only(
                             left: 20.w,
@@ -201,7 +214,7 @@ class PackagesScreen extends StatelessWidget {
                             color: hexToColor('#02040B'),
                             borderRadius: BorderRadius.circular(10.r),
                             border: Border.all(
-                              color: Color(0xFF15151569).withOpacity(.5),
+                              color: Color(0xFF15151569).withValues(alpha: .5),
                               width: .5.w,
                             ),
                           ),
@@ -209,7 +222,8 @@ class PackagesScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     padding: EdgeInsets.all(8.sp),
@@ -223,7 +237,7 @@ class PackagesScreen extends StatelessWidget {
                                       height: 26.h,
                                     ),
                                   ),
-                    
+
                                   Row(
                                     children: [
                                       Text(
@@ -252,22 +266,31 @@ class PackagesScreen extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      margin: EdgeInsets.symmetric(horizontal: 20.w),
-                                      padding: EdgeInsets.symmetric(vertical: 10.h),
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 20.w,
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 10.h,
+                                      ),
                                       decoration: BoxDecoration(
                                         color: Colors.transparent,
-                                        borderRadius: BorderRadius.circular(5.r),
+                                        borderRadius: BorderRadius.circular(
+                                          5.r,
+                                        ),
                                         border: Border.all(
-                                          color: Color(0xFF9F5A5B).withOpacity(.5),
+                                          color: Color(
+                                            0xFF9F5A5B,
+                                          ).withValues(alpha: .5),
                                           width: .5.w,
                                         ),
                                       ),
                                       child: Center(
                                         child: Text(
                                           '3 شهور',
-                                          style: Styles.featureSemibold.copyWith(
-                                            color: hexToColor('#9F5A5B'),
-                                          ),
+                                          style: Styles.featureSemibold
+                                              .copyWith(
+                                                color: hexToColor('#9F5A5B'),
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -286,8 +309,10 @@ class PackagesScreen extends StatelessWidget {
                                 text: 'دخول للجيم واستخدام الأجهزة الأساسية',
                               ),
                               6.verticalSpace,
-                    
-                              CustomRowWithCheckWidget(text: 'حصص جماعية محدودة'),
+
+                              CustomRowWithCheckWidget(
+                                text: 'حصص جماعية محدودة',
+                              ),
                             ],
                           ),
                         ),
@@ -296,7 +321,6 @@ class PackagesScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),

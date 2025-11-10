@@ -48,10 +48,7 @@ void notificationSnackBar({
         ),
       ),
     ),
-    dismissDirection: [
-      DismissDirection.vertical,
-      DismissDirection.horizontal,
-    ],
+    dismissDirection: [DismissDirection.vertical, DismissDirection.horizontal],
     curve: Curves.easeOutBack, // smoother animation
     displayDuration: const Duration(seconds: 3),
     dismissType: DismissType.onTap,

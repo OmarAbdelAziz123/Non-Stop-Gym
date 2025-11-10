@@ -31,7 +31,6 @@ class NotificationSnackBar {
     void Function(AnimationController controller)? onAnimationControllerInit,
   }) {
     final overlay = Overlay.of(context);
-    if (overlay == null) return;
 
     final String? body = remoteMessage.data["body"];
 
@@ -44,14 +43,15 @@ class NotificationSnackBar {
         backgroundColor: AppColors.neutralColor200,
 
         /// 🧾 Text style (bold + theme colors)
-        textStyle:
-        Styles.contentBold.copyWith(color: AppColors.primaryColor800),
+        textStyle: Styles.contentBold.copyWith(
+          color: AppColors.primaryColor800,
+        ),
 
         /// 🧩 Rounded corners & shadow
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),

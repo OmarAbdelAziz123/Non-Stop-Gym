@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// App-wide constants that do not depend on the environment.
@@ -37,5 +36,4 @@ class AppConstants {
   static double borderRadius = 6.r;
   static String? userToken;
   static int mainLayoutInitialScreenIndex = 0;
-  
 }

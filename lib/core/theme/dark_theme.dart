@@ -17,11 +17,11 @@
 //       /// CORE COLORS
 //       primaryColor: AppColors.primaryColor500,
 //       scaffoldBackgroundColor: AppColors.neutralColor900,
-//       splashColor: AppColors.primaryColor300.withOpacity(0.25),
-//       highlightColor: AppColors.primaryColor300.withOpacity(0.15),
+//       splashColor: AppColors.primaryColor300.withValues(alpha:0.25),
+//       highlightColor: AppColors.primaryColor300.withValues(alpha:0.15),
 //       hintColor: AppColors.neutralColor400,
 //       disabledColor: AppColors.neutralColor600,
-//       shadowColor: Colors.black.withOpacity(0.4),
+//       shadowColor: Colors.black.withValues(alpha:0.4),
 //       focusColor: AppColors.primaryColor400,
 //       hoverColor: AppColors.primaryColor300,
 //
@@ -119,14 +119,14 @@
 //       iconButtonTheme: IconButtonThemeData(
 //         style: IconButton.styleFrom(
 //           foregroundColor: AppColors.primaryColor300,
-//           highlightColor: AppColors.primaryColor200.withOpacity(0.2),
+//           highlightColor: AppColors.primaryColor200.withValues(alpha:0.2),
 //         ),
 //       ),
 //
 //       /// SWITCHES, RADIO, CHECKBOX
 //       switchTheme: SwitchThemeData(
 //         thumbColor: MaterialStateProperty.all(AppColors.primaryColor400),
-//         trackColor: MaterialStateProperty.all(AppColors.primaryColor700.withOpacity(0.6)),
+//         trackColor: MaterialStateProperty.all(AppColors.primaryColor700.withValues(alpha:0.6)),
 //       ),
 //       checkboxTheme: CheckboxThemeData(
 //         fillColor: MaterialStateProperty.resolveWith(
@@ -212,7 +212,7 @@
 //       drawerTheme: DrawerThemeData(
 //         backgroundColor: AppColors.neutralColor800,
 //         elevation: elevation,
-//         scrimColor: Colors.black.withOpacity(0.5),
+//         scrimColor: Colors.black.withValues(alpha:0.5),
 //         shape: const RoundedRectangleBorder(
 //           borderRadius: BorderRadius.only(
 //             topRight: Radius.circular(16),
@@ -250,7 +250,7 @@
 //       /// NAVIGATION BAR
 //       navigationBarTheme: NavigationBarThemeData(
 //         backgroundColor: AppColors.neutralColor900,
-//         indicatorColor: AppColors.primaryColor700.withOpacity(0.3),
+//         indicatorColor: AppColors.primaryColor700.withValues(alpha:0.3),
 //         labelTextStyle: MaterialStateProperty.all(
 //           Styles.captionRegular.copyWith(color: AppColors.primaryColor300),
 //         ),
@@ -299,7 +299,7 @@
 //         activeTrackColor: AppColors.primaryColor400,
 //         inactiveTrackColor: AppColors.primaryColor700,
 //         thumbColor: AppColors.primaryColor400,
-//         overlayColor: AppColors.primaryColor200.withOpacity(0.3),
+//         overlayColor: AppColors.primaryColor200.withValues(alpha:0.3),
 //       ),
 //
 //       /// BOTTOM NAVIGATION BAR (legacy)

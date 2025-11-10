@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: EdgeInsets.all(12.sp),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12.r),
-                                  color: Colors.white.withOpacity(0.1),
+                                  color: Colors.white.withValues(alpha: 0.1),
                                 ),
                                 child: SvgPicture.asset(
                                   "assets/svgs/Notification.svg",

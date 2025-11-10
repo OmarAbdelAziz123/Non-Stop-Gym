@@ -41,7 +41,7 @@ class ErrorScreenCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 10,
                       offset: const Offset(0, 2),
                     ),
@@ -53,7 +53,9 @@ class ErrorScreenCard extends StatelessWidget {
                       width: 80,
                       height: 80,
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.errorContainer.withOpacity(0.2),
+                        color: theme.colorScheme.errorContainer.withValues(
+                          alpha: 0.2,
+                        ),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -75,7 +77,9 @@ class ErrorScreenCard extends StatelessWidget {
                     Text(
                       effectiveMessage,
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurface.withOpacity(0.6),
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: 0.6,
+                        ),
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -101,7 +105,8 @@ class ErrorScreenCard extends StatelessWidget {
                 context,
                 icon: Icons.link_off_rounded,
                 title: 'Page not found',
-                description: 'The page you\'re looking for doesn\'t exist or has been moved.',
+                description:
+                    'The page you\'re looking for doesn\'t exist or has been moved.',
               ),
 
               const SizedBox(height: 12),
@@ -130,13 +135,15 @@ class ErrorScreenCard extends StatelessWidget {
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: onRetry ?? () {
-                    if (Navigator.canPop(context)) {
-                      Navigator.pop(context);
-                    } else {
-                      Navigator.pushReplacementNamed(context, '/');
-                    }
-                  },
+                  onPressed:
+                      onRetry ??
+                      () {
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        } else {
+                          Navigator.pushReplacementNamed(context, '/');
+                        }
+                      },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: theme.colorScheme.primary,
                     foregroundColor: Colors.white,
@@ -164,12 +171,12 @@ class ErrorScreenCard extends StatelessWidget {
                   onPressed: () => Navigator.pushNamedAndRemoveUntil(
                     context,
                     '/',
-                        (route) => false,
+                    (route) => false,
                   ),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: theme.colorScheme.primary,
                     side: BorderSide(
-                      color: theme.colorScheme.primary.withOpacity(0.3),
+                      color: theme.colorScheme.primary.withValues(alpha: 0.3),
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -177,10 +184,7 @@ class ErrorScreenCard extends StatelessWidget {
                   ),
                   child: const Text(
                     'Go to Home',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
@@ -192,11 +196,11 @@ class ErrorScreenCard extends StatelessWidget {
   }
 
   Widget _buildInfoCard(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required String description,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String description,
+  }) {
     final theme = Theme.of(context);
 
     return Container(
@@ -206,7 +210,7 @@ class ErrorScreenCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -218,14 +222,10 @@ class ErrorScreenCard extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: theme.colorScheme.primaryContainer.withOpacity(0.3),
+              color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(
-              icon,
-              color: theme.colorScheme.primary,
-              size: 24,
-            ),
+            child: Icon(icon, color: theme.colorScheme.primary, size: 24),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -243,7 +243,7 @@ class ErrorScreenCard extends StatelessWidget {
                 Text(
                   description,
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurface.withOpacity(0.6),
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
               ],

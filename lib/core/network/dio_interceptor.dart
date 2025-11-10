@@ -11,10 +11,8 @@ class DioInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     final token = _storage.get<String>(EndPoints.accessTokenKey);
-    if (token != null) {
-      options.headers['Authorization'] = 'Bearer $token';
-    }
-
+    options.headers['Authorization'] = 'Bearer $token';
+  
     log('➡️ [REQUEST] ${options.method} ${options.uri}');
     log('Headers: ${options.headers}');
     log('Data: ${options.data}');

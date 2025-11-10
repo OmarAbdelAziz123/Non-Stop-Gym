@@ -226,7 +226,7 @@ class CustomActiveBodyWidget extends StatelessWidget {
             color: hexToColor('#02040B'),
             borderRadius: BorderRadius.circular(10.r),
             border: Border.all(
-              color: Color(0xFF15151569).withOpacity(.5),
+              color: Color(0xff15151569).withValues(alpha: .5),
               width: .5.w,
             ),
           ),
@@ -239,7 +239,7 @@ class CustomActiveBodyWidget extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(8.sp),
                     decoration: BoxDecoration(
-                      color: Color(0xFF9F5A5B1A).withAlpha(10),
+                      color: Color(0xff9f5a5b1a).withAlpha(10),
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: Image.asset(
@@ -283,7 +283,7 @@ class CustomActiveBodyWidget extends StatelessWidget {
                         color: Colors.transparent,
                         borderRadius: BorderRadius.circular(5.r),
                         border: Border.all(
-                          color: Color(0xFF9F5A5B).withOpacity(.5),
+                          color: Color(0xFF9F5A5B).withValues(alpha: .5),
                           width: .5.w,
                         ),
                       ),
@@ -324,8 +324,6 @@ class CustomActiveBodyWidget extends StatelessWidget {
   }
 }
 
-
-
 class CustomInactiveBodyWidget extends StatelessWidget {
   const CustomInactiveBodyWidget({super.key});
 
@@ -345,7 +343,7 @@ class CustomInactiveBodyWidget extends StatelessWidget {
             color: hexToColor('#02040B'),
             borderRadius: BorderRadius.circular(10.r),
             border: Border.all(
-              color: Color(0xFF15151569).withOpacity(.5),
+              color: Color(0xff15151569).withValues(alpha: .5),
               width: .5.w,
             ),
           ),
@@ -358,7 +356,7 @@ class CustomInactiveBodyWidget extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(8.sp),
                     decoration: BoxDecoration(
-                      color: Color(0xFF9F5A5B1A).withAlpha(10),
+                      color: Color(0xff9f5a5b1a).withAlpha(10),
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: Image.asset(
@@ -402,7 +400,7 @@ class CustomInactiveBodyWidget extends StatelessWidget {
                         color: Colors.transparent,
                         borderRadius: BorderRadius.circular(5.r),
                         border: Border.all(
-                          color: Color(0xFF9F5A5B).withOpacity(.5),
+                          color: Color(0xFF9F5A5B).withValues(alpha: .5),
                           width: .5.w,
                         ),
                       ),
