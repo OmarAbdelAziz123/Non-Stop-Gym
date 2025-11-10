@@ -14,4 +14,6 @@ class Routes {
   static const String packagesScreen = '/packagesScreen';
   static const String moreAboutUsScreen = '/moreAboutUsScreen';
   static const String myBookingScreen = '/myBookingScreen';
+  static const String chagnePasswordScreen = '/chagnePasswordScreen';
+  static const String termsAndConditionsScreen = '/termsAndConditionsScreen';
 }

@@ -55,6 +55,9 @@ class ProfilePage extends StatelessWidget {
                           ProfileTile(
                             title: 'كلمة السر',
                             icon: Icons.lock_outline,
+                            onTap: () {
+                              context.pushNamed(Routes.chagnePasswordScreen);
+                            },
                           ),
                           ProfileTile(
                             title: 'بطاقاتي',
@@ -80,10 +83,19 @@ class ProfilePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Column(
-                        children: const [
+                        children: [
                           ProfileTile(
                             title: 'شكاوي و اقتراحات',
                             icon: Icons.feedback_outlined,
+                          ),
+                          ProfileTile(
+                            title: "سياسة الخصوصية",
+                            onTap: () {
+                              context.pushNamed(
+                                Routes.termsAndConditionsScreen,
+                              );
+                            },
+                            icon: Icons.privacy_tip_outlined,
                           ),
                           ProfileTile(
                             title: 'الأسئلة الشائعة',
