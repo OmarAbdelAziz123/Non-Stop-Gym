@@ -17,8 +17,8 @@
 //       /// CORE COLORS
 //       primaryColor: AppColors.primaryColor500,
 //       scaffoldBackgroundColor: AppColors.neutralColor100,
-//       splashColor: AppColors.primaryColor100.withOpacity(0.2),
-//       highlightColor: AppColors.primaryColor100.withOpacity(0.1),
+//       splashColor: AppColors.primaryColor100.withValues(alpha:0.2),
+//       highlightColor: AppColors.primaryColor100.withValues(alpha:0.1),
 //       hintColor: AppColors.neutralColor500,
 //       disabledColor: AppColors.neutralColor400,
 //       shadowColor: AppColors.neutralColor200,
@@ -135,7 +135,7 @@
 //       switchTheme: SwitchThemeData(
 //         thumbColor: MaterialStateProperty.all(AppColors.primaryColor500),
 //         trackColor:
-//         MaterialStateProperty.all(AppColors.primaryColor200.withOpacity(0.5)),
+//         MaterialStateProperty.all(AppColors.primaryColor200.withValues(alpha:0.5)),
 //       ),
 //       checkboxTheme: CheckboxThemeData(
 //         fillColor: MaterialStateProperty.resolveWith(
@@ -224,7 +224,7 @@
 //       drawerTheme: DrawerThemeData(
 //         backgroundColor: Colors.white,
 //         elevation: elevation,
-//         scrimColor: Colors.black.withOpacity(0.4),
+//         scrimColor: Colors.black.withValues(alpha:0.4),
 //         shape: const RoundedRectangleBorder(
 //           borderRadius: BorderRadius.only(
 //             topRight: Radius.circular(16),
@@ -262,7 +262,7 @@
 //       /// NAVIGATION BAR
 //       navigationBarTheme: NavigationBarThemeData(
 //         backgroundColor: Colors.white,
-//         indicatorColor: AppColors.primaryColor100.withOpacity(0.3),
+//         indicatorColor: AppColors.primaryColor100.withValues(alpha:0.3),
 //         labelTextStyle: MaterialStateProperty.all(
 //           Styles.captionRegular.copyWith(color: AppColors.primaryColor500),
 //         ),
@@ -313,7 +313,7 @@
 //         activeTrackColor: AppColors.primaryColor500,
 //         inactiveTrackColor: AppColors.primaryColor200,
 //         thumbColor: AppColors.primaryColor500,
-//         overlayColor: AppColors.primaryColor100.withOpacity(0.3),
+//         overlayColor: AppColors.primaryColor100.withValues(alpha:0.3),
 //       ),
 //
 //       /// BOTTOM NAVIGATION BAR (legacy)

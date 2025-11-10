@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:non_stop/core/theme/theme.dart';
-import 'package:non_stop/core/widgets/text_field/custom_text_form_field_widget.dart';
 import 'package:non_stop/core/widgets/custom_app_bar.dart';
+import 'package:non_stop/core/widgets/text_field/custom_text_form_field_widget.dart';
 import 'package:non_stop/features/profile/presentation/widgets/profile_card.dart';
-import 'package:non_stop/features/profile/presentation/screen/profile_screen.dart';
 
 class EditProfilePage extends StatelessWidget {
   const EditProfilePage({super.key});

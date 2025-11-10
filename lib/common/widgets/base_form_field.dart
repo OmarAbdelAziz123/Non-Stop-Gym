@@ -74,7 +74,7 @@ class _BaseFormFieldState extends State<BaseFormField>
           style: labelStyle?.copyWith(
             color: widget.enabled
                 ? colorScheme.onSurface
-                : colorScheme.onSurface.withOpacity(0.4),
+                : colorScheme.onSurface.withValues(alpha: 0.4),
           ),
         ),
         const SizedBox(height: 6),
@@ -82,7 +82,8 @@ class _BaseFormFieldState extends State<BaseFormField>
           controller: widget.controller,
           obscureText: _obscureText,
           enabled: widget.enabled,
-          keyboardType: widget.keyboardType ??
+          keyboardType:
+              widget.keyboardType ??
               (widget.isEmail
                   ? TextInputType.emailAddress
                   : widget.isPhone
@@ -92,25 +93,26 @@ class _BaseFormFieldState extends State<BaseFormField>
           style: theme.textTheme.bodyLarge?.copyWith(
             color: widget.enabled
                 ? colorScheme.onSurface
-                : colorScheme.onSurface.withOpacity(0.4),
+                : colorScheme.onSurface.withValues(alpha: 0.4),
           ),
           decoration: InputDecoration(
             hintText: widget.hint,
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.isPassword
                 ? IconButton(
-              icon: Icon(
-                _obscureText ? Icons.visibility_off : Icons.visibility,
-                color: colorScheme.onSurface.withOpacity(0.7),
-              ),
-              onPressed: () => setState(() => _obscureText = !_obscureText),
-            )
+                    icon: Icon(
+                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                      color: colorScheme.onSurface.withValues(alpha: 0.7),
+                    ),
+                    onPressed: () =>
+                        setState(() => _obscureText = !_obscureText),
+                  )
                 : widget.suffixIcon,
             errorText: _errorText,
             filled: true,
             fillColor: widget.enabled
                 ? (theme.inputDecorationTheme.fillColor ?? colorScheme.surface)
-                : theme.disabledColor.withOpacity(0.1),
+                : theme.disabledColor.withValues(alpha: 0.1),
           ).applyDefaults(theme.inputDecorationTheme),
           validator: (value) {
             final error = _validateInput(value);

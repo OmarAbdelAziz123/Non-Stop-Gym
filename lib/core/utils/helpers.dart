@@ -1,11 +1,12 @@
 import 'dart:io';
 import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// 🌟 helpers.dart
 /// ------------------------------------------------------------
@@ -74,7 +75,9 @@ class Helpers {
   /// 🔸 Formats number with commas (e.g., 15000 → 15,000)
   static String formatWithCommas(num number) {
     return number.toString().replaceAllMapped(
-        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match m) => '${m[1]},',
+    );
   }
 
   // 💾 ---------------------- FILES ----------------------------
@@ -101,8 +104,11 @@ class Helpers {
   // 📱 ---------------------- UI HELPERS -----------------------
 
   /// 🔸 Shows a simple SnackBar message
-  static void showSnackBar(BuildContext context, String message,
-      {Color backgroundColor = Colors.black87}) {
+  static void showSnackBar(
+    BuildContext context,
+    String message, {
+    Color backgroundColor = Colors.black87,
+  }) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message, style: const TextStyle(color: Colors.white)),
@@ -112,8 +118,7 @@ class Helpers {
   }
 
   /// 🔸 Copies text to clipboard with confirmation
-  static Future<void> copyToClipboard(
-      BuildContext context, String text) async {
+  static Future<void> copyToClipboard(BuildContext context, String text) async {
     await Clipboard.setData(ClipboardData(text: text));
     showSnackBar(context, 'تم النسخ إلى الحافظة');
   }
@@ -177,5 +182,6 @@ class Helpers {
       text.replaceAll(RegExp(r'\s+'), ' ').trim();
 
   /// 🔸 Generates a unique timestamp-based ID (for videos, posts, etc.)
-  static String generateUniqueId() => DateTime.now().millisecondsSinceEpoch.toString();
+  static String generateUniqueId() =>
+      DateTime.now().millisecondsSinceEpoch.toString();
 }

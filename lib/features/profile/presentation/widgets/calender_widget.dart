@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
-import 'package:non_stop/features/home/bloc/cubit/home_cubit.dart';
 import 'package:non_stop/features/profile/bloc/cubit/profile_cubit.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -73,7 +72,7 @@ class CalenderOnProfileWidget extends StatelessWidget {
                         height: 36.h,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: const Color(0xFF9F5A5B).withOpacity(0.8),
+                          color: const Color(0xFF9F5A5B).withValues(alpha: 0.8),
                         ),
                         child: Icon(
                           Icons.chevron_right,
@@ -136,7 +135,7 @@ class CalenderOnProfileWidget extends StatelessWidget {
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: const Color(0xFF9F5A5B).withOpacity(0.3),
+                      color: const Color(0xFF9F5A5B).withValues(alpha: 0.3),
                       width: 2,
                     ),
                   ),

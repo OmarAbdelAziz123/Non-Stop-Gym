@@ -72,7 +72,7 @@ class CalenderWidget extends StatelessWidget {
                         height: 36.h,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: const Color(0xFF9F5A5B).withOpacity(0.8),
+                          color: const Color(0xFF9F5A5B).withValues(alpha: 0.8),
                         ),
                         child: Icon(
                           Icons.chevron_right,
@@ -135,7 +135,7 @@ class CalenderWidget extends StatelessWidget {
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: const Color(0xFF9F5A5B).withOpacity(0.3),
+                      color: const Color(0xFF9F5A5B).withValues(alpha: 0.3),
                       width: 2,
                     ),
                   ),

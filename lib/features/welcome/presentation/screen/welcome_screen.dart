@@ -1,8 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
-import 'package:non_stop/core/constants/app_constants.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
 import 'package:non_stop/core/extensions/navigation_extension.dart';
 import 'package:non_stop/core/routing/routes_name.dart';
@@ -12,7 +10,6 @@ class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    print(AppConstants.navigatorKey.currentContext!.locale.languageCode);
     return Scaffold(
       body: Container(
         width: double.infinity,
