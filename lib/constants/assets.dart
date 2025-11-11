@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_single_quotes
 class Assets {
   Assets._();
-  
+
   /// Assets for resourceFontsAlfontComAlFontComSwissraNormal1
   /// assets/fonts/alfont_com_AlFont_com_Swissra-Normal-1.ttf
-  static const String resourceFontsAlfontComAlFontComSwissraNormal1 = "assets/fonts/alfont_com_AlFont_com_Swissra-Normal-1.ttf";
+  static const String resourceFontsAlfontComAlFontComSwissraNormal1 =
+      "assets/fonts/alfont_com_AlFont_com_Swissra-Normal-1.ttf";
 
   /// Assets for resourceLanguagesArEG
   /// assets/languages/ar-EG.json
@@ -40,7 +41,8 @@ class Assets {
 
   /// Assets for resourcePngsGalleryDetails
   /// assets/pngs/gallery_details.png
-  static const String resourcePngsGalleryDetails = "assets/pngs/gallery_details.png";
+  static const String resourcePngsGalleryDetails =
+      "assets/pngs/gallery_details.png";
 
   /// Assets for resourcePngsGym
   /// assets/pngs/gym.png
@@ -48,7 +50,8 @@ class Assets {
 
   /// Assets for resourcePngsHomeRealxIcon
   /// assets/pngs/home_realx_icon.png
-  static const String resourcePngsHomeRealxIcon = "assets/pngs/home_realx_icon.png";
+  static const String resourcePngsHomeRealxIcon =
+      "assets/pngs/home_realx_icon.png";
 
   /// Assets for resourcePngsImage1
   /// assets/pngs/image1.png
@@ -150,4 +153,3 @@ class Assets {
   /// assets/svgs/splash_logo.svg
   static const String resourceSvgsSplashLogo = "assets/svgs/splash_logo.svg";
 }
-

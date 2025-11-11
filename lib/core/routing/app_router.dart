@@ -8,11 +8,14 @@ import 'package:non_stop/features/auth/presentation/screens/login_screen.dart';
 import 'package:non_stop/features/auth/presentation/screens/register_screen.dart';
 import 'package:non_stop/features/auth/presentation/screens/verify_otp_screen.dart';
 import 'package:non_stop/features/change%20password/presentation/change_password_screen.dart';
+import 'package:non_stop/features/complaints%20and%20suggestions/presentation/screens/Complaints%20_and%20_suggestions_screen.dart';
+import 'package:non_stop/features/faq/presentation/screen/faq_screen.dart';
 import 'package:non_stop/features/home/bloc/cubit/home_cubit.dart';
 import 'package:non_stop/features/home/presentation/screen/home_screen.dart';
 import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit.dart';
 import 'package:non_stop/features/main%20layout/presentation/main_layout.dart';
 import 'package:non_stop/features/more_about_us/presentation/screens/more_about_us_screen.dart';
+import 'package:non_stop/features/notification/presentation/screens/notification_screen.dart';
 import 'package:non_stop/features/onboarding/onBoarding/Bloc/on_boarding_cubit.dart';
 import 'package:non_stop/features/onboarding/onBoarding/screens/on_boarding_screen.dart';
 import 'package:non_stop/features/packages/presentation/screens/my_packages_screen.dart';
@@ -63,6 +66,10 @@ class AppRouter {
           screen: const OnBoardingScreen(),
           cubit: OnBoardingCubit(),
         );
+      case Routes.faqScreen:
+        return transition(
+          screen: const FaqScreen(),
+        );
       case Routes.mainlayoutScreen:
         return transition(screen: MainLayoutScreen(), cubit: MainLayoutCubit());
       case Routes.splashScreen:
@@ -81,16 +88,27 @@ class AppRouter {
         );
       case Routes.myPackagesScreen:
         return transition(screen: const MyPackagesScreen());
-         case Routes.chagnePasswordScreen:
-        return transition(screen: const ChangePasswordScreen());
-          case Routes.termsAndConditionsScreen:
-        return transition(screen: const TermsConditionsScreen ());
+      case Routes.notificationScreen:
+        return transition(screen: const NotificationScreen());
+
+      case Routes.chagnePasswordScreen:
+        return transition(
+          screen: const ChangePasswordScreen(),
+          cubit: AuthCubit(),
+        );
+      case Routes.termsAndConditionsScreen:
+        return transition(screen: const TermsConditionsScreen());
       case Routes.packagesScreen:
         return transition(screen: const PackagesScreen());
       case Routes.moreAboutUsScreen:
         return transition(screen: const MoreAboutUsScreen());
       case Routes.myBookingScreen:
-        return transition(screen: const MyBookingScreen(), cubit: ProfileCubit());
+        return transition(
+          screen: const MyBookingScreen(),
+          cubit: ProfileCubit(),
+        );
+      case Routes.complaintsAndSuggetionsScreen:
+        return transition(screen: const ComplaintsAndSuggestionsScreen());
     }
     return null;
   }

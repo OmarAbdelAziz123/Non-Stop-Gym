@@ -18,7 +18,8 @@ class MoreAboutUsScreen extends StatelessWidget {
           child: Column(
             children: [
               SafeArea(
-                child: Container(
+                child: 
+                Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 20.w,
                     vertical: 15.h,

@@ -16,4 +16,7 @@ class Routes {
   static const String myBookingScreen = '/myBookingScreen';
   static const String chagnePasswordScreen = '/chagnePasswordScreen';
   static const String termsAndConditionsScreen = '/termsAndConditionsScreen';
+  static const String notificationScreen = '/notificationScreen';
+  static const String complaintsAndSuggetionsScreen = '/complaintsAndSuggetionsScreen';
+  static const String faqScreen = '/faqScreen';
 }
