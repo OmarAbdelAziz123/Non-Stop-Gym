@@ -37,7 +37,7 @@ class ProfileCard extends StatelessWidget {
               onPressed: () {},
               icon: const Icon(Icons.edit, color: Colors.white),
               label: const Text(
-                "edit profile",
+                "تعديل الملف الشخصي",
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
               style: ElevatedButton.styleFrom(

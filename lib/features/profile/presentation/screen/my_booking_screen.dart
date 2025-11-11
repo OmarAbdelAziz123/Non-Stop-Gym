@@ -41,16 +41,18 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            const Color(0xff160618),
-            const Color(0xff160618),
-            const Color(0xff160618).withAlpha(20),
-            const Color(0xff160618).withAlpha(20),
-          ],
-        ),
+        color: Color(0xff160618),
+
+        // gradient: LinearGradient(
+        //   begin: Alignment.topCenter,
+        //   end: Alignment.bottomCenter,
+        //   colors: [
+        //     const Color(0xff160618),
+        //     const Color(0xff160618),
+        //     const Color(0xff160618).withAlpha(20),
+        //     const Color(0xff160618).withAlpha(20),
+        //   ],
+        // ),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,

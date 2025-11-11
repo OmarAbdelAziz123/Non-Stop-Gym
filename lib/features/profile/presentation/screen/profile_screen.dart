@@ -18,7 +18,7 @@ class ProfilePage extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            CustomAppBar(title: 'الملف الشخصي'),
+            CustomAppBar(title: 'الملف الشخصي', hasLeading: false),
 
             Expanded(
               child: SingleChildScrollView(
@@ -53,11 +53,11 @@ class ProfilePage extends StatelessWidget {
                             },
                           ),
                           ProfileTile(
-                            title: 'كلمة السر',
-                            icon: Icons.lock_outline,
                             onTap: () {
                               context.pushNamed(Routes.chagnePasswordScreen);
                             },
+                            title: 'كلمة السر',
+                            icon: Icons.lock_outline,
                           ),
                           ProfileTile(
                             title: 'بطاقاتي',
@@ -68,6 +68,9 @@ class ProfilePage extends StatelessWidget {
                             icon: Icons.language_outlined,
                           ),
                           ProfileTile(
+                            onTap: () {
+                              context.pushNamed(Routes.notificationScreen);
+                            },
                             title: 'الاشعارات',
                             icon: Icons.notifications_none,
                           ),
@@ -85,19 +88,18 @@ class ProfilePage extends StatelessWidget {
                       child: Column(
                         children: [
                           ProfileTile(
+                            onTap: () {
+                              context.pushNamed(
+                                Routes.complaintsAndSuggetionsScreen,
+                              );
+                            },
                             title: 'شكاوي و اقتراحات',
                             icon: Icons.feedback_outlined,
                           ),
                           ProfileTile(
-                            title: "سياسة الخصوصية",
                             onTap: () {
-                              context.pushNamed(
-                                Routes.termsAndConditionsScreen,
-                              );
+                              context.pushNamed(Routes.faqScreen);
                             },
-                            icon: Icons.privacy_tip_outlined,
-                          ),
-                          ProfileTile(
                             title: 'الأسئلة الشائعة',
                             icon: Icons.help_outline,
                           ),
