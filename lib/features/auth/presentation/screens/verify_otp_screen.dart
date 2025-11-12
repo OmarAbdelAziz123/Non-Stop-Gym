@@ -10,7 +10,11 @@ import 'package:non_stop/features/auth/business_logic/auth_cubit.dart';
 import 'package:non_stop/features/auth/presentation/widgets/verify_otp_form_widget.dart';
 
 class VerifyOTPScreen extends StatelessWidget {
-  const VerifyOTPScreen({super.key});
+  // const VerifyOTPScreen({super.key, required this.email, required this.type});
+  const VerifyOTPScreen({super.key, required this.arguments});
+  // final String email;
+  // final String type
+  final Map<String, dynamic> arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -147,18 +151,50 @@ class VerifyOTPScreen extends StatelessWidget {
                             },
                           ),
                           18.verticalSpace,
-                          BlocBuilder<AuthCubit, AuthState>(
-                            buildWhen: (prev, curr) => curr is CodeChangedState,
+                          BlocConsumer<AuthCubit, AuthState>(
+                            listenWhen: (previous, current) =>
+                                current is AuthVerifyOtpSuccess ||
+                                current is AuthVerifyOtpFailure ||
+                                (current is AuthForgetPasswordSuccess &&
+                                    current.isResend),
+                            listener: (context, state) {
+                              if (state is AuthVerifyOtpSuccess) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(state.message)),
+                                );
+                                if (state.flowType == 'password_reset') {
+                                  context.pushNamed(Routes.createNewPasswordScreen);
+                                } else {
+                                  context.pushNamedAndRemoveUntil(
+                                    Routes.loginScreen,
+                                  );
+                                }
+                              } else if (state is AuthVerifyOtpFailure) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(state.message)),
+                                );
+                              } else if (state is AuthForgetPasswordSuccess &&
+                                  state.isResend) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(state.message)),
+                                );
+                              }
+                            },
+                            buildWhen: (previous, current) =>
+                                current is CodeChangedState ||
+                                current is AuthVerifyOtpLoading ||
+                                current is AuthVerifyOtpFailure ||
+                                current is AuthVerifyOtpSuccess,
                             builder: (context, state) {
+                              final isLoading = state is AuthVerifyOtpLoading;
                               return CustomButtonWidget(
-                                onPressed: cubit.isCodeComplete
-                                    ? () {
-                                        context.pushNamed(
-                                          Routes.createNewPasswordScreen,
-                                        );
-                                      }
-                                    : null,
+                                onPressed: !cubit.isCodeComplete || isLoading
+                                    ? null
+                                    : () {
+                                        cubit.verifyOtpCode(email: arguments['email'], type: arguments['type']);
+                                      },
                                 text: 'تأكيد',
+                                isLoading: isLoading,
                                 textStyle: Styles.contentRegular.copyWith(
                                   color: AppColors.neutralColor100,
                                 ),

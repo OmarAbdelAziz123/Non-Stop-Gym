@@ -55,7 +55,10 @@ class AppRouter {
           cubit: AuthCubit(),
         );
       case Routes.verifyOTPScreen:
-        return transition(screen: const VerifyOTPScreen(), cubit: AuthCubit());
+        // final args = settings.arguments as String;
+        final args = settings.arguments as Map<String, dynamic>;
+        
+        return transition(screen: VerifyOTPScreen(arguments: args), cubit: AuthCubit());
       case Routes.createNewPasswordScreen:
         return transition(
           screen: const CreateNewPasswordScreen(),
@@ -75,9 +78,12 @@ class AppRouter {
       case Routes.splashScreen:
         return transition(screen: const SplashScreen());
       case Routes.registerScreen:
-        return transition(screen: const RegisterScreen(), cubit: AuthCubit());
+        return transition(screen:  RegisterScreen(), cubit: AuthCubit());
       case Routes.editProfileScreen:
-        return transition(screen: const EditProfilePage());
+        return transition(
+          screen: const EditProfilePage(),
+          cubit: ProfileCubit()..fetchProfile(),
+        );
       case Routes.photoGalleryDetailsScreen:
         final args = settings.arguments as PhotoGalleryDetailsArgs;
         return transition(
@@ -94,7 +100,7 @@ class AppRouter {
       case Routes.chagnePasswordScreen:
         return transition(
           screen: const ChangePasswordScreen(),
-          cubit: AuthCubit(),
+          cubit: ProfileCubit()..fetchProfile(),
         );
       case Routes.termsAndConditionsScreen:
         return transition(screen: const TermsConditionsScreen());
@@ -105,7 +111,7 @@ class AppRouter {
       case Routes.myBookingScreen:
         return transition(
           screen: const MyBookingScreen(),
-          cubit: ProfileCubit(),
+          cubit: ProfileCubit()..fetchProfile(),
         );
       case Routes.complaintsAndSuggetionsScreen:
         return transition(screen: const ComplaintsAndSuggestionsScreen());
@@ -114,13 +120,19 @@ class AppRouter {
   }
 
   List<Widget> gymScreen = [
-    BlocProvider(create: (context) => HomeCubit(), child: HomeScreen()),
+    BlocProvider(
+      create: (context) => HomeCubit()..fetchBanners(),
+      child: HomeScreen(),
+    ),
     PackagesScreen(),
     BlocProvider(
       create: (context) => GalleryCubit(),
       child: PhotoGalleryScreen(),
     ),
-    BlocProvider(create: (context) => ProfileCubit(), child: ProfilePage()),
+    BlocProvider(
+      create: (context) => ProfileCubit()..fetchProfile(),
+      child: ProfilePage(),
+    ),
   ];
 }
 

@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
+import 'package:non_stop/core/extensions/navigation_extension.dart';
+import 'package:non_stop/core/routing/routes_name.dart';
 import 'package:non_stop/core/widgets/button/custom_button_widget.dart';
 import 'package:non_stop/core/widgets/text_field/custom_text_form_field_widget.dart';
 import 'package:non_stop/features/auth/business_logic/auth_cubit.dart';
@@ -315,24 +317,51 @@ class CreateNewPasswordScreen extends StatelessWidget {
                             ),
                           ),
                           95.verticalSpace,
-                          BlocBuilder<AuthCubit, AuthState>(
+                          BlocConsumer<AuthCubit, AuthState>(
+                            listenWhen: (previous, current) =>
+                                current is AuthResetPasswordSuccess ||
+                                current is AuthResetPasswordFailure,
+                            listener: (context, state) {
+                              if (state is AuthResetPasswordSuccess) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(state.message)),
+                                );
+                                context.pushNamedAndRemoveUntil(
+                                  Routes.loginScreen,
+                                );
+                              } else if (state is AuthResetPasswordFailure) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(state.message)),
+                                );
+                              }
+                            },
                             buildWhen: (previous, current) =>
-                                current is PasswordValidationState,
+                                current is PasswordValidationState ||
+                                current is AuthResetPasswordLoading ||
+                                current is AuthResetPasswordFailure ||
+                                current is AuthResetPasswordSuccess,
                             builder: (context, state) {
+                              final isLoading =
+                                  state is AuthResetPasswordLoading;
                               return CustomButtonWidget(
-                                onPressed: cubit.isPasswordValid
-                                    ? () {
-                                        if (cubit.formKey.currentState!
-                                            .validate()) {}
-                                      }
-                                    : null,
+                                onPressed: !cubit.isPasswordValid || isLoading
+                                    ? null
+                                    : () {
+                                        if (cubit.formKey.currentState
+                                                ?.validate() ??
+                                            false) {
+                                          cubit.resetPassword();
+                                        }
+                                      },
                                 text: ' تاكيد',
+                                isLoading: isLoading,
                                 textStyle: Styles.contentRegular.copyWith(
                                   color: AppColors.neutralColor100,
                                 ),
                                 color: cubit.isPasswordValid
-                                    ? Color(0xff9f5a5b)
-                                    : Color(0xff9F5A5B).withValues(alpha: 0.21),
+                                    ? const Color(0xff9f5a5b)
+                                    : const Color(0xff9F5A5B)
+                                        .withValues(alpha: 0.21),
                                 height: 56.h,
                               );
                             },

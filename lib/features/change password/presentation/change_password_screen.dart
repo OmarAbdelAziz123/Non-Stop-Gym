@@ -7,16 +7,68 @@ import 'package:non_stop/core/constants/app_styles.dart';
 import 'package:non_stop/core/theme/theme.dart';
 import 'package:non_stop/core/widgets/button/custom_button_widget.dart';
 import 'package:non_stop/core/widgets/custom_app_bar.dart';
-import 'package:non_stop/features/auth/business_logic/auth_cubit.dart';
+import 'package:non_stop/features/profile/bloc/cubit/profile_cubit.dart';
+import 'package:non_stop/features/profile/presentation/widgets/profile_card.dart';
 
 import '../../../core/widgets/text_field/custom_text_form_field_widget.dart';
 
-class ChangePasswordScreen extends StatelessWidget {
+class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
 
   @override
+  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
+}
+
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+  final _formKey = GlobalKey<FormState>();
+  late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
+  bool _isObscure = true;
+  bool _isObscure2 = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
+    final cubit = context.read<ProfileCubit>();
+    if (cubit.profileData == null) {
+      cubit.fetchProfile();
+    }
+  }
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  void _toggleObscure() {
+    setState(() {
+      _isObscure = !_isObscure;
+    });
+  }
+
+  void _toggleObscure2() {
+    setState(() {
+      _isObscure2 = !_isObscure2;
+    });
+  }
+
+  bool get _isPasswordValid {
+    final password = _passwordController.text.trim();
+    final confirmPassword = _confirmPasswordController.text.trim();
+    return password.length >= 8 &&
+        password.contains(RegExp(r'[0-9]')) &&
+        password.contains(RegExp(r'[a-zA-Z]')) &&
+        password == confirmPassword;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final cubit = context.read<AuthCubit>();
+    final profileCubit = context.read<ProfileCubit>();
+
     return Container(
       decoration: const BoxDecoration(gradient: linearGradient),
       child: Scaffold(
@@ -24,46 +76,66 @@ class ChangePasswordScreen extends StatelessWidget {
           child: Column(
             children: [
               const CustomAppBar(title: "كلمة السر"),
-
-              SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 30.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "كلمة المرور",
-                      style: Styles.highlightStandard.copyWith(
-                        color: AppColors.neutralColor100,
-                      ),
-                    ),
-                    8.verticalSpace,
-                    BlocBuilder<AuthCubit, AuthState>(
-                      buildWhen: (previous, current) =>
-                          current is TogglePasswordState ||
-                          current is PasswordValidationState,
-                      builder: (context, state) {
-                        return CustomTextFormFieldWidget(
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 30.h),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BlocBuilder<ProfileCubit, ProfileState>(
+                          builder: (context, state) {
+                            final profile = profileCubit.profileData;
+                            if (profile == null) {
+                              if (state is ProfileLoading) {
+                                return const Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                );
+                              }
+                              return const SizedBox.shrink();
+                            }
+                            return ProfileCard(profile: profile);
+                          },
+                        ),
+                        24.verticalSpace,
+                        Text(
+                          "كلمة المرور الجديدة",
+                          style: Styles.highlightStandard.copyWith(
+                            color: AppColors.neutralColor100,
+                          ),
+                        ),
+                        8.verticalSpace,
+                        CustomTextFormFieldWidget(
                           backgroundColor: Colors.transparent,
-                          controller: cubit.passwordController,
-                          obscureText: cubit.isObscure,
+                          controller: _passwordController,
+                          obscureText: _isObscure,
                           keyboardType: TextInputType.visiblePassword,
-                          hintText: 'قم بإدخال كلمة المرور الخاصة بك ',
+                          hintText: 'قم بإدخال كلمة المرور الجديدة',
                           hintStyle: Styles.captionRegular.copyWith(
                             color: AppColors.neutralColor100,
                           ),
-                          onChanged: (value) {
-                            cubit.validatePassword();
-                          },
                           validator: (value) {
-                            if (value!.isEmpty) {
+                            if (value == null || value.trim().isEmpty) {
                               return 'passwordIsRequired'.tr();
+                            }
+                            if (value.trim().length < 8) {
+                              return 'كلمة المرور يجب ألا تقل عن 8 أحرف';
+                            }
+                            if (!value.contains(RegExp(r'[0-9]'))) {
+                              return 'يجب أن تحتوي على رقم واحد على الأقل';
+                            }
+                            if (!value.contains(RegExp(r'[a-zA-Z]'))) {
+                              return 'يجب أن تحتوي على حرف واحد على الأقل';
                             }
                             return null;
                           },
                           borderColor: AppColors.neutralColor100,
                           suffixIcon: IconButton(
-                            onPressed: () => cubit.toggleObscure(),
-                            icon: cubit.isObscure
+                            onPressed: _toggleObscure,
+                            icon: _isObscure
                                 ? Icon(
                                     Icons.remove_red_eye,
                                     color: AppColors.neutralColor100,
@@ -73,44 +145,37 @@ class ChangePasswordScreen extends StatelessWidget {
                                     color: Color(0xFF9F5A5B),
                                   ),
                           ),
-                        );
-                      },
-                    ),
-                    25.verticalSpace,
-                    Text(
-                      "تاكيد كلمة المرور",
-                      style: Styles.highlightStandard.copyWith(
-                        color: AppColors.neutralColor100,
-                      ),
-                    ),
-                    8.verticalSpace,
-                    BlocBuilder<AuthCubit, AuthState>(
-                      buildWhen: (previous, current) =>
-                          current is TogglePasswordState2 ||
-                          current is PasswordValidationState,
-                      builder: (context, state) {
-                        return CustomTextFormFieldWidget(
+                        ),
+                        25.verticalSpace,
+                        Text(
+                          "تأكيد كلمة المرور",
+                          style: Styles.highlightStandard.copyWith(
+                            color: AppColors.neutralColor100,
+                          ),
+                        ),
+                        8.verticalSpace,
+                        CustomTextFormFieldWidget(
                           backgroundColor: Colors.transparent,
-                          controller: cubit.rePasswordController,
-                          obscureText: cubit.isObscure2,
+                          controller: _confirmPasswordController,
+                          obscureText: _isObscure2,
                           keyboardType: TextInputType.visiblePassword,
-                          hintText: 'قم بإدخال تاكيد  كلمة المرور الخاصة بك ',
+                          hintText: 'قم بتأكيد كلمة المرور الخاصة بك',
                           hintStyle: Styles.captionRegular.copyWith(
                             color: AppColors.neutralColor100,
                           ),
-                          onChanged: (value) {
-                            cubit.validatePassword();
-                          },
                           validator: (value) {
-                            if (value!.isEmpty) {
+                            if (value == null || value.trim().isEmpty) {
                               return 'passwordIsRequired'.tr();
+                            }
+                            if (value.trim() != _passwordController.text.trim()) {
+                              return 'كلمتا المرور غير متطابقتين';
                             }
                             return null;
                           },
                           borderColor: AppColors.neutralColor100,
                           suffixIcon: IconButton(
-                            onPressed: () => cubit.toggleObscure2(),
-                            icon: cubit.isObscure2
+                            onPressed: _toggleObscure2,
+                            icon: _isObscure2
                                 ? Icon(
                                     Icons.remove_red_eye,
                                     color: AppColors.neutralColor100,
@@ -120,17 +185,68 @@ class ChangePasswordScreen extends StatelessWidget {
                                     color: Color(0xFF9F5A5B),
                                   ),
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-              Spacer(),
-              CustomButtonWidget(
-                textColor: Colors.white,
-                text: "حفظ",
-                onPressed: () {},
+              16.verticalSpace,
+              BlocConsumer<ProfileCubit, ProfileState>(
+                listenWhen: (previous, current) =>
+                    current is ProfileChangePasswordSuccess ||
+                    current is ProfileChangePasswordFailure,
+                listener: (context, state) {
+                  if (state is ProfileChangePasswordSuccess) {
+                    _passwordController.clear();
+                    _confirmPasswordController.clear();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(state.message)),
+                    );
+                    Navigator.pop(context);
+                  } else if (state is ProfileChangePasswordFailure) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(state.message)),
+                    );
+                  }
+                },
+                buildWhen: (previous, current) =>
+                    current is ProfileChangePasswordLoading ||
+                    current is ProfileChangePasswordFailure ||
+                    current is ProfileChangePasswordSuccess,
+                builder: (context, state) {
+                  final isLoading = state is ProfileChangePasswordLoading;
+                  return Padding(
+                    padding:
+                        EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16),
+                    child: CustomButtonWidget(
+                      textColor: Colors.white,
+                      text: "حفظ",
+                      isLoading: isLoading,
+                      onPressed: isLoading
+                          ? null
+                          : () {
+                              if (!(_formKey.currentState?.validate() ?? false)) {
+                                return;
+                              }
+                              if (_isPasswordValid) {
+                                profileCubit.changePassword(
+                                  newPassword: _passwordController.text.trim(),
+                                  confirmPassword:
+                                      _confirmPasswordController.text.trim(),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content:
+                                        Text('برجاء التأكد من الشروط أعلى الصفحة'),
+                                  ),
+                                );
+                              }
+                            },
+                    ),
+                  );
+                },
               ),
             ],
           ),

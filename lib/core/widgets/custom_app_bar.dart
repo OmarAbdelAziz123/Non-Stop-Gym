@@ -5,8 +5,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CustomAppBar extends StatelessWidget {
   final String title;
   final bool hasLeading;
+  final VoidCallback? onBack;
 
-  const CustomAppBar({super.key, required this.title, this.hasLeading = true});
+  const CustomAppBar({
+    super.key,
+    required this.title,
+    this.hasLeading = true,
+    this.onBack,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +33,11 @@ class CustomAppBar extends StatelessWidget {
             if (hasLeading)
               IconButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  if (onBack != null) {
+                    onBack!();
+                  } else {
+                    Navigator.pop(context);
+                  }
 
                 },
                 icon: Container(

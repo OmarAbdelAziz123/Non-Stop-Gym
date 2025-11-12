@@ -171,59 +171,49 @@ class LoginScreen extends StatelessWidget {
                                     },
                                   ),
                                   12.verticalSpace,
-                                  BlocBuilder<AuthCubit, AuthState>(
-                                    buildWhen: (previous, current) =>
-                                        current is ToggleCheckboxState,
-                                    builder: (context, state) {
-                                      return Row(
-                                        children: [
-                                          Transform.scale(
-                                            scale: 1.5,
-                                            child: Checkbox(
-                                              value: cubit.isCheck,
-                                              onChanged: (value) {
-                                                cubit.toggleCheckbox();
-                                              },
-                                              activeColor: const Color(
-                                                0xFF9F5A5B,
-                                              ),
-                                              checkColor:
+                                  Row(
+                                    children: [
+                                      Transform.scale(
+                                        scale: 1.5,
+                                        child: Checkbox(
+                                          value: true,
+                                          onChanged: null,
+                                          activeColor: const Color(
+                                            0xFF9F5A5B,
+                                          ),
+                                          checkColor:
+                                              AppColors.neutralColor100,
+                                          side: BorderSide(
+                                            color: AppColors.neutralColor100,
+                                            width: 1.w,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.r),
+                                          ),
+                                          visualDensity:
+                                              VisualDensity.compact,
+                                          materialTapTargetSize:
+                                              MaterialTapTargetSize.shrinkWrap,
+                                        ),
+                                      ),
+                                      10.horizontalSpace,
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 4.0,
+                                          ),
+                                          child: Text(
+                                            "أوافق على سياسة الخصوصية و شروط الخدمة",
+                                            style: Styles.captionRegular
+                                                .copyWith(
+                                              color:
                                                   AppColors.neutralColor100,
-                                              side: BorderSide(
-                                                color:
-                                                    AppColors.neutralColor100,
-                                                width: 1.w,
-                                              ),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(4.r),
-                                              ),
-                                              visualDensity:
-                                                  VisualDensity.compact,
-                                              materialTapTargetSize:
-                                                  MaterialTapTargetSize
-                                                      .shrinkWrap,
                                             ),
                                           ),
-                                          10.horizontalSpace,
-                                          Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                top: 4.0,
-                                              ),
-                                              child: Text(
-                                                "أوافق على سياسة الخصوصية و شروط الخدمة",
-                                                style: Styles.captionRegular
-                                                    .copyWith(
-                                                      color: AppColors
-                                                          .neutralColor100,
-                                                    ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    },
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   12.verticalSpace,
                                   Row(
@@ -311,23 +301,38 @@ class LoginScreen extends StatelessWidget {
                             ],
                           ),
                           18.verticalSpace,
-                          CustomButtonWidget(
-                            onPressed: () {
-                              context.pushNamedAndRemoveUntil(
-                                Routes.mainlayoutScreen,
-                              );
-                              // if (cubit.formKey.currentState!.validate()) {
-                              //   context.pushNamedAndRemoveUntil(
-                              //     Routes.mainlayoutScreen,
-                              //   );
-                              // }
+                          BlocConsumer<AuthCubit, AuthState>(
+                            listener: (context, state) {
+                              if (state is AuthLoginSuccess) {
+                                context.pushNamedAndRemoveUntil(
+                                  Routes.mainlayoutScreen,
+                                );
+                              } else if (state is AuthLoginFailure) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(state.message),
+                                  ),
+                                );
+                              }
                             },
-                            text: 'تسجيل الدخول',
-                            textStyle: Styles.contentRegular.copyWith(
-                              color: AppColors.neutralColor100,
-                            ),
-                            color: const Color(0xFF9F5A5B),
-                            height: 56.h,
+                            builder: (context, state) {
+                              final isLoading = state is AuthLoginLoading;
+                              return CustomButtonWidget(
+                                onPressed: isLoading
+                                    ? null
+                                    : () {
+                                        cubit.login();
+                                      },
+                                text: isLoading
+                                    ? 'جاري تسجيل الدخول...'
+                                    : 'تسجيل الدخول',
+                                textStyle: Styles.contentRegular.copyWith(
+                                  color: AppColors.neutralColor100,
+                                ),
+                                color: const Color(0xFF9F5A5B),
+                                height: 56.h,
+                              );
+                            },
                           ),
                         ],
                       ),
