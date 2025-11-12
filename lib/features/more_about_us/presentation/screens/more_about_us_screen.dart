@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:non_stop/common/extensions/build_context_extensions.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
+import 'package:non_stop/features/home/bloc/cubit/home_cubit.dart';
 
 class MoreAboutUsScreen extends StatelessWidget {
   const MoreAboutUsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(color: Color(0xff160618)),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
+    return BlocBuilder<HomeCubit, HomeState>(
+      buildWhen: (previous, current) =>
+          current is HomeSettingsLoading ||
+          current is HomeSettingsSuccess ||
+          current is HomeSettingsFailure,
+      builder: (context, state) {
+        final homeCubit = context.read<HomeCubit>();
+        final settings = homeCubit.settings;
+
+        return Container(
+          decoration: const BoxDecoration(color: Color(0xff160618)),
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
               SafeArea(
                 child: 
                 Container(
@@ -75,7 +86,7 @@ class MoreAboutUsScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(15.w),
                 child: Text(
-                  'نحن نادي Non-stop مشروع رياضي متكامل يقع في برج العبد الكريم ويخدم موظفي وموظفات اكثر من ٢٠ شركه من مختلف القطاعات. تأسس النادي لتوفير بيئه مرنه وصحيه تساعد الموظفين علي تحقيق التوازن بين العمل والحياه. وتعزز من صحتهم الجسديه والذهنيه.',
+                  settings?.aboutUs ?? 'نحن نادي Non-stop مشروع رياضي متكامل يقع في برج العبد الكريم ويخدم موظفي وموظفات اكثر من ٢٠ شركه من مختلف القطاعات. تأسس النادي لتوفير بيئه مرنه وصحيه تساعد الموظفين علي تحقيق التوازن بين العمل والحياه. وتعزز من صحتهم الجسديه والذهنيه.',
                   style: Styles.contentRegular.copyWith(
                     color: AppColors.neutralColor200,
                   ),
@@ -88,7 +99,7 @@ class MoreAboutUsScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(15.w),
                 child: Text(
-                  'ان نكون الخيار الاول والمفضل للموظفين والموظفات في بيئه العمل العصريه، من خلال تقديم تجربه رياضيه تجمع بين الراحه، والتنوع، وتسهم في رفع جوده الحياه والصحه العامه.',
+                  settings?.ourVision ?? 'ان نكون الخيار الاول والمفضل للموظفين والموظفات في بيئه العمل العصريه، من خلال تقديم تجربه رياضيه تجمع بين الراحه، والتنوع، وتسهم في رفع جوده الحياه والصحه العامه.',
                   style: Styles.contentRegular.copyWith(
                     color: AppColors.neutralColor200,
                   ),
@@ -98,34 +109,35 @@ class MoreAboutUsScreen extends StatelessWidget {
 
               Image.asset("assets/pngs/value.png"),
               8.verticalSpace,
-              buildNumberedSection(
-                items: [
-                  'تعزيز نمط الحياة الصحي في بيئة العمل'
-                      'تقديم خدمات رياضية مرنة لكل الأعمار والمستويات',
-                  'تجهيز النادي بأحدث الأجهزة والمرافق',
-                  'بناء شراكات مع شركات البرج لخدمة موظفيها',
-                  'رفع إنتاجية الموظفين وتقليل التوتر عبر برامج رياضية واستشفائية',
-                  'ضمان الخصوصية من خلال مرافق وأوقات منفصلة للرجال والنساء',
-                ],
+              Padding(
+                padding: EdgeInsets.all(15.w),
+                child: Text(
+                  settings?.ourValues ?? 'التميز والنزاهة والمجتمع والابتكار والتفاني في مساعدة أعضائنا على تحقيق أفضل ما لديهم.',
+                  style: Styles.contentRegular.copyWith(
+                    color: AppColors.neutralColor200,
+                  ),
+                ),
               ),
               8.verticalSpace,
 
               Image.asset("assets/pngs/club.png"),
               8.verticalSpace,
-              buildNumberedSection(
-                items: [
-                  'الصحة: الاهتمام بالصحة الجسدية والذهنية',
-                  'المرونة: تقديم خدمات تناسب الجداول المختلفة والاحتياجات المتنوعة',
-                  'الخصوصية: مراعاة خصوصية الرجال والنساء في جميع المرافق',
-                  'الاحترافية: تقديم خدمات عالية الجودة بتجهيزات حديثة',
-                  'التكامل: خلق بيئة متكاملة تدعم رفاهية الموظف داخل مكان العمل',
-                ],
+              Padding(
+                padding: EdgeInsets.all(15.w),
+                child: Text(
+                  settings?.ourGoals ?? 'توفير مرافق لياقة بدنية عالمية المستوى، وتعزيز أنماط الحياة الصحية، وبناء مجتمع لياقة بدنية قوي، وتحسين خدماتنا باستمرار.',
+                  style: Styles.contentRegular.copyWith(
+                    color: AppColors.neutralColor200,
+                  ),
+                ),
               ),
               20.verticalSpace,
-            ],
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

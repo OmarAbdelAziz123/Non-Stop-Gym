@@ -107,7 +107,10 @@ class AppRouter {
       case Routes.packagesScreen:
         return transition(screen: const PackagesScreen());
       case Routes.moreAboutUsScreen:
-        return transition(screen: const MoreAboutUsScreen());
+        return transition(
+          screen: const MoreAboutUsScreen(),
+          cubit: HomeCubit()..fetchSettings(),
+        );
       case Routes.myBookingScreen:
         return transition(
           screen: const MyBookingScreen(),

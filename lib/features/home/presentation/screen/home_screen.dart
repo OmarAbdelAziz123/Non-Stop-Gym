@@ -48,6 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
     if (homeCubit.banners.isEmpty) {
       homeCubit.fetchBanners();
     }
+    if (homeCubit.settings == null) {
+      homeCubit.fetchSettings();
+    }
   }
 
   @override
@@ -395,7 +398,8 @@ class _HomeScreenState extends State<HomeScreen> {
               selectedTab == 0
                   ? RelaxTap(times: times, selectedTimeSlot: selectedTimeSlot)
                   : selectedTab == 1
-                  ? const SizedBox.shrink()
+                  ? RelaxTap(times: times, selectedTimeSlot: selectedTimeSlot)
+                  // ? const SizedBox.shrink()
                   : GiftsTap(),
             ],
           ),

@@ -15,6 +15,7 @@ class EndPoints {
 static const String getBanners = '/api/frontend/banners';
 static const String getProfileData = '/api/frontend/profile';
 static const String updateProfileData = 'api/user/profile/updateData';
+static const String getSettings = '/api/frontend/settings';
   /// Storage Keys
   static const String accessTokenKey = 'ACCESS_TOKEN';
   static const String refreshTokenKey = 'REFRESH_TOKEN';
