@@ -60,8 +60,11 @@ class ProfilePage extends StatelessWidget {
                             icon: Icons.lock_outline,
                           ),
                           ProfileTile(
-                            title: 'بطاقاتي',
+                            title: 'باقاتي',
                             icon: Icons.credit_card_outlined,
+                            onTap: () {
+                              context.pushNamed(Routes.myPackagesScreen);
+                            },
                           ),
                           ProfileTile(
                             title: 'لغة التطبيق',
