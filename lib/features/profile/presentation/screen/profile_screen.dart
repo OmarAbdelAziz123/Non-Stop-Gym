@@ -165,10 +165,6 @@ class ProfilePage extends StatelessWidget {
                             title: 'الأسئلة الشائعة',
                             icon: Icons.help_outline,
                           ),
-                          ProfileTile(
-                            title: 'دعوة الأصدقاء',
-                            icon: Icons.group_outlined,
-                          ),
                         ],
                       ),
                     ),

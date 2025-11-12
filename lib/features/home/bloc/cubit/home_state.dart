@@ -20,3 +20,17 @@ final class HomeBannersFailure extends HomeState {
   final String message;
 }
 
+final class HomeSettingsLoading extends HomeState {}
+
+final class HomeSettingsSuccess extends HomeState {
+  HomeSettingsSuccess(this.settings);
+
+  final SettingsData settings;
+}
+
+final class HomeSettingsFailure extends HomeState {
+  HomeSettingsFailure(this.message);
+
+  final String message;
+}
+
