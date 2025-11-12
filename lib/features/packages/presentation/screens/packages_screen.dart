@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:non_stop/common/extensions/build_context_extensions.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
 import 'package:non_stop/core/constants/hex_colors.dart';
+import 'package:non_stop/core/widgets/button/custom_button_widget.dart';
 import 'package:non_stop/core/widgets/row/custom_row_with_check_widget.dart';
 import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit.dart';
 
@@ -38,7 +40,7 @@ class PackagesScreen extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        MainLayoutCubit.get(context).changeBottomNavBar(0);
+                        context.pop();
                       },
                       child: Container(
                         width: 44.w,
@@ -198,6 +200,18 @@ class PackagesScreen extends StatelessWidget {
                               CustomRowWithCheckWidget(
                                 text: 'خصم 20% على جلسات كراسي المساج',
                               ),
+                              30.verticalSpace,
+                              CustomButtonWidget(
+                                onPressed: () {},
+                                text: 'اشتراك الان',
+                                textStyle: Styles.highlightBold.copyWith(
+                                  color: AppColors.neutralColor100,
+                                ),
+                                color: const Color(0xFF9F5A5B),
+                                height: 56.h,
+                              ),
+
+
                             ],
                           ),
                         ),
@@ -312,6 +326,16 @@ class PackagesScreen extends StatelessWidget {
 
                               CustomRowWithCheckWidget(
                                 text: 'حصص جماعية محدودة',
+                              ),
+                              30.verticalSpace,
+                              CustomButtonWidget(
+                                onPressed: () {},
+                                text: 'اشتراك الان',
+                                textStyle: Styles.highlightBold.copyWith(
+                                  color: AppColors.neutralColor100,
+                                ),
+                                color: const Color(0xFF9F5A5B),
+                                height: 56.h,
                               ),
                             ],
                           ),

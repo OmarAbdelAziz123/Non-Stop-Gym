@@ -48,7 +48,7 @@ class _MyPackagesScreenState extends State<MyPackagesScreen> {
                   children: [
                     InkWell(
                       onTap: () {
-                        MainLayoutCubit.get(context).changeBottomNavBar(0);
+                        context.pop();
                       },
                       child: Container(
                         width: 44.w,
