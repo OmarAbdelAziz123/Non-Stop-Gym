@@ -1,19 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:non_stop/core/cache_helper/cache_helper.dart';
+import 'package:non_stop/core/cache_helper/cache_keys.dart';
+import 'package:non_stop/core/constants/app_constants.dart';
 import 'package:non_stop/core/routing/routes_name.dart';
 import 'package:non_stop/features/splash/widgets/animated_logo_widget.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    /// Schedule navigation after first frame
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 3), () {
-        Navigator.pushReplacementNamed(context, Routes.onBoardingScreen);
-      });
-    });
+  State<SplashScreen> createState() => _SplashScreenState();
+}
 
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _handleNavigation());
+  }
+
+  Future<void> _handleNavigation() async {
+    final token = await CacheHelper.getSecuredString(
+      key: CacheKeys.userToken,
+    );
+
+    if (token is String && token.isNotEmpty) {
+      AppConstants.userToken = token;
+    }
+
+    final hasToken = token is String && token.isNotEmpty;
+    final targetRoute =
+        hasToken ? Routes.mainlayoutScreen : Routes.onBoardingScreen;
+
+    await Future.delayed(const Duration(seconds: 3));
+
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, targetRoute);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: double.infinity,

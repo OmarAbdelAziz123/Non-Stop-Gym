@@ -20,7 +20,7 @@ class VerifyOtpFormWidget extends StatelessWidget {
     final cubit = context.read<AuthCubit>();
     return Pinput(
       controller: cubit.verificationCodeController,
-      length: 6,
+      length: 4,
       autofocus: true,
       obscureText: false,
       keyboardType: TextInputType.number,
@@ -28,7 +28,7 @@ class VerifyOtpFormWidget extends StatelessWidget {
       pinAnimationType: PinAnimationType.fade,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
-        LengthLimitingTextInputFormatter(6),
+        LengthLimitingTextInputFormatter(4),
       ],
       onChanged: (pin) {
         cubit.onCodeChanged(pin);
@@ -57,7 +57,7 @@ class VerifyOtpFormWidget extends StatelessWidget {
         ),
       ),
       validator: (pin) {
-        if (pin?.length != 6) {
+        if (pin?.length != 4) {
           return 'enterYourCodeComplete'.tr();
         }
         return null;

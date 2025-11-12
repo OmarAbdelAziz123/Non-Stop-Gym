@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:non_stop/core/cache_helper/cache_helper.dart';
+import 'package:non_stop/core/constants/app_constants.dart';
 import 'package:non_stop/core/extensions/navigation_extension.dart';
 import 'package:non_stop/core/routing/routes_name.dart';
 import 'package:non_stop/core/theme/theme.dart';
 import 'package:non_stop/core/widgets/custom_app_bar.dart';
+import 'package:non_stop/features/profile/bloc/cubit/profile_cubit.dart';
+import 'package:non_stop/features/profile/presentation/screen/edit_profile_screen.dart';
 import 'package:non_stop/features/profile/presentation/widgets/profile_card.dart';
 import 'package:non_stop/features/profile/presentation/widgets/profile_tile.dart';
 
@@ -27,7 +32,44 @@ class ProfilePage extends StatelessWidget {
                   children: [
                     10.verticalSpace,
 
-                    const ProfileCard(),
+                    BlocBuilder<ProfileCubit, ProfileState>(
+                      builder: (context, state) {
+                        final cubit = context.read<ProfileCubit>();
+
+                        if (state is ProfileLoading &&
+                            cubit.profileData == null) {
+                          return const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 24),
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        if (state is ProfileError &&
+                            cubit.profileData == null) {
+                          return Column(
+                            children: [
+                              const SizedBox(height: 16),
+                              Text(
+                                state.message,
+                                style:
+                                    const TextStyle(color: Colors.redAccent),
+                              ),
+                              const SizedBox(height: 12),
+                              ElevatedButton(
+                                onPressed: cubit.fetchProfile,
+                                child: const Text('إعادة المحاولة'),
+                              ),
+                            ],
+                          );
+                        }
+
+                        final profile = state is ProfileLoaded
+                            ? state.profile
+                            : cubit.profileData;
+
+                        return ProfileCard(profile: profile);
+                      },
+                    ),
 
                     20.verticalSpace,
 
@@ -41,8 +83,25 @@ class ProfilePage extends StatelessWidget {
                           ProfileTile(
                             title: 'البيانات الشخصية',
                             icon: Icons.person_outline,
-                            onTap: () {
-                              context.pushNamed(Routes.editProfileScreen);
+                            onTap: () async {
+                              final cubit = context.read<ProfileCubit>();
+                              final didUpdate =
+                                  await Navigator.of(context).push<bool>(
+                                MaterialPageRoute(
+                                  builder: (_) => BlocProvider.value(
+                                    value: cubit,
+                                    child: const EditProfilePage(),
+                                  ),
+                                ),
+                              );
+
+                              if (didUpdate == true) {
+                                if (cubit.profileData != null) {
+                                  cubit.notifyProfileChanged();
+                                } else {
+                                  cubit.fetchProfile();
+                                }
+                              }
                             },
                           ),
                           ProfileTile(
@@ -117,7 +176,14 @@ class ProfilePage extends StatelessWidget {
                     30.verticalSpace,
 
                     OutlinedButton.icon(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await CacheHelper.clearAllData();
+                        await CacheHelper.clearAllSecuredData();
+                        AppConstants.userToken = null;
+
+                        if (!context.mounted) return;
+                        context.pushNamedAndRemoveUntil(Routes.loginScreen);
+                      },
                       icon: const Icon(Icons.logout, color: Colors.white),
                       label: const Text(
                         'تسجيل خروج',

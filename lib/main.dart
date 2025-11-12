@@ -8,11 +8,13 @@ import 'package:non_stop/core/cache_helper/cache_helper.dart';
 import 'package:non_stop/core/constants/app_constants.dart';
 import 'package:non_stop/core/network/dio_helper/dio_helper.dart';
 import 'package:non_stop/core/routing/app_router.dart';
+import 'package:non_stop/core/services/di/dependency_injection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await DioHelper.init();
+  await setupDependencyInjection();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

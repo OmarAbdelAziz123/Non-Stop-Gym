@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -133,14 +135,13 @@ class RegisterScreen extends StatelessWidget {
                                   ),
                                   8.verticalSpace,
                                   CustomTextFormFieldWidget(
-                                    controller: context
-                                        .read<AuthCubit>()
-                                        .phoneController,
+                                    controller: cubit.phoneController,
                                     keyboardType: TextInputType.phone,
                                     borderColor: AppColors.neutralColor100,
                                     borderRadius: 6.r,
                                     backgroundColor: Colors.transparent,
-                                    hintText: "قم بإدخال رقم الهاتف الخاصة بك",
+                                    hintText:
+                                        "قم بإدخال رقم الهاتف الخاصة بك",
                                     hintStyle: Styles.captionRegular,
                                     validator: (value) {
                                       if (value!.isEmpty) {
@@ -160,7 +161,7 @@ class RegisterScreen extends StatelessWidget {
                                   CustomTextFormFieldWidget(
                                     backgroundColor: Colors.transparent,
                                     controller: cubit.emailController,
-                                    obscureText: cubit.isObscure,
+                                    obscureText: false,
                                     keyboardType: TextInputType.emailAddress,
                                     hintText:
                                         'قم بإدخال بريدك الإلكتروني الخاصة بك',
@@ -175,60 +176,201 @@ class RegisterScreen extends StatelessWidget {
                                     },
                                     borderColor: AppColors.neutralColor100,
                                   ),
-                                  12.verticalSpace,
+                                  16.verticalSpace,
+                                  Text(
+                                    "الجنس",
+                                    style: Styles.highlightStandard.copyWith(
+                                      color: AppColors.neutralColor100,
+                                    ),
+                                  ),
+                                  8.verticalSpace,
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 12.w,
+                                      vertical: 4.h,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(6.r),
+                                      border: Border.all(
+                                        color: AppColors.neutralColor100,
+                                      ),
+                                    ),
+                                    child: DropdownButtonFormField<String>(
+                                      value: cubit.genderController.text
+                                          .toLowerCase()
+                                          .contains('female')
+                                          ? 'female'
+                                          : 'male',
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+                                      items: const [
+                                        DropdownMenuItem(
+                                          value: 'male',
+                                          child: Text('ذكر'),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: 'female',
+                                          child: Text('أنثى'),
+                                        ),
+                                      ],
+                                      style: Styles.contentRegular.copyWith(
+                                        color: AppColors.neutralColor100,
+                                      ),
+                                      dropdownColor: const Color(0xFF170313),
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: AppColors.neutralColor100,
+                                      ),
+                                      onChanged: (value) {
+                                        cubit.genderController.text =
+                                            value ?? 'male';
+                                      },
+                                    ),
+                                  ),
+                                  16.verticalSpace,
+                                  Text(
+                                    "كلمة المرور",
+                                    style: Styles.highlightStandard.copyWith(
+                                      color: AppColors.neutralColor100,
+                                    ),
+                                  ),
+                                  8.verticalSpace,
                                   BlocBuilder<AuthCubit, AuthState>(
                                     buildWhen: (previous, current) =>
-                                        current is ToggleCheckboxState,
+                                        current is TogglePasswordState,
                                     builder: (context, state) {
-                                      return Row(
-                                        children: [
-                                          Transform.scale(
-                                            scale: 1.5,
-                                            child: Checkbox(
-                                              value: cubit.isCheck,
-                                              onChanged: (value) {
-                                                cubit.toggleCheckbox();
-                                              },
-                                              activeColor: const Color(
-                                                0xFF9F5A5B,
-                                              ),
-                                              checkColor:
-                                                  AppColors.neutralColor100,
-                                              side: BorderSide(
-                                                color:
-                                                    AppColors.neutralColor100,
-                                                width: 1.w,
-                                              ),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(4.r),
-                                              ),
-                                              visualDensity:
-                                                  VisualDensity.compact,
-                                              materialTapTargetSize:
-                                                  MaterialTapTargetSize
-                                                      .shrinkWrap,
-                                            ),
+                                      return CustomTextFormFieldWidget(
+                                        controller: cubit.passwordController,
+                                        obscureText: cubit.isObscure,
+                                        keyboardType:
+                                            TextInputType.visiblePassword,
+                                        backgroundColor: Colors.transparent,
+                                        hintText:
+                                            'قم بإدخال كلمة المرور الخاصة بك',
+                                        hintStyle: Styles.captionRegular,
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.trim().isEmpty) {
+                                            return 'passwordIsRequired'.tr();
+                                          }
+                                          if (value.trim().length < 8) {
+                                            return 'كلمة المرور يجب ألا تقل عن 8 أحرف';
+                                          }
+                                          return null;
+                                        },
+                                        onChanged: (_) => cubit
+                                            .validatePassword(),
+                                        borderColor:
+                                            AppColors.neutralColor100,
+                                        suffixIcon: IconButton(
+                                          onPressed: cubit.toggleObscure,
+                                          icon: Icon(
+                                            cubit.isObscure
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                            color:
+                                                AppColors.neutralColor100,
                                           ),
-                                          10.horizontalSpace,
-                                          Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                top: 4.0,
-                                              ),
-                                              child: Text(
-                                                "أوافق على سياسة الخصوصية و شروط الخدمة",
-                                                style: Styles.captionRegular
-                                                    .copyWith(
-                                                      color: AppColors
-                                                          .neutralColor100,
-                                                    ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       );
                                     },
+                                  ),
+                                  16.verticalSpace,
+                                  Text(
+                                    "تأكيد كلمة المرور",
+                                    style: Styles.highlightStandard.copyWith(
+                                      color: AppColors.neutralColor100,
+                                    ),
+                                  ),
+                                  8.verticalSpace,
+                                  BlocBuilder<AuthCubit, AuthState>(
+                                    buildWhen: (previous, current) =>
+                                        current is TogglePasswordState2,
+                                    builder: (context, state) {
+                                      return CustomTextFormFieldWidget(
+                                        controller: cubit.rePasswordController,
+                                        obscureText: cubit.isObscure2,
+                                        keyboardType:
+                                            TextInputType.visiblePassword,
+                                        backgroundColor: Colors.transparent,
+                                        hintText:
+                                            'قم بتأكيد كلمة المرور الخاصة بك',
+                                        hintStyle: Styles.captionRegular,
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.trim().isEmpty) {
+                                            return 'passwordIsRequired'.tr();
+                                          }
+                                          if (value.trim() !=
+                                              cubit.passwordController.text
+                                                  .trim()) {
+                                            return 'كلمتا المرور غير متطابقتين';
+                                          }
+                                          return null;
+                                        },
+                                        onChanged: (_) => cubit
+                                            .validatePassword(),
+                                        borderColor:
+                                            AppColors.neutralColor100,
+                                        suffixIcon: IconButton(
+                                          onPressed: cubit.toggleObscure2,
+                                          icon: Icon(
+                                            cubit.isObscure2
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                            color:
+                                                AppColors.neutralColor100,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  12.verticalSpace,
+                                  Row(
+                                    children: [
+                                      Transform.scale(
+                                        scale: 1.5,
+                                        child: Checkbox(
+                                          value: true,
+                                          onChanged: null,
+                                          activeColor: const Color(
+                                            0xFF9F5A5B,
+                                          ),
+                                          checkColor:
+                                              AppColors.neutralColor100,
+                                          side: BorderSide(
+                                            color: AppColors.neutralColor100,
+                                            width: 1.w,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.r),
+                                          ),
+                                          visualDensity:
+                                              VisualDensity.compact,
+                                          materialTapTargetSize:
+                                              MaterialTapTargetSize.shrinkWrap,
+                                        ),
+                                      ),
+                                      10.horizontalSpace,
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 4.0,
+                                          ),
+                                          child: Text(
+                                            "أوافق على سياسة الخصوصية و شروط الخدمة",
+                                            style: Styles.captionRegular
+                                                .copyWith(
+                                              color:
+                                                  AppColors.neutralColor100,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -278,16 +420,58 @@ class RegisterScreen extends StatelessWidget {
                             ],
                           ),
                           18.verticalSpace,
-                          CustomButtonWidget(
-                            onPressed: () {
-                              context.pushNamed(Routes.verifyOTPScreen);
+                          BlocConsumer<AuthCubit, AuthState>(
+                            listenWhen: (previous, current) =>
+                                current is AuthRegisterSuccess ||
+                                current is AuthRegisterFailure,
+                            listener: (context, state) {
+                              if (state is AuthRegisterSuccess) {
+                                final otp = state.response.data?.otp ?? '';
+                                cubit.verificationCodeController.text = otp;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      state.response.message ??
+                                          'تم إرسال رمز التحقق بنجاح',
+                                    ),
+                                  ),
+                                );
+                                context.pushNamed(
+                                  Routes.verifyOTPScreen,
+                                  arguments: {
+                                    'email': cubit.emailController.text.trim(),
+                                    'type': 'registration',
+                                  },
+                                );
+                              } else if (state is AuthRegisterFailure) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(state.message),
+                                  ),
+                                );
+                              }
                             },
-                            text: 'طلب OTP',
-                            textStyle: Styles.contentRegular.copyWith(
-                              color: AppColors.neutralColor100,
-                            ),
-                            color: const Color(0xFF9F5A5B),
-                            height: 56.h,
+                            buildWhen: (previous, current) =>
+                                current is AuthRegisterLoading ||
+                                current is AuthRegisterFailure ||
+                                current is AuthRegisterSuccess,
+                            builder: (context, state) {
+                              final isLoading = state is AuthRegisterLoading;
+                              return CustomButtonWidget(
+                                onPressed: isLoading
+                                    ? null
+                                    : () {
+                                        cubit.register();
+                                      },
+                                text: 'طلب OTP',
+                                isLoading: isLoading,
+                                textStyle: Styles.contentRegular.copyWith(
+                                  color: AppColors.neutralColor100,
+                                ),
+                                color: const Color(0xFF9F5A5B),
+                                height: 56.h,
+                              );
+                            },
                           ),
                         ],
                       ),

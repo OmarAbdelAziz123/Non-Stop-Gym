@@ -172,16 +172,53 @@ class ForgetPasswordScreen extends StatelessWidget {
                             ],
                           ),
                           18.verticalSpace,
-                          CustomButtonWidget(
-                            onPressed: () {
-                              context.pushNamed(Routes.verifyOTPScreen);
+                          BlocConsumer<AuthCubit, AuthState>(
+                            listenWhen: (previous, current) =>
+                                current is AuthForgetPasswordSuccess ||
+                                current is AuthForgetPasswordFailure,
+                            listener: (context, state) {
+                              if (state is AuthForgetPasswordSuccess) {
+                                final cubit = context.read<AuthCubit>();
+                                cubit.verificationCodeController.clear();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(state.message)),
+                                );
+                                if (!state.isResend) {
+                                  context.pushNamed(Routes.verifyOTPScreen, arguments: {'email': cubit.emailController.text.trim(), 'type': 'password_reset'});
+                                }
+                              } else if (state is AuthForgetPasswordFailure) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(state.message)),
+                                );
+                              }
                             },
-                            text: 'طلب OTP',
-                            textStyle: Styles.contentRegular.copyWith(
-                              color: AppColors.neutralColor100,
-                            ),
-                            color: const Color(0xFF9F5A5B),
-                            height: 56.h,
+                            buildWhen: (previous, current) =>
+                                current is AuthForgetPasswordLoading ||
+                                current is AuthForgetPasswordFailure ||
+                                current is AuthForgetPasswordSuccess,
+                            builder: (context, state) {
+                              final isLoading =
+                                  state is AuthForgetPasswordLoading;
+                              final cubit = context.read<AuthCubit>();
+                              return CustomButtonWidget(
+                                onPressed: isLoading
+                                    ? null
+                                    : () {
+                                        if (cubit.formKey.currentState
+                                                ?.validate() ??
+                                            false) {
+                                          cubit.requestPasswordReset();
+                                        }
+                                      },
+                                text: 'طلب OTP',
+                                isLoading: isLoading,
+                                textStyle: Styles.contentRegular.copyWith(
+                                  color: AppColors.neutralColor100,
+                                ),
+                                color: const Color(0xFF9F5A5B),
+                                height: 56.h,
+                              );
+                            },
                           ),
                         ],
                       ),

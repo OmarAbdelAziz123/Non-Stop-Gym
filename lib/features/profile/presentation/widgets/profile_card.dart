@@ -1,11 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:non_stop/features/profile/data/models/profile_response.dart';
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({super.key, this.isEditProfile = false});
+  const ProfileCard({
+    super.key,
+    this.isEditProfile = false,
+    this.profile,
+    this.onEditPressed,
+    this.isLoading = false,
+    this.customImage,
+  });
+
   final bool isEditProfile;
+  final ProfileData? profile;
+  final VoidCallback? onEditPressed;
+  final bool isLoading;
+  final ImageProvider? customImage;
 
   @override
   Widget build(BuildContext context) {
+    final imageProvider = customImage ??
+        (profile?.image != null && profile!.image!.isNotEmpty
+            ? NetworkImage(profile!.image!)
+            : const AssetImage('assets/pngs/image2.png') as ImageProvider);
+
+    final name = profile?.name ?? '—';
+    final email = profile?.email ?? '—';
+    final completed =
+        profile?.finishedBookingsCount?.toString() ?? '0';
+    final active = profile?.activeBookingsCount?.toString() ?? '0';
+
+    final totalSessions = (profile?.activeBookingsCount ?? 0) +
+        (profile?.finishedBookingsCount ?? 0);
+    final progress = totalSessions == 0
+        ? 0.0
+        : (profile?.finishedBookingsCount ?? 0) / totalSessions;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -14,53 +44,71 @@ class ProfileCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 35,
-            backgroundImage: AssetImage('assets/pngs/image2.png'),
+            backgroundImage: imageProvider,
           ),
           const SizedBox(height: 8),
-          const Text(
-            'محمد جوده',
-            style: TextStyle(
+          Text(
+            name,
+            style: const TextStyle(
               fontSize: 18,
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const Text(
-            'UIUX@mohamedguda.com',
-            style: TextStyle(color: Colors.grey, fontSize: 13),
+          Text(
+            email,
+            style: const TextStyle(color: Colors.grey, fontSize: 13),
           ),
           const SizedBox(height: 12),
           if (isEditProfile) ...[
-            ElevatedButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.edit, color: Colors.white),
-              label: const Text(
-                "تعديل الملف الشخصي",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
+            ElevatedButton(
+              onPressed: isLoading ? null : onEditPressed,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xff9F5A5B),
                 minimumSize: const Size(double.infinity, 50),
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
               ),
+              child: isLoading
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.edit, color: Colors.white),
+                        SizedBox(width: 8),
+                        Text(
+                          "تعديل الملف الشخصي",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
             ),
             const SizedBox(height: 12),
           ],
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Text(
-                '62/7 :الحصص المكتملة',
-                style: TextStyle(color: Colors.grey),
+                '$completed :الحصص المكتملة',
+                style: const TextStyle(color: Colors.grey),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Text(
-                '62/55 :الحصص المتبقية',
-                style: TextStyle(color: Colors.grey),
+                '$active :الحصص المتبقية',
+                style: const TextStyle(color: Colors.grey),
               ),
             ],
           ),
@@ -68,7 +116,7 @@ class ProfileCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: LinearProgressIndicator(
-              value: 0.8,
+              value: progress.isFinite ? progress : 0,
               color: const Color(0xff9F5A5B),
               backgroundColor: Colors.grey,
               minHeight: 6,

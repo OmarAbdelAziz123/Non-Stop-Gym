@@ -26,6 +26,7 @@ class CustomButtonWidget extends StatelessWidget {
   final TextStyle? textStyle;
   final List<Color>? gradientColors;
   final List<BoxShadow>? boxShadow;
+  final bool isLoading;
 
   const CustomButtonWidget({
     super.key,
@@ -50,12 +51,13 @@ class CustomButtonWidget extends StatelessWidget {
     this.isEnabled,
     this.gradientColors,
     this.boxShadow = const [],
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: isLoading ? null : onPressed,
       child: Container(
         width: width ?? MediaQuery.of(context).size.width * 0.9,
         height: height ?? 53.h,
@@ -98,17 +100,29 @@ class CustomButtonWidget extends StatelessWidget {
                   color: imageColor ?? AppColors.primaryColor900,
                   fit: BoxFit.scaleDown,
                 ),
-              if (iconData != null || imagePath != null) 8.horizontalSpace,
-              Text(
-                text!,
-                style:
-                    textStyle ??
-                    Styles.contentEmphasis.copyWith(
-                      color: textColor ?? AppColors.primaryColor900,
-                      fontSize: fontSize,
-                      fontWeight: fontWeight,
+              if (isLoading)
+                SizedBox(
+                  width: 20.sp,
+                  height: 20.sp,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      textColor ?? AppColors.primaryColor900,
                     ),
-              ),
+                  ),
+                ),
+              if (isLoading && (text?.isNotEmpty ?? false)) 8.horizontalSpace,
+              if (!isLoading || (text?.isNotEmpty ?? false))
+                Text(
+                  text ?? '',
+                  style:
+                      textStyle ??
+                      Styles.contentEmphasis.copyWith(
+                        color: textColor ?? AppColors.primaryColor900,
+                        fontSize: fontSize,
+                        fontWeight: fontWeight,
+                      ),
+                ),
             ],
           ),
         ),
