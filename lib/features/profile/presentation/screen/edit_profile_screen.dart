@@ -76,9 +76,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (_passwordController.text.isNotEmpty &&
         _passwordController.text != _passwordConfirmController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('كلمتا المرور غير متطابقتين'),
-        ),
+        const SnackBar(content: Text('كلمتا المرور غير متطابقتين')),
       );
       return;
     }
@@ -159,9 +157,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
             const SnackBar(content: Text('تم تحديث الملف الشخصي بنجاح')),
           );
         } else if (state is ProfileUpdateFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
         } else if (state is ProfileLoaded) {
           _updateControllers(state.profile);
         }
@@ -171,18 +169,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
         final profile = state is ProfileLoaded
             ? state.profile
             : state is ProfileUpdateSuccess
-                ? state.profile
-                : cubit.profileData;
-        final isInitialLoading =
-            profile == null && state is ProfileLoading;
+            ? state.profile
+            : cubit.profileData;
+        final isInitialLoading = profile == null && state is ProfileLoading;
         final isUpdateLoading = state is ProfileUpdateLoading;
 
-        final genderValue = _selectedGender ??
-            profile?.gender?.toLowerCase() ??
-            'male';
+        final genderValue =
+            _selectedGender ?? profile?.gender?.toLowerCase() ?? 'male';
 
-        final ImageProvider? customImage =
-            _pickedImage != null ? FileImage(File(_pickedImage!.path)) : null;
+        final ImageProvider? customImage = _pickedImage != null
+            ? FileImage(File(_pickedImage!.path))
+            : null;
 
         return WillPopScope(
           onWillPop: () async {
@@ -253,9 +250,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     child: TextButton.icon(
                                       onPressed: _pickImage,
                                       icon: const Icon(
+                                        color: Color(0xff9F5A5B),
                                         Icons.camera_alt_outlined,
                                       ),
-                                      label: const Text('تغيير الصورة'),
+                                      label: const Text(
+                                        'تغيير الصورة',
+                                        style: TextStyle(
+                                          color: Color(0xff9F5A5B),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   CustomTextFormFieldWidget(
@@ -297,7 +300,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     },
                                   ),
                                   DropdownButtonFormField<String>(
-                                    value: genderValue,
+                                    initialValue: genderValue,
                                     decoration: const InputDecoration(
                                       labelText: 'الجنس',
                                       border: OutlineInputBorder(),
@@ -316,9 +319,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       setState(() {
                                         _selectedGender = value;
                                         _genderController.text =
-                                            value == 'female'
-                                                ? 'أنثى'
-                                                : 'ذكر';
+                                            value == 'female' ? 'أنثى' : 'ذكر';
                                       });
                                     },
                                   ),
