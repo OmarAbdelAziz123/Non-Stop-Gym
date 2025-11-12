@@ -99,7 +99,7 @@ class LoginScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "رقم الهاتف",
+                                    "رقم الهاتف او الايميل الالكتروني",
                                     style: Styles.highlightStandard.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -109,7 +109,7 @@ class LoginScreen extends StatelessWidget {
                                     controller: context
                                         .read<AuthCubit>()
                                         .phoneController,
-                                    keyboardType: TextInputType.phone,
+                                    // keyboardType: TextInputType.phone,
                                     borderColor: AppColors.neutralColor100,
                                     borderRadius: 6.r,
                                     backgroundColor: Colors.transparent,
