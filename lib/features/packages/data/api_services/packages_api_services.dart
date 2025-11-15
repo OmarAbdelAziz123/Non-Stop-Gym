@@ -12,5 +12,24 @@ class PackagesApiServices {
       endPoint: EndPoints.getSubscriptions,
     );
   }
+
+  Future<Response?> subscribe({
+    required int subscriptionId,
+    String paymentMethod = 'cash',
+  }) {
+    return _dioHelper.post(
+      endPoint: EndPoints.subscribe,
+      data: {
+        'subscription_id': subscriptionId,
+        'payment_method': paymentMethod,
+      },
+    );
+  }
+
+  Future<Response?> getUserSubscription() {
+    return _dioHelper.get(
+      endPoint: EndPoints.getUserSubscription,
+    );
+  }
 }
 

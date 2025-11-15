@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -76,16 +78,19 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
                           color: const Color(0xff2A1A2C),
                           borderRadius: BorderRadius.circular(12.r),
                         ),
-                        child: SvgPicture.asset(
-                          "assets/svgs/Back _con.svg",
-                          width: 24.w,
-                          height: 24.h,
-                          fit: BoxFit.scaleDown,
+                        child: Transform.rotate(
+                          angle: context.locale.languageCode == 'en' ? math.pi : 0, // 180 degrees (π radians) for English
+                          child: SvgPicture.asset(
+                            "assets/svgs/Back _con.svg",
+                            width: 24.w,
+                            height: 24.h,
+                            fit: BoxFit.scaleDown,
+                          ),
                         ),
                       ),
                     ),
                     Text(
-                      'حجوزاتي',
+                      'myBookings'.tr(),
                       style: Styles.heading2.copyWith(color: Colors.white),
                     ),
                     Container(
@@ -141,7 +146,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      'جارية',
+                                      'active'.tr(),
                                       style: Styles.featureEmphasis.copyWith(
                                         color: isActive
                                             ? AppColors.neutralColor100
@@ -177,7 +182,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      'منتهية',
+                                      'completed'.tr(),
                                       style: Styles.featureEmphasis.copyWith(
                                         color: !isActive
                                             ? AppColors.neutralColor100

@@ -75,7 +75,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         body: SafeArea(
           child: Column(
             children: [
-              const CustomAppBar(title: "كلمة السر"),
+              CustomAppBar(title: "password".tr()),
               Expanded(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 30.h),
@@ -102,7 +102,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         ),
                         24.verticalSpace,
                         Text(
-                          "كلمة المرور الجديدة",
+                          "newPassword".tr(),
                           style: Styles.highlightStandard.copyWith(
                             color: AppColors.neutralColor100,
                           ),
@@ -113,7 +113,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           controller: _passwordController,
                           obscureText: _isObscure,
                           keyboardType: TextInputType.visiblePassword,
-                          hintText: 'قم بإدخال كلمة المرور الجديدة',
+                          hintText: 'enterNewPassword'.tr(),
                           hintStyle: Styles.captionRegular.copyWith(
                             color: AppColors.neutralColor100,
                           ),
@@ -122,13 +122,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               return 'passwordIsRequired'.tr();
                             }
                             if (value.trim().length < 8) {
-                              return 'كلمة المرور يجب ألا تقل عن 8 أحرف';
+                              return 'passwordMinLength'.tr();
                             }
                             if (!value.contains(RegExp(r'[0-9]'))) {
-                              return 'يجب أن تحتوي على رقم واحد على الأقل';
+                              return 'passwordMustContainNumber'.tr();
                             }
                             if (!value.contains(RegExp(r'[a-zA-Z]'))) {
-                              return 'يجب أن تحتوي على حرف واحد على الأقل';
+                              return 'passwordMustContainLetter'.tr();
                             }
                             return null;
                           },
@@ -148,7 +148,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         ),
                         25.verticalSpace,
                         Text(
-                          "تأكيد كلمة المرور",
+                          "confirmPassword".tr(),
                           style: Styles.highlightStandard.copyWith(
                             color: AppColors.neutralColor100,
                           ),
@@ -159,7 +159,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           controller: _confirmPasswordController,
                           obscureText: _isObscure2,
                           keyboardType: TextInputType.visiblePassword,
-                          hintText: 'قم بتأكيد كلمة المرور الخاصة بك',
+                          hintText: 'confirmYourPassword'.tr(),
                           hintStyle: Styles.captionRegular.copyWith(
                             color: AppColors.neutralColor100,
                           ),
@@ -168,7 +168,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               return 'passwordIsRequired'.tr();
                             }
                             if (value.trim() != _passwordController.text.trim()) {
-                              return 'كلمتا المرور غير متطابقتين';
+                              return 'passwordsDoNotMatch'.tr();
                             }
                             return null;
                           },
@@ -221,7 +221,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16),
                     child: CustomButtonWidget(
                       textColor: Colors.white,
-                      text: "حفظ",
+                      text: "save".tr(),
                       isLoading: isLoading,
                       onPressed: isLoading
                           ? null
@@ -237,9 +237,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
+                                  SnackBar(
                                     content:
-                                        Text('برجاء التأكد من الشروط أعلى الصفحة'),
+                                        Text('pleaseCheckConditions'.tr()),
                                   ),
                                 );
                               }

@@ -21,11 +21,10 @@ class CacheHelper {
     await CacheHelper.saveData(key: CacheKeys.currentLanguage, value: "en");
   }
 
-  static String getCurrentLanguage() {
+  static String? getCurrentLanguage() {
     return CacheHelper.getData(
-          key: CacheKeys.currentLanguage,
-        ) ??
-        "en";
+      key: CacheKeys.currentLanguage,
+    ) as String?;
   }
 
   static Future<void> changeLanguageToAr() async {

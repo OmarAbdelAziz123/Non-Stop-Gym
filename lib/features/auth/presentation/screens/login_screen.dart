@@ -71,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Text(
-                                      'اهلا بعودتك',
+                                      'welcomeBack'.tr(),
                                       style: Styles.heading1.copyWith(
                                         color: AppColors.neutralColor100,
                                       ),
@@ -79,7 +79,7 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                     6.verticalSpace,
                                     Text(
-                                      'الرجاء إدخال رقم هاتفك ومع كلمة المرور للوصول إلى حسابك.',
+                                      'enterPhoneAndPassword'.tr(),
                                       style: Styles.contentRegular.copyWith(
                                         color: AppColors.neutralColor100,
                                       ),
@@ -99,7 +99,7 @@ class LoginScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "رقم الهاتف او الايميل الالكتروني",
+                                    "phoneNumberOrEmail".tr(),
                                     style: Styles.highlightStandard.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -113,7 +113,7 @@ class LoginScreen extends StatelessWidget {
                                     borderColor: AppColors.neutralColor100,
                                     borderRadius: 6.r,
                                     backgroundColor: Colors.transparent,
-                                    hintText: "قم بإدخال رقم الهاتف الخاصة بك",
+                                    hintText: "enterYourPhoneNumber".tr(),
                                     hintStyle: Styles.captionRegular,
                                     validator: (value) {
                                       if (value!.isEmpty) {
@@ -124,7 +124,7 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                   16.verticalSpace,
                                   Text(
-                                    "كلمة المرور",
+                                    "password".tr(),
                                     style: Styles.highlightStandard.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -141,7 +141,7 @@ class LoginScreen extends StatelessWidget {
                                         keyboardType:
                                             TextInputType.visiblePassword,
                                         hintText:
-                                            'قم بإدخال كلمة المرور الخاصة بك ',
+                                            'enterYourPassword'.tr(),
                                         hintStyle: Styles.captionRegular
                                             .copyWith(
                                               color: AppColors.neutralColor100,
@@ -204,7 +204,7 @@ class LoginScreen extends StatelessWidget {
                                             top: 4.0,
                                           ),
                                           child: Text(
-                                            "أوافق على سياسة الخصوصية و شروط الخدمة",
+                                            "agreeToPrivacyPolicy".tr(),
                                             style: Styles.captionRegular
                                                 .copyWith(
                                               color:
@@ -239,7 +239,7 @@ class LoginScreen extends StatelessWidget {
                                         },
 
                                         child: Text(
-                                          'نسيت كلمة السر؟',
+                                          'forgotPasswordQuestion'.tr(),
                                           style: Styles.contentRegular.copyWith(
                                             color: Colors.white,
                                             decoration:
@@ -261,7 +261,7 @@ class LoginScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                ' ليس لديك حساب ؟',
+                                'dontHaveAccount'.tr(),
                                 style: Styles.contentRegular.copyWith(
                                   color: AppColors.neutralColor100,
                                 ),
@@ -285,7 +285,7 @@ class LoginScreen extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Text(
-                                      ' إنشاء حساب',
+                                      'createAccount'.tr(),
                                       style: Styles.contentRegular.copyWith(
                                         color: const Color(0xFF9F5A5B),
                                         decoration: TextDecoration.underline,
@@ -324,8 +324,8 @@ class LoginScreen extends StatelessWidget {
                                         cubit.login();
                                       },
                                 text: isLoading
-                                    ? 'جاري تسجيل الدخول...'
-                                    : 'تسجيل الدخول',
+                                    ? 'loggingIn'.tr()
+                                    : 'login'.tr(),
                                 textStyle: Styles.contentRegular.copyWith(
                                   color: AppColors.neutralColor100,
                                 ),

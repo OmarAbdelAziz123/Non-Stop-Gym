@@ -72,7 +72,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Text(
-                                      'انشاء كلمة مرور جديدة',
+                                      'createNewPassword'.tr(),
                                       style: Styles.heading1.copyWith(
                                         color: AppColors.neutralColor100,
                                       ),
@@ -80,7 +80,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                                     ),
                                     6.verticalSpace,
                                     Text(
-                                      'يرجي إضافة كلمة مرور قوية للحفاظ علي بياناتك',
+                                      'addStrongPassword'.tr(),
                                       style: Styles.contentRegular.copyWith(
                                         color: AppColors.neutralColor100,
                                       ),
@@ -100,7 +100,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "كلمة المرور",
+                                    "password".tr(),
                                     style: Styles.highlightStandard.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -118,7 +118,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                                         keyboardType:
                                             TextInputType.visiblePassword,
                                         hintText:
-                                            'قم بإدخال كلمة المرور الخاصة بك ',
+                                            'enterYourPassword'.tr(),
                                         hintStyle: Styles.captionRegular
                                             .copyWith(
                                               color: AppColors.neutralColor100,
@@ -152,7 +152,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                                   ),
                                   20.verticalSpace,
                                   Text(
-                                    "تاكيد كلمة المرور",
+                                    "confirmPassword".tr(),
                                     style: Styles.highlightStandard.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -170,7 +170,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                                         keyboardType:
                                             TextInputType.visiblePassword,
                                         hintText:
-                                            'قم بإدخال تاكيد  كلمة المرور الخاصة بك ',
+                                            'confirmYourPassword'.tr(),
                                         hintStyle: Styles.captionRegular
                                             .copyWith(
                                               color: AppColors.neutralColor100,
@@ -213,7 +213,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                                             children: [
                                               Expanded(
                                                 child: CustomTextContainer(
-                                                  text: "8 حروف علي الاقل",
+                                                  text: "atLeast8Characters".tr(),
                                                   backgroundColor:
                                                       cubit.hasMinLength
                                                       ? Color(0xff138855)
@@ -236,7 +236,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                                               Expanded(
                                                 child: CustomTextContainer(
                                                   text:
-                                                      "تحتوي على رقم واحد على الأقل",
+                                                      "containsAtLeastOneNumber".tr(),
                                                   backgroundColor:
                                                       cubit.hasNumber
                                                       ? Color(0xff138855)
@@ -262,7 +262,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                                               Expanded(
                                                 child: CustomTextContainer(
                                                   text:
-                                                      "كلمتي المرور متطابقتين",
+                                                      "passwordsMatch".tr(),
                                                   backgroundColor:
                                                       cubit.passwordsMatch
                                                       ? Color(0xff138855)
@@ -286,7 +286,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                                               Expanded(
                                                 child: CustomTextContainer(
                                                   text:
-                                                      "تحتوي على حرف كبير أو صغير",
+                                                      "containsUpperOrLower".tr(),
                                                   backgroundColor:
                                                       cubit.hasUpperOrLower
                                                       ? Color(0xff138855)
@@ -353,7 +353,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                                           cubit.resetPassword();
                                         }
                                       },
-                                text: ' تاكيد',
+                                text: 'confirm'.tr(),
                                 isLoading: isLoading,
                                 textStyle: Styles.contentRegular.copyWith(
                                   color: AppColors.neutralColor100,

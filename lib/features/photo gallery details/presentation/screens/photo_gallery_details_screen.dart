@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,11 +38,14 @@ class PhotoGalleryDetailsScreen extends StatelessWidget {
                       color: const Color(0xff2A1A2C),
                       borderRadius: BorderRadius.circular(12.r),
                     ),
-                    child: SvgPicture.asset(
-                      "assets/svgs/Back _con.svg",
-                      width: 24.w,
-                      height: 24.h,
-                      fit: BoxFit.scaleDown,
+                    child: Transform.rotate(
+                      angle: context.locale.languageCode == 'en' ? math.pi : 0, // 180 degrees (π radians) for English
+                      child: SvgPicture.asset(
+                        "assets/svgs/Back _con.svg",
+                        width: 24.w,
+                        height: 24.h,
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
                   ),
                 ),

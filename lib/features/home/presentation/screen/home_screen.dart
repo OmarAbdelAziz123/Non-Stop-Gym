@@ -175,9 +175,9 @@ class _HomeScreenState extends State<HomeScreen> {
             12.verticalSpace,
             TextButton(
               onPressed: cubit.fetchBanners,
-              child: const Text(
-                'إعادة المحاولة',
-                style: TextStyle(color: Colors.white),
+              child: Text(
+                'retry'.tr(),
+                style: const TextStyle(color: Colors.white),
               ),
             ),
           ],
@@ -373,10 +373,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             10.verticalSpace,
                             Text(
                               i == 0
-                                  ? 'ريلاكس'
+                                  ? 'relax'.tr()
                                   : i == 1
-                                  ? 'اجهزة'
-                                  : 'العروض',
+                                  ? 'devices'.tr()
+                                  : 'bestOffers'.tr(),
                               style: Styles.contentRegular.copyWith(
                                 color: selectedTab == i
                                     ? Colors.white
