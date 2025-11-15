@@ -6,6 +6,8 @@ import 'package:non_stop/features/home/data/api_services/home_api_services.dart'
 import 'package:non_stop/features/home/data/repos/home_repository.dart';
 import 'package:non_stop/features/profile/data/api_services/profile_api_services.dart';
 import 'package:non_stop/features/profile/data/repos/profile_repository.dart';
+import 'package:non_stop/features/packages/data/api_services/packages_api_services.dart';
+import 'package:non_stop/features/packages/data/repos/packages_repository.dart';
 
 final getIt = GetIt.instance;
 
@@ -36,6 +38,14 @@ Future<void> setupDependencyInjection() async {
 
   getIt.registerLazySingleton<HomeRepository>(
     () => HomeRepository(getIt()),
+  );
+
+  getIt.registerLazySingleton<PackagesApiServices>(
+    () => PackagesApiServices(getIt()),
+  );
+
+  getIt.registerLazySingleton<PackagesRepository>(
+    () => PackagesRepository(getIt()),
   );
 
   // getIt.registerLazySingleton<MyBookingRepos>(() => MyBookingRepos(getIt()));
