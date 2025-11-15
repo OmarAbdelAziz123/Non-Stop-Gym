@@ -16,6 +16,7 @@ static const String getBanners = '/api/frontend/banners';
 static const String getProfileData = '/api/frontend/profile';
 static const String updateProfileData = 'api/user/profile/updateData';
 static const String getSettings = '/api/frontend/settings';
+  static const String getSubscriptions = '/api/frontend/subscriptions';
   /// Storage Keys
   static const String accessTokenKey = 'ACCESS_TOKEN';
   static const String refreshTokenKey = 'REFRESH_TOKEN';

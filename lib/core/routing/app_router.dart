@@ -18,6 +18,7 @@ import 'package:non_stop/features/more_about_us/presentation/screens/more_about_
 import 'package:non_stop/features/notification/presentation/screens/notification_screen.dart';
 import 'package:non_stop/features/onboarding/onBoarding/Bloc/on_boarding_cubit.dart';
 import 'package:non_stop/features/onboarding/onBoarding/screens/on_boarding_screen.dart';
+import 'package:non_stop/features/packages/bloc/cubit/packages_cubit.dart';
 import 'package:non_stop/features/packages/presentation/screens/my_packages_screen.dart';
 import 'package:non_stop/features/packages/presentation/screens/packages_screen.dart';
 import 'package:non_stop/features/photo%20gallery%20details/presentation/screens/photo_gallery_details_screen.dart';
@@ -105,7 +106,10 @@ class AppRouter {
       case Routes.termsAndConditionsScreen:
         return transition(screen: const TermsConditionsScreen());
       case Routes.packagesScreen:
-        return transition(screen: const PackagesScreen());
+        return transition(
+          screen: const PackagesScreen(),
+          cubit: PackagesCubit()..fetchSubscriptions(),
+        );
       case Routes.moreAboutUsScreen:
         return transition(
           screen: const MoreAboutUsScreen(),
@@ -127,7 +131,10 @@ class AppRouter {
       create: (context) => HomeCubit()..fetchBanners(),
       child: HomeScreen(),
     ),
-    PackagesScreen(),
+    BlocProvider(
+      create: (context) => PackagesCubit()..fetchSubscriptions(),
+      child: PackagesScreen(),
+    ),
     BlocProvider(
       create: (context) => GalleryCubit(),
       child: PhotoGalleryScreen(),
