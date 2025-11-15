@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:non_stop/core/extensions/navigation_extension.dart';
 import 'package:non_stop/core/routing/routes_name.dart';
@@ -41,11 +43,12 @@ class RelaxTap extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 21),
           child: Text(
-            'المواعيد المتاحة',
+            'availableAppointments'.tr(),
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.white,
+              fontFamily: GoogleFonts.cairo().fontFamily,
             ),
           ),
         ),
@@ -83,7 +86,7 @@ class RelaxTap extends StatelessWidget {
           onPressed: () {
             context.pushNamed(Routes.moreAboutUsScreen);
           },
-          text: 'المزيد عنا',
+          text: 'moreAboutUs'.tr(),
           textStyle: Styles.contentRegular.copyWith(
             color: AppColors.neutralColor100,
           ),
@@ -97,11 +100,12 @@ class RelaxTap extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'تواصل معنا',
+                'contactUs'.tr(),
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
+                  fontFamily: GoogleFonts.cairo().fontFamily,
                 ),
               ),
               SizedBox(height: 24),
@@ -124,7 +128,7 @@ class RelaxTap extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'رقم الهاتف',
+                            'phoneNumber'.tr(),
                             style: Styles.highlightEmphasis.copyWith(
                               color: Colors.white,
                             ),
@@ -158,7 +162,7 @@ class RelaxTap extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4.r),
                         ),
                         child: Text(
-                          'اتصل بنا',
+                          'callUs'.tr(),
                           style: Styles.highlightStandard.copyWith(
                             color: Colors.white,
                           ),
@@ -188,7 +192,7 @@ class RelaxTap extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'الإيميل',
+                            'email'.tr(),
                             style: Styles.highlightEmphasis.copyWith(
                               color: Colors.white,
                             ),
@@ -208,7 +212,7 @@ class RelaxTap extends StatelessWidget {
                         final email = settings?.email ?? 'nonstop1@mail.com';
                         Clipboard.setData(ClipboardData(text: email));
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('تم نسخ الإيميل')),
+                          SnackBar(content: Text('emailCopied'.tr())),
                         );
                       },
                       child: Container(
@@ -230,7 +234,7 @@ class RelaxTap extends StatelessWidget {
                             ),
                             5.horizontalSpace,
                             Text(
-                              'نسخ',
+                              'copy'.tr(),
                               style: Styles.highlightStandard.copyWith(
                                 color: Colors.white,
                               ),
@@ -269,9 +273,13 @@ class RelaxTap extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'اكس',
+                          'x'.tr(),
                           textAlign: TextAlign.start,
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: GoogleFonts.cairo().fontFamily,
+                          ),
                         ),
                       ),
                       SizedBox(width: 8),
@@ -307,7 +315,7 @@ class RelaxTap extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'فيسبوك',
+                          'facebook'.tr(),
                           textAlign: TextAlign.start,
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
@@ -345,7 +353,7 @@ class RelaxTap extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'انستجرام',
+                          'instagram'.tr(),
                           textAlign: TextAlign.start,
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
@@ -383,7 +391,7 @@ class RelaxTap extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'واتساب',
+                          'whatsapp'.tr(),
                           textAlign: TextAlign.start,
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),

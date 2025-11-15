@@ -71,7 +71,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Text(
-                                      'نسيت كلمة المرور',
+                                      'forgotPassword'.tr(),
                                       style: Styles.heading1.copyWith(
                                         color: AppColors.neutralColor100,
                                       ),
@@ -79,7 +79,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                                     ),
                                     6.verticalSpace,
                                     Text(
-                                      'الرجاء إدخال رقم هاتفك او الايميل لإرسال رمز التأكيد إليه ',
+                                      'enterPhoneOrEmailForCode'.tr(),
                                       style: Styles.contentRegular.copyWith(
                                         color: AppColors.neutralColor100,
                                       ),
@@ -99,7 +99,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "رقم الهاتف او الايميل",
+                                    "phoneNumberOrEmailShort".tr(),
                                     style: Styles.highlightStandard.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -114,7 +114,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                                     borderRadius: 6.r,
                                     backgroundColor: Colors.transparent,
                                     hintText:
-                                        "قم بإدخال بريدك الإلكتروني او رقم الهاتف الخاصة بك",
+                                        "enterEmailOrPhone".tr(),
                                     hintStyle: Styles.captionRegular,
                                     validator: (value) {
                                       if (value!.isEmpty) {
@@ -132,7 +132,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                ' ليس لديك حساب ؟',
+                                'dontHaveAccount'.tr(),
                                 style: Styles.contentRegular.copyWith(
                                   color: AppColors.neutralColor100,
                                 ),
@@ -156,7 +156,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Text(
-                                      ' إنشاء حساب',
+                                      'createAccount'.tr(),
                                       style: Styles.contentRegular.copyWith(
                                         color: const Color(0xFF9F5A5B),
                                         decoration: TextDecoration.underline,
@@ -210,7 +210,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                                           cubit.requestPasswordReset();
                                         }
                                       },
-                                text: 'طلب OTP',
+                                text: 'requestOTP'.tr(),
                                 isLoading: isLoading,
                                 textStyle: Styles.contentRegular.copyWith(
                                   color: AppColors.neutralColor100,

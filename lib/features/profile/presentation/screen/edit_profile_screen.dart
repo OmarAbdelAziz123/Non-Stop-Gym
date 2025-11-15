@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:non_stop/core/theme/theme.dart';
 import 'package:non_stop/core/widgets/custom_app_bar.dart';
@@ -218,8 +220,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   children: [
                                     Text(
                                       errorState.message,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         color: Colors.redAccent,
+                                        fontFamily: GoogleFonts.cairo().fontFamily,
                                       ),
                                     ),
                                     const SizedBox(height: 12),
@@ -253,10 +256,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         color: Color(0xff9F5A5B),
                                         Icons.camera_alt_outlined,
                                       ),
-                                      label: const Text(
+                                      label: Text(
                                         'تغيير الصورة',
                                         style: TextStyle(
-                                          color: Color(0xff9F5A5B),
+                                          color: const Color(0xff9F5A5B),
+                                          fontFamily: GoogleFonts.cairo().fontFamily,
                                         ),
                                       ),
                                     ),
@@ -301,25 +305,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   ),
                                   DropdownButtonFormField<String>(
                                     initialValue: genderValue,
-                                    decoration: const InputDecoration(
-                                      labelText: 'الجنس',
-                                      border: OutlineInputBorder(),
+                                    decoration: InputDecoration(
+                                      labelText: 'gender'.tr(),
+                                      border: const OutlineInputBorder(),
                                     ),
-                                    items: const [
+                                    items: [
                                       DropdownMenuItem(
                                         value: 'male',
-                                        child: Text('ذكر'),
+                                        child: Text('male'.tr()),
                                       ),
                                       DropdownMenuItem(
                                         value: 'female',
-                                        child: Text('أنثى'),
+                                        child: Text('female'.tr()),
                                       ),
                                     ],
                                     onChanged: (value) {
                                       setState(() {
                                         _selectedGender = value;
                                         _genderController.text =
-                                            value == 'female' ? 'أنثى' : 'ذكر';
+                                            value == 'female' ? 'female'.tr() : 'male'.tr();
                                       });
                                     },
                                   ),

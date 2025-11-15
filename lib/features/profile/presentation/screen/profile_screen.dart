@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import 'package:non_stop/core/theme/theme.dart';
 import 'package:non_stop/core/widgets/custom_app_bar.dart';
 import 'package:non_stop/features/profile/bloc/cubit/profile_cubit.dart';
 import 'package:non_stop/features/profile/presentation/screen/edit_profile_screen.dart';
+import 'package:non_stop/features/profile/presentation/widgets/language_selection_bottom_sheet.dart';
 import 'package:non_stop/features/profile/presentation/widgets/profile_card.dart';
 import 'package:non_stop/features/profile/presentation/widgets/profile_tile.dart';
 
@@ -23,7 +25,7 @@ class ProfilePage extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            CustomAppBar(title: 'الملف الشخصي', hasLeading: false),
+            CustomAppBar(title: 'myProfile'.tr(), hasLeading: false),
 
             Expanded(
               child: SingleChildScrollView(
@@ -57,7 +59,7 @@ class ProfilePage extends StatelessWidget {
                               const SizedBox(height: 12),
                               ElevatedButton(
                                 onPressed: cubit.fetchProfile,
-                                child: const Text('إعادة المحاولة'),
+                                child: Text('retry'.tr()),
                               ),
                             ],
                           );
@@ -81,7 +83,7 @@ class ProfilePage extends StatelessWidget {
                       child: Column(
                         children: [
                           ProfileTile(
-                            title: 'البيانات الشخصية',
+                            title: 'personalData'.tr(),
                             icon: Icons.person_outline,
                             onTap: () async {
                               final cubit = context.read<ProfileCubit>();
@@ -105,7 +107,7 @@ class ProfilePage extends StatelessWidget {
                             },
                           ),
                           ProfileTile(
-                            title: 'حجوزاتي',
+                            title: 'myBookings'.tr(),
                             icon: Icons.event_note_outlined,
                             onTap: () {
                               context.pushNamed(Routes.myBookingScreen);
@@ -115,25 +117,28 @@ class ProfilePage extends StatelessWidget {
                             onTap: () {
                               context.pushNamed(Routes.chagnePasswordScreen);
                             },
-                            title: 'كلمة السر',
+                            title: 'password'.tr(),
                             icon: Icons.lock_outline,
                           ),
                           ProfileTile(
-                            title: 'باقاتي',
+                            title: 'myPackages'.tr(),
                             icon: Icons.credit_card_outlined,
                             onTap: () {
                               context.pushNamed(Routes.myPackagesScreen);
                             },
                           ),
                           ProfileTile(
-                            title: 'لغة التطبيق',
+                            title: 'appLanguage'.tr(),
                             icon: Icons.language_outlined,
+                            onTap: () {
+                              LanguageSelectionBottomSheet.show(context);
+                            },
                           ),
                           ProfileTile(
                             onTap: () {
                               context.pushNamed(Routes.notificationScreen);
                             },
-                            title: 'الاشعارات',
+                            title: 'notifications'.tr(),
                             icon: Icons.notifications_none,
                           ),
                         ],
@@ -155,14 +160,14 @@ class ProfilePage extends StatelessWidget {
                                 Routes.complaintsAndSuggetionsScreen,
                               );
                             },
-                            title: 'شكاوي و اقتراحات',
+                            title: 'complaintsAndSuggestions'.tr(),
                             icon: Icons.feedback_outlined,
                           ),
                           ProfileTile(
                             onTap: () {
                               context.pushNamed(Routes.faqScreen);
                             },
-                            title: 'الأسئلة الشائعة',
+                            title: 'faqs'.tr(),
                             icon: Icons.help_outline,
                           ),
                         ],
@@ -181,9 +186,9 @@ class ProfilePage extends StatelessWidget {
                         context.pushNamedAndRemoveUntil(Routes.loginScreen);
                       },
                       icon: const Icon(Icons.logout, color: Colors.white),
-                      label: const Text(
-                        'تسجيل خروج',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      label: Text(
+                        'logout'.tr(),
+                        style: const TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       style: OutlinedButton.styleFrom(
                         side: const BorderSide(color: Color(0xff9F5A5B)),
@@ -202,9 +207,9 @@ class ProfilePage extends StatelessWidget {
                         Icons.delete_outline,
                         color: Colors.white,
                       ),
-                      label: const Text(
-                        'حذف الحساب',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      label: Text(
+                        'deleteAccount'.tr(),
+                        style: const TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff9F5A5B),

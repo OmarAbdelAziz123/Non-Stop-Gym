@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -76,7 +77,7 @@ class VerifyOTPScreen extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Text(
-                                      'رمز التحقق',
+                                      'verificationCode'.tr(),
                                       style: Styles.heading1.copyWith(
                                         color: AppColors.neutralColor100,
                                       ),
@@ -84,7 +85,7 @@ class VerifyOTPScreen extends StatelessWidget {
                                     ),
                                     6.verticalSpace,
                                     Text(
-                                      'تم ارسال رمز مكون من 6 أرقام على الايميل الخاص بك',
+                                      'codeSentToEmail'.tr(),
                                       style: Styles.contentRegular.copyWith(
                                         color: AppColors.neutralColor100,
                                       ),
@@ -107,8 +108,8 @@ class VerifyOTPScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     cubit.canResend
-                                        ? ' لم تستلم الكود؟ '
-                                        : ' ستنتهي صلاحية الكود خلال (${cubit.remainingSeconds} ثانية)',
+                                        ? 'didntReceiveCode'.tr()
+                                        : 'codeWillExpireIn'.tr() + ' (${cubit.remainingSeconds} ${'seconds'.tr()})',
                                     style: Styles.contentRegular.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -131,7 +132,7 @@ class VerifyOTPScreen extends StatelessWidget {
                                           : AppColors.neutralColor400,
                                     ),
                                     child: Text(
-                                      ' إعادة إرسال',
+                                      'resend'.tr(),
                                       style: Styles.contentRegular.copyWith(
                                         color: cubit.canResend
                                             ? const Color(0xFF9F5A5B)
@@ -193,7 +194,7 @@ class VerifyOTPScreen extends StatelessWidget {
                                     : () {
                                         cubit.verifyOtpCode(email: arguments['email'], type: arguments['type']);
                                       },
-                                text: 'تأكيد',
+                                text: 'confirm'.tr(),
                                 isLoading: isLoading,
                                 textStyle: Styles.contentRegular.copyWith(
                                   color: AppColors.neutralColor100,

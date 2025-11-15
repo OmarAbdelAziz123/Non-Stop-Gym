@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -111,7 +112,13 @@ class Helpers {
   }) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message, style: const TextStyle(color: Colors.white)),
+        content: Text(
+          message,
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: GoogleFonts.cairo().fontFamily,
+          ),
+        ),
         backgroundColor: backgroundColor,
       ),
     );

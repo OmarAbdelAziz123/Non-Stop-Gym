@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:non_stop/core/errors/failures.dart' as errors;
@@ -191,7 +192,7 @@ class AuthCubit extends Cubit<AuthState> {
         : emailController.text.trim();
 
     if (email.isEmpty) {
-      emit(AuthForgetPasswordFailure('البريد الإلكتروني مطلوب'));
+      emit(AuthForgetPasswordFailure('emailIsRequired'.tr()));
       return;
     }
 
@@ -220,13 +221,13 @@ class AuthCubit extends Cubit<AuthState> {
       return;
     }
 
-    emit(AuthForgetPasswordFailure('حدث خطأ غير متوقع'));
+    emit(AuthForgetPasswordFailure('unexpectedErrorOccurred'.tr()));
   }
 
   Future<void> verifyOtpCode({String? email, String? type}) async {
     final otp = verificationCodeController.text.trim();
     if (otp.length < 4) {
-      emit(AuthVerifyOtpFailure('الرجاء إدخال رمز صحيح'));
+      emit(AuthVerifyOtpFailure('pleaseEnterValidCode'.tr()));
       return;
     }
 
@@ -237,7 +238,7 @@ class AuthCubit extends Cubit<AuthState> {
             : (otpEmail ?? emailController.text.trim()));
 
     if (targetEmail.isEmpty) {
-      emit(AuthVerifyOtpFailure('البريد الإلكتروني غير متوفر'));
+      emit(AuthVerifyOtpFailure('emailNotAvailable'.tr()));
       return;
     }
 
@@ -269,7 +270,7 @@ class AuthCubit extends Cubit<AuthState> {
       return;
     }
 
-    emit(AuthVerifyOtpFailure('حدث خطأ غير متوقع'));
+    emit(AuthVerifyOtpFailure('unexpectedErrorOccurred'.tr()));
   }
 
   Future<void> resetPassword() async {
@@ -301,7 +302,7 @@ class AuthCubit extends Cubit<AuthState> {
       return;
     }
 
-    emit(AuthResetPasswordFailure('حدث خطأ غير متوقع'));
+    emit(AuthResetPasswordFailure('unexpectedErrorOccurred'.tr()));
   }
 
   Future<void> resendOtp() async {

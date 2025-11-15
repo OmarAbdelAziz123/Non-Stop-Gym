@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
@@ -47,7 +48,7 @@ class NotificationScreen extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: [
-              const CustomAppBar(title: "الاشعارات"),
+              CustomAppBar(title: "notifications".tr()),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(

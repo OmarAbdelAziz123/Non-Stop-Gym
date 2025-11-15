@@ -1,8 +1,9 @@
+import 'dart:math' as math;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:non_stop/common/extensions/build_context_extensions.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
 import 'package:non_stop/core/constants/hex_colors.dart';
@@ -14,6 +15,44 @@ import 'package:non_stop/features/packages/data/models/subscription_response.dar
 
 class PackagesScreen extends StatelessWidget {
   const PackagesScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Capture parent context before wrapping with BlocProvider
+    final parentContext = context;
+    
+    return Builder(
+      builder: (builderContext) {
+        // Check if PackagesCubit already exists in the widget tree
+        PackagesCubit? existingCubit;
+        try {
+          existingCubit = BlocProvider.of<PackagesCubit>(builderContext, listen: false);
+        } catch (e) {
+          // Cubit doesn't exist, will create new one
+        }
+
+        if (existingCubit != null) {
+          // Use existing cubit
+          return BlocProvider<PackagesCubit>.value(
+            value: existingCubit,
+            child: _PackagesScreenContent(parentContext: parentContext),
+          );
+        } else {
+          // Create new cubit
+          return BlocProvider<PackagesCubit>(
+            create: (context) => PackagesCubit()..fetchSubscriptions(),
+            child: _PackagesScreenContent(parentContext: parentContext),
+          );
+        }
+      },
+    );
+  }
+}
+
+class _PackagesScreenContent extends StatelessWidget {
+  final BuildContext parentContext;
+  
+  const _PackagesScreenContent({required this.parentContext});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +82,12 @@ class PackagesScreen extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        context.read<MainLayoutCubit>().changeBottomNavBar(0);
+                        try {
+                          parentContext.read<MainLayoutCubit>().changeBottomNavBar(0);
+                        } catch (e) {
+                          // If MainLayoutCubit is not available, try to pop
+                          Navigator.of(parentContext).pop();
+                        }
                       },
                       child: Container(
                         width: 44.w,
@@ -52,16 +96,19 @@ class PackagesScreen extends StatelessWidget {
                           color: const Color(0xff2A1A2C),
                           borderRadius: BorderRadius.circular(12.r),
                         ),
-                        child: SvgPicture.asset(
-                          "assets/svgs/Back _con.svg",
-                          width: 24.w,
-                          height: 24.h,
-                          fit: BoxFit.scaleDown,
+                        child: Transform.rotate(
+                          angle: context.locale.languageCode == 'en' ? math.pi : 0, // 180 degrees (π radians) for English
+                          child: SvgPicture.asset(
+                            "assets/svgs/Back _con.svg",
+                            width: 24.w,
+                            height: 24.h,
+                            fit: BoxFit.scaleDown,
+                          ),
                         ),
                       ),
                     ),
                     Text(
-                      'الباقات',
+                      'packages'.tr(),
                       style: Styles.heading2.copyWith(color: Colors.white),
                     ),
                     Container(
@@ -85,6 +132,14 @@ class PackagesScreen extends StatelessWidget {
                 Expanded(
                   child: BlocBuilder<PackagesCubit, PackagesState>(
                     builder: (context, state) {
+                      // Initialize cubit if needed
+                      final cubit = context.read<PackagesCubit>();
+                      if (state is PackagesInitial && cubit.subscriptions.isEmpty) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          cubit.fetchSubscriptions();
+                        });
+                      }
+
                       if (state is PackagesLoading) {
                         return SingleChildScrollView(
                           child: Column(
@@ -116,21 +171,24 @@ class PackagesScreen extends StatelessWidget {
                                 onPressed: () {
                                   context.read<PackagesCubit>().fetchSubscriptions();
                                 },
-                                child: const Text('إعادة المحاولة'),
+                                child: Text('retry'.tr()),
                               ),
                             ],
                           ),
                         );
                       }
 
+                      // Get subscriptions from state or cubit to maintain list even during subscribe operations
                       final subscriptions = state is PackagesSuccess
                           ? state.subscriptions
-                          : <SubscriptionModel>[];
+                          : cubit.subscriptions.isNotEmpty
+                              ? cubit.subscriptions
+                              : <SubscriptionModel>[];
 
                       if (subscriptions.isEmpty) {
                         return Center(
                           child: Text(
-                            'لا توجد باقات متاحة',
+                            'noPackagesAvailable'.tr(),
                             style: Styles.featureSemibold.copyWith(
                               color: Colors.white,
                             ),
@@ -138,15 +196,44 @@ class PackagesScreen extends StatelessWidget {
                         );
                       }
 
-                      return SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            42.verticalSpace,
-                            ...subscriptions.map((subscription) => Padding(
-                                  padding: EdgeInsets.only(bottom: 18.h),
-                                  child: _buildSubscriptionCard(context, subscription),
-                                )),
-                          ],
+                      return BlocListener<PackagesCubit, PackagesState>(
+                        listenWhen: (previous, current) =>
+                            current is PackagesSubscribeSuccess ||
+                            current is PackagesSubscribeFailure,
+                        listener: (context, state) {
+                          if (state is PackagesSubscribeSuccess) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(state.message),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+                          } else if (state is PackagesSubscribeFailure) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  state.message,
+                                  style: Styles.featureSemibold.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                backgroundColor: Colors.red,
+                                duration: const Duration(seconds: 4),
+                                behavior: SnackBarBehavior.floating,
+                              ),
+                            );
+                          }
+                        },
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              42.verticalSpace,
+                              ...subscriptions.map((subscription) => Padding(
+                                    padding: EdgeInsets.only(bottom: 18.h),
+                                    child: _buildSubscriptionCard(context, subscription),
+                                  )),
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -291,7 +378,7 @@ class PackagesScreen extends StatelessWidget {
           if (benefits.isNotEmpty) ...[
             19.verticalSpace,
             Text(
-              'المميزات',
+              'features'.tr(),
               style: Styles.featureSemibold.copyWith(
                 color: AppColors.neutralColor100,
               ),
@@ -305,14 +392,34 @@ class PackagesScreen extends StatelessWidget {
                 )),
           ],
           30.verticalSpace,
-          CustomButtonWidget(
-            onPressed: () {},
-            text: 'اشتراك الان',
-            textStyle: Styles.highlightBold.copyWith(
-              color: AppColors.neutralColor100,
-            ),
-            color: const Color(0xFF9F5A5B),
-            height: 56.h,
+          BlocBuilder<PackagesCubit, PackagesState>(
+            buildWhen: (previous, current) =>
+                current is PackagesSubscribeLoading ||
+                current is PackagesSubscribeSuccess ||
+                current is PackagesSubscribeFailure ||
+                current is PackagesSuccess,
+            builder: (context, state) {
+              final cubit = context.read<PackagesCubit>();
+              final isSubscribing = state is PackagesSubscribeLoading &&
+                  cubit.subscribingSubscriptionId == subscription.id;
+              
+              return CustomButtonWidget(
+                onPressed: isSubscribing
+                    ? null
+                    : () {
+                        cubit.subscribe(
+                          subscriptionId: subscription.id ?? 0,
+                          paymentMethod: 'cash',
+                        );
+                      },
+                text: isSubscribing ? 'subscribing'.tr() : 'subscribeNow'.tr(),
+                textStyle: Styles.highlightBold.copyWith(
+                  color: AppColors.neutralColor100,
+                ),
+                color: const Color(0xFF9F5A5B),
+                height: 56.h,
+              );
+            },
           ),
         ],
       ),

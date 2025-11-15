@@ -12,6 +12,16 @@ import 'package:non_stop/core/services/di/dependency_injection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize CacheHelper first to read saved language preference
+  await CacheHelper.init();
+  
+  // Get saved language preference or default to Arabic (matching original behavior)
+  final savedLanguage = CacheHelper.getCurrentLanguage();
+  final startLocale = savedLanguage == 'en' 
+      ? const Locale('en', 'UK') 
+      : const Locale('ar', 'EG'); // Default to Arabic if not set
+  
   await EasyLocalization.ensureInitialized();
   await DioHelper.init();
   await setupDependencyInjection();
@@ -21,14 +31,12 @@ void main() async {
   ]);
   await AppInitializer.init();
 
-  await EasyLocalization.ensureInitialized();
-  await CacheHelper.init();
   runApp(
     EasyLocalization(
       saveLocale: true,
       useFallbackTranslations: true,
       fallbackLocale: const Locale('ar', 'EG'),
-      startLocale: const Locale('ar', 'EG'),
+      startLocale: startLocale,
       supportedLocales: const [Locale('ar', 'EG'), Locale('en', 'UK')],
       path: 'assets/languages',
       child: Phoenix(

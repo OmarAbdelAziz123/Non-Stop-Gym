@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
@@ -19,7 +20,7 @@ class ComplaintsAndSuggestionsScreen extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: [
-              const CustomAppBar(title: "شكاوي و اقتراحات"),
+              CustomAppBar(title: "complaintsAndSuggestions".tr()),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
@@ -31,7 +32,7 @@ class ComplaintsAndSuggestionsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "رسالتك",
+                          "yourMessage".tr(),
                           style: Styles.heading2.copyWith(
                             color: AppColors.neutralColor100,
                           ),
@@ -51,7 +52,7 @@ class ComplaintsAndSuggestionsScreen extends StatelessWidget {
                         100.verticalSpace,
                         CustomButtonWidget(
                           textColor: Colors.white,
-                          text: "إرسال",
+                          text: "send".tr(),
                           onPressed: () {},
                         ),
                       ],

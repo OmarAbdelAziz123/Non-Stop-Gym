@@ -18,3 +18,17 @@ final class PackagesFailure extends PackagesState {
   final String message;
 }
 
+final class PackagesSubscribeLoading extends PackagesState {}
+
+final class PackagesSubscribeSuccess extends PackagesState {
+  PackagesSubscribeSuccess(this.message);
+
+  final String message;
+}
+
+final class PackagesSubscribeFailure extends PackagesState {
+  PackagesSubscribeFailure(this.message);
+
+  final String message;
+}
+

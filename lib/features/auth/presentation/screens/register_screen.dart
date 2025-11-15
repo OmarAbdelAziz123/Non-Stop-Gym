@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,7 +71,7 @@ class RegisterScreen extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Text(
-                                      'اهلا بك في تطبيق  نادي \n Non-stop ',
+                                      'welcomeToApp'.tr(),
                                       style: Styles.heading1.copyWith(
                                         color: AppColors.neutralColor100,
                                       ),
@@ -81,7 +79,7 @@ class RegisterScreen extends StatelessWidget {
                                     ),
                                     6.verticalSpace,
                                     Text(
-                                      'الرجاء إدخال رقم جوالك اوايميلك وسنرسل رمز التحقق إليه',
+                                      'enterPhoneOrEmailForVerification'.tr(),
                                       style: Styles.contentRegular.copyWith(
                                         color: AppColors.neutralColor100,
                                       ),
@@ -101,7 +99,7 @@ class RegisterScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "اسم المستخدم",
+                                    "username".tr(),
                                     style: Styles.highlightStandard.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -116,7 +114,7 @@ class RegisterScreen extends StatelessWidget {
                                     borderRadius: 6.r,
                                     backgroundColor: Colors.transparent,
                                     hintText:
-                                        "قم بإدخال اسم المستخدم الخاصة بك",
+                                        "enterYourUsername".tr(),
                                     hintStyle: Styles.captionRegular,
                                     validator: (value) {
                                       if (value!.isEmpty) {
@@ -128,7 +126,7 @@ class RegisterScreen extends StatelessWidget {
                                   16.verticalSpace,
 
                                   Text(
-                                    "رقم الهاتف",
+                                    "phoneNumber".tr(),
                                     style: Styles.highlightStandard.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -141,7 +139,7 @@ class RegisterScreen extends StatelessWidget {
                                     borderRadius: 6.r,
                                     backgroundColor: Colors.transparent,
                                     hintText:
-                                        "قم بإدخال رقم الهاتف الخاصة بك",
+                                        "enterYourPhoneNumber".tr(),
                                     hintStyle: Styles.captionRegular,
                                     validator: (value) {
                                       if (value!.isEmpty) {
@@ -152,7 +150,7 @@ class RegisterScreen extends StatelessWidget {
                                   ),
                                   16.verticalSpace,
                                   Text(
-                                    "البريد الإلكتروني",
+                                    "email".tr(),
                                     style: Styles.highlightStandard.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -164,7 +162,7 @@ class RegisterScreen extends StatelessWidget {
                                     obscureText: false,
                                     keyboardType: TextInputType.emailAddress,
                                     hintText:
-                                        'قم بإدخال بريدك الإلكتروني الخاصة بك',
+                                        'enterYourEmail'.tr(),
                                     hintStyle: Styles.captionRegular.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -178,7 +176,7 @@ class RegisterScreen extends StatelessWidget {
                                   ),
                                   16.verticalSpace,
                                   Text(
-                                    "الجنس",
+                                    "gender".tr(),
                                     style: Styles.highlightStandard.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -205,14 +203,14 @@ class RegisterScreen extends StatelessWidget {
                                       decoration: const InputDecoration(
                                         border: InputBorder.none,
                                       ),
-                                      items: const [
+                                      items: [
                                         DropdownMenuItem(
                                           value: 'male',
-                                          child: Text('ذكر'),
+                                          child: Text('male'.tr()),
                                         ),
                                         DropdownMenuItem(
                                           value: 'female',
-                                          child: Text('أنثى'),
+                                          child: Text('female'.tr()),
                                         ),
                                       ],
                                       style: Styles.contentRegular.copyWith(
@@ -231,7 +229,7 @@ class RegisterScreen extends StatelessWidget {
                                   ),
                                   16.verticalSpace,
                                   Text(
-                                    "كلمة المرور",
+                                    "password".tr(),
                                     style: Styles.highlightStandard.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -248,7 +246,7 @@ class RegisterScreen extends StatelessWidget {
                                             TextInputType.visiblePassword,
                                         backgroundColor: Colors.transparent,
                                         hintText:
-                                            'قم بإدخال كلمة المرور الخاصة بك',
+                                            'enterYourPassword'.tr(),
                                         hintStyle: Styles.captionRegular,
                                         validator: (value) {
                                           if (value == null ||
@@ -256,7 +254,7 @@ class RegisterScreen extends StatelessWidget {
                                             return 'passwordIsRequired'.tr();
                                           }
                                           if (value.trim().length < 8) {
-                                            return 'كلمة المرور يجب ألا تقل عن 8 أحرف';
+                                            return 'passwordMinLength'.tr();
                                           }
                                           return null;
                                         },
@@ -279,7 +277,7 @@ class RegisterScreen extends StatelessWidget {
                                   ),
                                   16.verticalSpace,
                                   Text(
-                                    "تأكيد كلمة المرور",
+                                    "confirmPassword".tr(),
                                     style: Styles.highlightStandard.copyWith(
                                       color: AppColors.neutralColor100,
                                     ),
@@ -296,7 +294,7 @@ class RegisterScreen extends StatelessWidget {
                                             TextInputType.visiblePassword,
                                         backgroundColor: Colors.transparent,
                                         hintText:
-                                            'قم بتأكيد كلمة المرور الخاصة بك',
+                                            'confirmYourPassword'.tr(),
                                         hintStyle: Styles.captionRegular,
                                         validator: (value) {
                                           if (value == null ||
@@ -306,7 +304,7 @@ class RegisterScreen extends StatelessWidget {
                                           if (value.trim() !=
                                               cubit.passwordController.text
                                                   .trim()) {
-                                            return 'كلمتا المرور غير متطابقتين';
+                                            return 'passwordsDoNotMatch'.tr();
                                           }
                                           return null;
                                         },
@@ -361,7 +359,7 @@ class RegisterScreen extends StatelessWidget {
                                             top: 4.0,
                                           ),
                                           child: Text(
-                                            "أوافق على سياسة الخصوصية و شروط الخدمة",
+                                            "agreeToPrivacyPolicy".tr(),
                                             style: Styles.captionRegular
                                                 .copyWith(
                                               color:
@@ -380,7 +378,7 @@ class RegisterScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                ' لدي حساب بالفعل ؟',
+                                'alreadyHaveAccount'.tr(),
                                 style: Styles.contentRegular.copyWith(
                                   color: AppColors.neutralColor100,
                                 ),
@@ -404,7 +402,7 @@ class RegisterScreen extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Text(
-                                      ' تسجيل دخول',
+                                      'login'.tr(),
                                       style: Styles.contentRegular.copyWith(
                                         color: const Color(0xFF9F5A5B),
                                         decoration: TextDecoration.underline,
@@ -432,7 +430,7 @@ class RegisterScreen extends StatelessWidget {
                                   SnackBar(
                                     content: Text(
                                       state.response.message ??
-                                          'تم إرسال رمز التحقق بنجاح',
+                                          'verificationCodeSentSuccessfully'.tr(),
                                     ),
                                   ),
                                 );
@@ -463,7 +461,7 @@ class RegisterScreen extends StatelessWidget {
                                     : () {
                                         cubit.register();
                                       },
-                                text: 'طلب OTP',
+                                text: 'requestOTP'.tr(),
                                 isLoading: isLoading,
                                 textStyle: Styles.contentRegular.copyWith(
                                   color: AppColors.neutralColor100,
