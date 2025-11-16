@@ -3,6 +3,7 @@ import 'package:non_stop/core/errors/failures.dart';
 import 'package:non_stop/core/network/api_result.dart';
 import 'package:non_stop/features/packages/data/api_services/packages_api_services.dart';
 import 'package:non_stop/features/packages/data/models/subscription_response.dart';
+import 'package:non_stop/features/packages/data/models/user_subscription_response.dart';
 
 class PackagesRepository {
   PackagesRepository(this._packagesApiServices);
@@ -129,6 +130,48 @@ class PackagesRepository {
             'Unexpected error occurred';
       }
       
+      return ApiResult.failure(
+        NetworkFailure(
+          message,
+          statusCode: statusCode,
+        ),
+      );
+    } catch (error) {
+      return ApiResult.failure(
+        UnknownFailure(error.toString()),
+      );
+    }
+  }
+
+  Future<ApiResult<List<UserSubscriptionModel>>> getUserSubscriptions() async {
+    try {
+      final response = await _packagesApiServices.getUserSubscriptions();
+
+      if (response == null) {
+        return const ApiResult.failure(
+          NetworkFailure('No response from server'),
+        );
+      }
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final userSubscriptionResponse = UserSubscriptionResponse.fromJson(
+          response.data as Map<String, dynamic>,
+        );
+        return ApiResult.success(userSubscriptionResponse.data ?? []);
+      }
+
+      final message = _extractErrorMessage(response.data) ?? 'Failed to load user subscriptions';
+      return ApiResult.failure(
+        NetworkFailure(
+          message,
+          statusCode: response.statusCode,
+        ),
+      );
+    } on DioException catch (error) {
+      final statusCode = error.response?.statusCode;
+      final message = _extractErrorMessage(error.response?.data) ??
+          error.message ??
+          'Unexpected error occurred';
       return ApiResult.failure(
         NetworkFailure(
           message,

@@ -367,6 +367,10 @@
     "title3": "Set your goals clearly!",
     "desc1": "We designed this experience to help you balance work stress and focus on your physical and mental health. Start a new journey toward a healthy, active lifestyle!",
     "desc2": "Get personalized workout programs that match your fitness level and goals — from strength training to cardio and flexibility.",
-    "desc3": "Whether you want to lose weight, build muscle, or improve your overall fitness, we’re here to support you every step of the way."
-  }
+    "desc3": "Whether you want to lose weight, build muscle, or improve your overall fitness, we're here to support you every step of the way."
+  },
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "noActivePackages": "No active packages",
+  "noCompletedPackages": "No completed packages"
 }

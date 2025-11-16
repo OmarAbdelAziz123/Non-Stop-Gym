@@ -7,24 +7,24 @@ part of 'subscription_response.dart';
 // **************************************************************************
 
 SubscriptionResponse _$SubscriptionResponseFromJson(
-        Map<String, dynamic> json) =>
-    SubscriptionResponse(
-      code: (json['code'] as num?)?.toInt(),
-      message: json['message'] as String?,
-      errors: json['errors'] as List<dynamic>?,
-      data: (json['data'] as List<dynamic>?)
-          ?.map((e) => SubscriptionModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+  Map<String, dynamic> json,
+) => SubscriptionResponse(
+  code: (json['code'] as num?)?.toInt(),
+  message: json['message'] as String?,
+  errors: json['errors'] as List<dynamic>?,
+  data: (json['data'] as List<dynamic>?)
+      ?.map((e) => SubscriptionModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
+);
 
 Map<String, dynamic> _$SubscriptionResponseToJson(
-        SubscriptionResponse instance) =>
-    <String, dynamic>{
-      'code': instance.code,
-      'message': instance.message,
-      'errors': instance.errors,
-      'data': instance.data?.map((e) => e.toJson()).toList(),
-    };
+  SubscriptionResponse instance,
+) => <String, dynamic>{
+  'code': instance.code,
+  'message': instance.message,
+  'errors': instance.errors,
+  'data': instance.data?.map((e) => e.toJson()).toList(),
+};
 
 SubscriptionModel _$SubscriptionModelFromJson(Map<String, dynamic> json) =>
     SubscriptionModel(
@@ -57,4 +57,3 @@ Map<String, dynamic> _$SubscriptionModelToJson(SubscriptionModel instance) =>
       'benefits': instance.benefits,
       'subscription_icon_type': instance.subscriptionIconType,
     };
-
