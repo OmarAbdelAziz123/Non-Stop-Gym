@@ -32,3 +32,17 @@ final class PackagesSubscribeFailure extends PackagesState {
   final String message;
 }
 
+final class PackagesUserSubscriptionsLoading extends PackagesState {}
+
+final class PackagesUserSubscriptionsSuccess extends PackagesState {
+  PackagesUserSubscriptionsSuccess(this.userSubscriptions);
+
+  final List<UserSubscriptionModel> userSubscriptions;
+}
+
+final class PackagesUserSubscriptionsFailure extends PackagesState {
+  PackagesUserSubscriptionsFailure(this.message);
+
+  final String message;
+}
+

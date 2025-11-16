@@ -31,5 +31,11 @@ class PackagesApiServices {
       endPoint: EndPoints.getUserSubscription,
     );
   }
+
+  Future<Response?> getUserSubscriptions() {
+    return _dioHelper.get(
+      endPoint: EndPoints.getUserSubscriptions,
+    );
+  }
 }
 

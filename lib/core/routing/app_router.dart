@@ -94,7 +94,10 @@ class AppRouter {
           ),
         );
       case Routes.myPackagesScreen:
-        return transition(screen: const MyPackagesScreen());
+        return transition(
+          screen: const MyPackagesScreen(),
+          cubit: PackagesCubit(),
+        );
       case Routes.notificationScreen:
         return transition(screen: const NotificationScreen());
 

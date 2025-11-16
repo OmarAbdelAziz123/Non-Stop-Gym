@@ -25,17 +25,17 @@ Map<String, dynamic> _$SettingsResponseToJson(SettingsResponse instance) =>
     };
 
 SettingsData _$SettingsDataFromJson(Map<String, dynamic> json) => SettingsData(
-      phone: json['phone'] as String?,
-      email: json['email'] as String?,
-      xLink: json['x_link'] as String?,
-      facebookLink: json['facebook_link'] as String?,
-      instagramLink: json['instagram_link'] as String?,
-      whatsappLink: json['whatsapp_link'] as String?,
-      aboutUs: json['about_us'] as String?,
-      ourVision: json['our_vision'] as String?,
-      ourValues: json['our_values'] as String?,
-      ourGoals: json['our_goals'] as String?,
-    );
+  phone: json['phone'] as String?,
+  email: json['email'] as String?,
+  xLink: json['x_link'] as String?,
+  facebookLink: json['facebook_link'] as String?,
+  instagramLink: json['instagram_link'] as String?,
+  whatsappLink: json['whatsapp_link'] as String?,
+  aboutUs: json['about_us'] as String?,
+  ourVision: json['our_vision'] as String?,
+  ourValues: json['our_values'] as String?,
+  ourGoals: json['our_goals'] as String?,
+);
 
 Map<String, dynamic> _$SettingsDataToJson(SettingsData instance) =>
     <String, dynamic>{
@@ -50,4 +50,3 @@ Map<String, dynamic> _$SettingsDataToJson(SettingsData instance) =>
       'our_values': instance.ourValues,
       'our_goals': instance.ourGoals,
     };
-

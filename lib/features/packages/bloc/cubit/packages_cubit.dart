@@ -3,6 +3,7 @@ import 'package:non_stop/core/errors/failures.dart' as errors;
 import 'package:non_stop/core/network/api_result.dart' as api_result;
 import 'package:non_stop/core/services/di/dependency_injection.dart';
 import 'package:non_stop/features/packages/data/models/subscription_response.dart';
+import 'package:non_stop/features/packages/data/models/user_subscription_response.dart';
 import 'package:non_stop/features/packages/data/repos/packages_repository.dart';
 
 part 'packages_state.dart';
@@ -15,6 +16,7 @@ class PackagesCubit extends Cubit<PackagesState> {
   final PackagesRepository _packagesRepository;
 
   List<SubscriptionModel> subscriptions = [];
+  List<UserSubscriptionModel> userSubscriptions = [];
   int? subscribingSubscriptionId;
 
   Future<void> fetchSubscriptions() async {
@@ -79,6 +81,29 @@ class PackagesCubit extends Cubit<PackagesState> {
 
     subscribingSubscriptionId = null;
     emit(PackagesSubscribeFailure('حدث خطأ غير متوقع'));
+  }
+
+  Future<void> fetchUserSubscriptions() async {
+    emit(PackagesUserSubscriptionsLoading());
+
+    final api_result.ApiResult<List<UserSubscriptionModel>> result =
+        await _packagesRepository.getUserSubscriptions();
+
+    if (result is api_result.Success<List<UserSubscriptionModel>>) {
+      userSubscriptions = result.data;
+      emit(PackagesUserSubscriptionsSuccess(userSubscriptions));
+      return;
+    }
+
+    if (result is api_result.Failure<List<UserSubscriptionModel>>) {
+      final error = result.errorHandler;
+      final message =
+          error is errors.Failure ? error.message : error.toString();
+      emit(PackagesUserSubscriptionsFailure(message));
+      return;
+    }
+
+    emit(PackagesUserSubscriptionsFailure('حدث خطأ غير متوقع'));
   }
 }
 
