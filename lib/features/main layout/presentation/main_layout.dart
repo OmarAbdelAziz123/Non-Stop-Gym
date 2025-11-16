@@ -58,7 +58,7 @@ class MainLayoutScreen extends StatelessWidget {
           ),
           _buildNavItem(
             svgPath: 'assets/svgs/gallery.svg',
-            label: 'Photogallery'.tr(),
+            label: 'photoGallery'.tr(),
             isActive: currentIndex == 2,
             onTap: () => cubit.changeBottomNavBar(2),
           ),

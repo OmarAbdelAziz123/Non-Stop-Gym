@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,7 +46,9 @@ class PhotoGalleryScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12.r),
                         ),
                         child: Transform.rotate(
-                          angle: context.locale.languageCode == 'en' ? math.pi : 0, // 180 degrees (π radians) for English
+                          angle: context.locale.languageCode == 'en'
+                              ? math.pi
+                              : 0, // 180 degrees (π radians) for English
                           child: SvgPicture.asset(
                             "assets/svgs/Back _con.svg",
                             width: 24.w,
