@@ -38,7 +38,6 @@ class CustomAppBar extends StatelessWidget {
                   } else {
                     Navigator.pop(context);
                   }
-
                 },
                 icon: Container(
                   padding: EdgeInsets.all(12.sp),

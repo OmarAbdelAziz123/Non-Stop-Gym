@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
 import 'package:non_stop/core/constants/hex_colors.dart';
+import 'package:non_stop/core/extensions/navigation_extension.dart';
+import 'package:non_stop/core/routing/routes_name.dart';
 import 'package:non_stop/core/widgets/button/custom_button_widget.dart';
 import 'package:non_stop/core/widgets/row/custom_row_with_check_widget.dart';
 import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit.dart';
@@ -20,13 +23,16 @@ class PackagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Capture parent context before wrapping with BlocProvider
     final parentContext = context;
-    
+
     return Builder(
       builder: (builderContext) {
         // Check if PackagesCubit already exists in the widget tree
         PackagesCubit? existingCubit;
         try {
-          existingCubit = BlocProvider.of<PackagesCubit>(builderContext, listen: false);
+          existingCubit = BlocProvider.of<PackagesCubit>(
+            builderContext,
+            listen: false,
+          );
         } catch (e) {
           // Cubit doesn't exist, will create new one
         }
@@ -51,7 +57,7 @@ class PackagesScreen extends StatelessWidget {
 
 class _PackagesScreenContent extends StatelessWidget {
   final BuildContext parentContext;
-  
+
   const _PackagesScreenContent({required this.parentContext});
 
   @override
@@ -83,7 +89,9 @@ class _PackagesScreenContent extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         try {
-                          parentContext.read<MainLayoutCubit>().changeBottomNavBar(0);
+                          parentContext
+                              .read<MainLayoutCubit>()
+                              .changeBottomNavBar(0);
                         } catch (e) {
                           // If MainLayoutCubit is not available, try to pop
                           Navigator.of(parentContext).pop();
@@ -97,7 +105,9 @@ class _PackagesScreenContent extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12.r),
                         ),
                         child: Transform.rotate(
-                          angle: context.locale.languageCode == 'en' ? math.pi : 0, // 180 degrees (π radians) for English
+                          angle: context.locale.languageCode == 'en'
+                              ? math.pi
+                              : 0, // 180 degrees (π radians) for English
                           child: SvgPicture.asset(
                             "assets/svgs/Back _con.svg",
                             width: 24.w,
@@ -111,18 +121,23 @@ class _PackagesScreenContent extends StatelessWidget {
                       'packages'.tr(),
                       style: Styles.heading2.copyWith(color: Colors.white),
                     ),
-                    Container(
-                      width: 44.w,
-                      height: 44.h,
-                      decoration: BoxDecoration(
-                        color: const Color(0xff2A1A2C),
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: SvgPicture.asset(
-                        "assets/svgs/Notification.svg",
-                        width: 24.w,
-                        height: 24.h,
-                        fit: BoxFit.scaleDown,
+                    InkWell(
+                      onTap: () {
+                        context.pushNamed(Routes.notificationScreen);
+                      },
+                      child: Container(
+                        width: 44.w,
+                        height: 44.h,
+                        decoration: BoxDecoration(
+                          color: const Color(0xff2A1A2C),
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: SvgPicture.asset(
+                          "assets/svgs/Notification.svg",
+                          width: 24.w,
+                          height: 24.h,
+                          fit: BoxFit.scaleDown,
+                        ),
                       ),
                     ),
                   ],
@@ -134,7 +149,8 @@ class _PackagesScreenContent extends StatelessWidget {
                     builder: (context, state) {
                       // Initialize cubit if needed
                       final cubit = context.read<PackagesCubit>();
-                      if (state is PackagesInitial && cubit.subscriptions.isEmpty) {
+                      if (state is PackagesInitial &&
+                          cubit.subscriptions.isEmpty) {
                         WidgetsBinding.instance.addPostFrameCallback((_) {
                           cubit.fetchSubscriptions();
                         });
@@ -169,7 +185,9 @@ class _PackagesScreenContent extends StatelessWidget {
                               16.verticalSpace,
                               ElevatedButton(
                                 onPressed: () {
-                                  context.read<PackagesCubit>().fetchSubscriptions();
+                                  context
+                                      .read<PackagesCubit>()
+                                      .fetchSubscriptions();
                                 },
                                 child: Text('retry'.tr()),
                               ),
@@ -182,8 +200,8 @@ class _PackagesScreenContent extends StatelessWidget {
                       final subscriptions = state is PackagesSuccess
                           ? state.subscriptions
                           : cubit.subscriptions.isNotEmpty
-                              ? cubit.subscriptions
-                              : <SubscriptionModel>[];
+                          ? cubit.subscriptions
+                          : <SubscriptionModel>[];
 
                       if (subscriptions.isEmpty) {
                         return Center(
@@ -228,10 +246,15 @@ class _PackagesScreenContent extends StatelessWidget {
                           child: Column(
                             children: [
                               42.verticalSpace,
-                              ...subscriptions.map((subscription) => Padding(
-                                    padding: EdgeInsets.only(bottom: 18.h),
-                                    child: _buildSubscriptionCard(context, subscription),
-                                  )),
+                              ...subscriptions.map(
+                                (subscription) => Padding(
+                                  padding: EdgeInsets.only(bottom: 18.h),
+                                  child: _buildSubscriptionCard(
+                                    context,
+                                    subscription,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -247,10 +270,18 @@ class _PackagesScreenContent extends StatelessWidget {
     );
   }
 
-  Widget _buildSubscriptionCard(BuildContext context, SubscriptionModel subscription) {
-    final iconPath = _getIconPath(subscription.subscriptionIconType ?? 'bronze');
+  Widget _buildSubscriptionCard(
+    BuildContext context,
+    SubscriptionModel subscription,
+  ) {
+    final iconPath = _getIconPath(
+      subscription.subscriptionIconType ?? 'bronze',
+    );
     final benefits = subscription.benefits?.split('\n') ?? [];
-    final durationText = _getDurationText(subscription.typeAmount ?? 0, subscription.typeLabel ?? '');
+    final durationText = _getDurationText(
+      subscription.typeAmount ?? 0,
+      subscription.typeLabel ?? '',
+    );
 
     return Container(
       padding: EdgeInsets.only(
@@ -263,7 +294,7 @@ class _PackagesScreenContent extends StatelessWidget {
         color: hexToColor('#02040B'),
         borderRadius: BorderRadius.circular(10.r),
         border: Border.all(
-          color: Color(0xFF15151569).withValues(alpha: .5),
+          color: Color(0xff15151569).withValues(alpha: .5),
           width: .5.w,
         ),
       ),
@@ -276,21 +307,18 @@ class _PackagesScreenContent extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(8.sp),
                 decoration: BoxDecoration(
-                  color: Color(0xFF9F5A5B1A).withAlpha(10),
+                  color: Color(0xff9f5a5b1a).withAlpha(10),
                   borderRadius: BorderRadius.circular(4.r),
                 ),
-                child: Image.asset(
-                  iconPath,
-                  width: 26.w,
-                  height: 26.h,
-                ),
+                child: Image.asset(iconPath, width: 26.w, height: 26.h),
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   if (subscription.priceAfterDiscount != null &&
-                      subscription.priceAfterDiscount != subscription.price) ...[
+                      subscription.priceAfterDiscount !=
+                          subscription.price) ...[
                     // Original price with strikethrough
                     Row(
                       mainAxisSize: MainAxisSize.min,
@@ -349,12 +377,8 @@ class _PackagesScreenContent extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: 20.w,
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    vertical: 10.h,
-                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 20.w),
+                  padding: EdgeInsets.symmetric(vertical: 10.h),
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                     borderRadius: BorderRadius.circular(5.r),
@@ -384,12 +408,12 @@ class _PackagesScreenContent extends StatelessWidget {
               ),
             ),
             21.verticalSpace,
-            ...benefits.map((benefit) => Padding(
-                  padding: EdgeInsets.only(bottom: 6.h),
-                  child: CustomRowWithCheckWidget(
-                    text: benefit.trim(),
-                  ),
-                )),
+            ...benefits.map(
+              (benefit) => Padding(
+                padding: EdgeInsets.only(bottom: 6.h),
+                child: CustomRowWithCheckWidget(text: benefit.trim()),
+              ),
+            ),
           ],
           30.verticalSpace,
           BlocBuilder<PackagesCubit, PackagesState>(
@@ -400,9 +424,10 @@ class _PackagesScreenContent extends StatelessWidget {
                 current is PackagesSuccess,
             builder: (context, state) {
               final cubit = context.read<PackagesCubit>();
-              final isSubscribing = state is PackagesSubscribeLoading &&
+              final isSubscribing =
+                  state is PackagesSubscribeLoading &&
                   cubit.subscribingSubscriptionId == subscription.id;
-              
+
               return CustomButtonWidget(
                 onPressed: isSubscribing
                     ? null
@@ -457,7 +482,7 @@ class _PackagesScreenContent extends StatelessWidget {
           color: hexToColor('#02040B'),
           borderRadius: BorderRadius.circular(10.r),
           border: Border.all(
-            color: Color(0xFF15151569).withValues(alpha: .5),
+            color: Color(0xff15151569).withValues(alpha: .5),
             width: .5.w,
           ),
         ),
@@ -470,7 +495,7 @@ class _PackagesScreenContent extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(8.sp),
                   decoration: BoxDecoration(
-                    color: Color(0xFF9F5A5B1A).withAlpha(10),
+                    color: Color(0xff9f5a5b1a).withAlpha(10),
                     borderRadius: BorderRadius.circular(4.r),
                   ),
                   child: Container(
@@ -519,12 +544,8 @@ class _PackagesScreenContent extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal: 20.w,
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      vertical: 10.h,
-                    ),
+                    margin: EdgeInsets.symmetric(horizontal: 20.w),
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
                     decoration: BoxDecoration(
                       color: Colors.transparent,
                       borderRadius: BorderRadius.circular(5.r),
@@ -637,11 +658,7 @@ class _ShimmerWrapperState extends State<_ShimmerWrapper>
             return LinearGradient(
               begin: Alignment(-1.0 - _controller.value * 2, 0.0),
               end: Alignment(1.0 - _controller.value * 2, 0.0),
-              colors: [
-                Colors.grey[800]!,
-                Colors.grey[700]!,
-                Colors.grey[800]!,
-              ],
+              colors: [Colors.grey[800]!, Colors.grey[700]!, Colors.grey[800]!],
               stops: const [0.0, 0.5, 1.0],
             ).createShader(bounds);
           },

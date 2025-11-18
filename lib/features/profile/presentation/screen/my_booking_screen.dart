@@ -1,12 +1,14 @@
 import 'dart:math' as math;
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:non_stop/common/extensions/build_context_extensions.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
 import 'package:non_stop/core/constants/hex_colors.dart';
+import 'package:non_stop/core/extensions/navigation_extension.dart';
+import 'package:non_stop/core/routing/routes_name.dart';
 import 'package:non_stop/features/profile/bloc/cubit/profile_cubit.dart';
 import 'package:non_stop/features/profile/data/models/booking_response.dart';
 
@@ -35,9 +37,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: Color(0xff160618),
-      ),
+      decoration: BoxDecoration(color: Color(0xff160618)),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
@@ -61,7 +61,9 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
                           borderRadius: BorderRadius.circular(12.r),
                         ),
                         child: Transform.rotate(
-                          angle: context.locale.languageCode == 'en' ? math.pi : 0,
+                          angle: context.locale.languageCode == 'en'
+                              ? math.pi
+                              : 0,
                           child: SvgPicture.asset(
                             "assets/svgs/Back _con.svg",
                             width: 24.w,
@@ -75,18 +77,23 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
                       'myBookings'.tr(),
                       style: Styles.heading2.copyWith(color: Colors.white),
                     ),
-                    Container(
-                      width: 44.w,
-                      height: 44.h,
-                      decoration: BoxDecoration(
-                        color: const Color(0xff2A1A2C),
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: SvgPicture.asset(
-                        "assets/svgs/Notification.svg",
-                        width: 24.w,
-                        height: 24.h,
-                        fit: BoxFit.scaleDown,
+                    InkWell(
+                      onTap: () {
+                        context.pushNamed(Routes.notificationScreen);
+                      },
+                      child: Container(
+                        width: 44.w,
+                        height: 44.h,
+                        decoration: BoxDecoration(
+                          color: const Color(0xff2A1A2C),
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: SvgPicture.asset(
+                          "assets/svgs/Notification.svg",
+                          width: 24.w,
+                          height: 24.h,
+                          fit: BoxFit.scaleDown,
+                        ),
                       ),
                     ),
                   ],
@@ -109,7 +116,9 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
                               child: GestureDetector(
                                 onTap: () {
                                   setState(() => isActive = true);
-                                  context.read<ProfileCubit>().fetchUserBookings('active');
+                                  context
+                                      .read<ProfileCubit>()
+                                      .fetchUserBookings('active');
                                 },
                                 child: AnimatedContainer(
                                   duration: const Duration(milliseconds: 300),
@@ -146,7 +155,9 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
                               child: GestureDetector(
                                 onTap: () {
                                   setState(() => isActive = false);
-                                  context.read<ProfileCubit>().fetchUserBookings('finished');
+                                  context
+                                      .read<ProfileCubit>()
+                                      .fetchUserBookings('finished');
                                 },
                                 child: AnimatedContainer(
                                   duration: const Duration(milliseconds: 300),
@@ -213,8 +224,11 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
                                     16.verticalSpace,
                                     ElevatedButton(
                                       onPressed: () {
-                                        context.read<ProfileCubit>().fetchUserBookings(
-                                            isActive ? 'active' : 'finished');
+                                        context
+                                            .read<ProfileCubit>()
+                                            .fetchUserBookings(
+                                              isActive ? 'active' : 'finished',
+                                            );
                                       },
                                       child: Text('retry'.tr()),
                                     ),
@@ -242,10 +256,12 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
                               child: Column(
                                 key: ValueKey(isActive),
                                 children: [
-                                  ...bookings.map((booking) => Padding(
-                                        padding: EdgeInsets.only(bottom: 18.h),
-                                        child: _buildBookingCard(booking),
-                                      )),
+                                  ...bookings.map(
+                                    (booking) => Padding(
+                                      padding: EdgeInsets.only(bottom: 18.h),
+                                      child: _buildBookingCard(booking),
+                                    ),
+                                  ),
                                 ],
                               ),
                             );
@@ -265,7 +281,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
 
   Widget _buildBookingCard(BookingModel booking) {
     final bookingDate = booking.bookingDate;
-    
+
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
@@ -465,11 +481,7 @@ class _ShimmerWrapperState extends State<_ShimmerWrapper>
             return LinearGradient(
               begin: Alignment(-1.0 - _controller.value * 2, 0.0),
               end: Alignment(1.0 - _controller.value * 2, 0.0),
-              colors: [
-                Colors.grey[800]!,
-                Colors.grey[700]!,
-                Colors.grey[800]!,
-              ],
+              colors: [Colors.grey[800]!, Colors.grey[700]!, Colors.grey[800]!],
               stops: const [0.0, 0.5, 1.0],
             ).createShader(bounds);
           },

@@ -10,6 +10,8 @@ import 'package:non_stop/core/cache_helper/cache_helper.dart';
 import 'package:non_stop/core/cache_helper/cache_keys.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
+import 'package:non_stop/core/extensions/navigation_extension.dart';
+import 'package:non_stop/core/routing/routes_name.dart';
 import 'package:non_stop/features/home/bloc/cubit/home_cubit.dart';
 import 'package:non_stop/features/home/data/models/banner_response.dart';
 import 'package:non_stop/features/home/presentation/screen/gifts_tap.dart';
@@ -289,7 +291,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 20.h,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.pushNamed(Routes.notificationScreen);
+                        },
                       ),
                     ],
                   ),
@@ -402,24 +406,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
 
-              // selectedTab == 0
-              //     ? const RelaxTap()
-              //     : selectedTab == 1
-              //     ? Builder(
-              //         builder: (context) {
-              //           Navigator.push(
-              //             context,
-              //             MaterialPageRoute(
-              //               builder: (_) => BlocProvider(
-              //                 create: (_) => GalleryCubit(),
-              //                 child: const PhotoGalleryScreen(),
-              //               ),
-              //             ),
-              //           );
-              //           return const SizedBox.shrink();
-              //         },
-              //       )
-              //     : GiftsTap(),
               selectedTab == 0
                   ? const RelaxTap()
                   : selectedTab == 1
