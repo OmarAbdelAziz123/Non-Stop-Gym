@@ -82,6 +82,8 @@ class PhotoGalleryScreen extends StatelessWidget {
               Expanded(
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  shrinkWrap: true,
+
                   children: [
                     20.verticalSpace,
 

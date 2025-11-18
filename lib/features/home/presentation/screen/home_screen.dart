@@ -173,9 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: Styles.contentRegular.copyWith(
-                color: Colors.white70,
-              ),
+              style: Styles.contentRegular.copyWith(color: Colors.white70),
             ),
             12.verticalSpace,
             TextButton(
@@ -211,13 +209,15 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CachedNetworkImage(
                 imageUrl: banner.image ?? '',
                 fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
-                  color: const Color(0xFF2A2535),
-                ),
+                placeholder: (context, url) =>
+                    Container(color: const Color(0xFF2A2535)),
                 errorWidget: (context, url, error) => Container(
                   color: const Color(0xFF2A2535),
-                  child: const Icon(Icons.image_not_supported_outlined,
-                      color: Colors.white54, size: 40),
+                  child: const Icon(
+                    Icons.image_not_supported_outlined,
+                    color: Colors.white54,
+                    size: 40,
+                  ),
                 ),
               ),
             ),
@@ -244,9 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Container(
                         width: 45.sp,
                         height: 45.sp,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
+                        decoration: const BoxDecoration(shape: BoxShape.circle),
                         clipBehavior: Clip.antiAlias,
                         child: CachedNetworkImage(
                           imageUrl: userImage,
@@ -319,6 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     final homeCubit = BlocProvider.of<HomeCubit>(context);
@@ -369,9 +368,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: Image.asset(
                                 i == 0
-                                    ? 'assets/pngs/relax.png'
+                                    ? 'assets/pngs/booking.png'
                                     : i == 1
-                                    ? 'assets/pngs/device.png'
+                                    ? 'assets/pngs/moments.png'
                                     : 'assets/pngs/offer2.png',
                                 color: Colors.white,
                                 width: 50.w,
@@ -403,11 +402,29 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
 
+              // selectedTab == 0
+              //     ? const RelaxTap()
+              //     : selectedTab == 1
+              //     ? Builder(
+              //         builder: (context) {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (_) => BlocProvider(
+              //                 create: (_) => GalleryCubit(),
+              //                 child: const PhotoGalleryScreen(),
+              //               ),
+              //             ),
+              //           );
+              //           return const SizedBox.shrink();
+              //         },
+              //       )
+              //     : GiftsTap(),
               selectedTab == 0
                   ? const RelaxTap()
                   : selectedTab == 1
-                  ? const RelaxTap()
-                  // ? const SizedBox.shrink()
+                  // ? const RelaxTap()
+                  ? const SizedBox.shrink()
                   : GiftsTap(),
             ],
           ),
