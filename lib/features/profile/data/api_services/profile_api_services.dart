@@ -67,5 +67,12 @@ class ProfileApiServices {
     if (path.endsWith('.webp')) return MediaType('image', 'webp');
     return MediaType('application', 'octet-stream');
   }
+
+  Future<Response?> getUserBookings(String status) {
+    return _dioHelper.get(
+      endPoint: EndPoints.getUserBookings,
+      data: {'status': status},
+    );
+  }
 }
 

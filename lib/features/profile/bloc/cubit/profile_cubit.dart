@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:non_stop/core/errors/failures.dart' as errors;
 import 'package:non_stop/core/network/api_result.dart' as api_result;
 import 'package:non_stop/core/services/di/dependency_injection.dart';
 import 'package:non_stop/features/profile/data/models/profile_response.dart';
+import 'package:non_stop/features/profile/data/models/booking_response.dart';
 import 'package:non_stop/features/profile/data/repos/profile_repository.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -21,6 +23,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   DateTime selectedDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 7));
   ProfileData? profileData;
+  List<BookingModel> bookings = [];
 
   void updateFocusedDay(DateTime day) {
     final firstDay = DateTime.now();
@@ -91,7 +94,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
 
     if (!hasChanges) {
-      emit(ProfileUpdateFailure('لا توجد تغييرات لتحديثها'));
+      emit(ProfileUpdateFailure('noChangesToUpdate'.tr()));
       return;
     }
 
@@ -123,7 +126,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       return;
     }
 
-    emit(ProfileUpdateFailure('حدث خطأ غير متوقع'));
+    emit(ProfileUpdateFailure('unexpectedErrorOccurred'.tr()));
   }
 
   Future<void> changePassword({
@@ -140,7 +143,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
     if (result is api_result.Success<ProfileData>) {
       profileData = result.data;
-      emit(ProfileChangePasswordSuccess('تم تحديث كلمة المرور بنجاح'));
+      emit(ProfileChangePasswordSuccess('passwordUpdatedSuccessfully'.tr()));
       emit(ProfileLoaded(result.data));
       return;
     }
@@ -153,6 +156,29 @@ class ProfileCubit extends Cubit<ProfileState> {
       return;
     }
 
-    emit(ProfileChangePasswordFailure('حدث خطأ غير متوقع'));
+    emit(ProfileChangePasswordFailure('unexpectedErrorOccurred'.tr()));
+  }
+
+  Future<void> fetchUserBookings(String status) async {
+    emit(ProfileBookingsLoading());
+
+    final api_result.ApiResult<List<BookingModel>> result =
+        await _profileRepository.getUserBookings(status);
+
+    if (result is api_result.Success<List<BookingModel>>) {
+      bookings = result.data;
+      emit(ProfileBookingsSuccess(bookings));
+      return;
+    }
+
+    if (result is api_result.Failure<List<BookingModel>>) {
+      final error = result.errorHandler;
+      final message =
+          error is errors.Failure ? error.message : error.toString();
+      emit(ProfileBookingsFailure(message));
+      return;
+    }
+
+    emit(ProfileBookingsFailure('unexpectedErrorOccurred'.tr()));
   }
 }

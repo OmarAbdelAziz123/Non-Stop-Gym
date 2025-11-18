@@ -7,6 +7,7 @@ import 'package:non_stop/core/errors/failures.dart';
 import 'package:non_stop/core/network/api_result.dart';
 import 'package:non_stop/features/profile/data/api_services/profile_api_services.dart';
 import 'package:non_stop/features/profile/data/models/profile_response.dart';
+import 'package:non_stop/features/profile/data/models/booking_response.dart';
 
 class ProfileRepository {
   ProfileRepository(this._profileApiServices);
@@ -173,6 +174,48 @@ class ProfileRepository {
       await CacheHelper.saveData(
         key: CacheKeys.userImage,
         value: profile.image,
+      );
+    }
+  }
+
+  Future<ApiResult<List<BookingModel>>> getUserBookings(String status) async {
+    try {
+      final response = await _profileApiServices.getUserBookings(status);
+
+      if (response == null) {
+        return const ApiResult.failure(
+          NetworkFailure('No response from server'),
+        );
+      }
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final bookingResponse = BookingResponse.fromJson(
+          response.data as Map<String, dynamic>,
+        );
+        return ApiResult.success(bookingResponse.data ?? []);
+      }
+
+      final message = _extractErrorMessage(response.data) ?? 'Failed to load bookings';
+      return ApiResult.failure(
+        NetworkFailure(
+          message,
+          statusCode: response.statusCode,
+        ),
+      );
+    } on DioException catch (error) {
+      final statusCode = error.response?.statusCode;
+      final message = _extractErrorMessage(error.response?.data) ??
+          error.message ??
+          'Unexpected error occurred';
+      return ApiResult.failure(
+        NetworkFailure(
+          message,
+          statusCode: statusCode,
+        ),
+      );
+    } catch (error) {
+      return ApiResult.failure(
+        UnknownFailure(error.toString()),
       );
     }
   }

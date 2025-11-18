@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:non_stop/core/cache_helper/cache_helper.dart';
 import 'package:non_stop/core/constants/app_constants.dart';
 import 'package:non_stop/core/extensions/navigation_extension.dart';
@@ -54,7 +55,10 @@ class ProfilePage extends StatelessWidget {
                               Text(
                                 state.message,
                                 style:
-                                    const TextStyle(color: Colors.redAccent),
+                                    TextStyle(
+                                      color: Colors.redAccent,
+                                      fontFamily: GoogleFonts.cairo().fontFamily,
+                                    ),
                               ),
                               const SizedBox(height: 12),
                               ElevatedButton(
@@ -188,7 +192,11 @@ class ProfilePage extends StatelessWidget {
                       icon: const Icon(Icons.logout, color: Colors.white),
                       label: Text(
                         'logout'.tr(),
-                        style: const TextStyle(color: Colors.white, fontSize: 16),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: GoogleFonts.cairo().fontFamily,
+                        ),
                       ),
                       style: OutlinedButton.styleFrom(
                         side: const BorderSide(color: Color(0xff9F5A5B)),
@@ -209,7 +217,11 @@ class ProfilePage extends StatelessWidget {
                       ),
                       label: Text(
                         'deleteAccount'.tr(),
-                        style: const TextStyle(color: Colors.white, fontSize: 16),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: GoogleFonts.cairo().fontFamily,
+                        ),
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff9F5A5B),

@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:non_stop/features/profile/data/models/profile_response.dart';
 
 class ProfileCard extends StatelessWidget {
@@ -59,7 +61,11 @@ class ProfileCard extends StatelessWidget {
           ),
           Text(
             email,
-            style: const TextStyle(color: Colors.grey, fontSize: 13),
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 13,
+              fontFamily: GoogleFonts.cairo().fontFamily,
+            ),
           ),
           const SizedBox(height: 12),
           if (isEditProfile) ...[
@@ -83,15 +89,17 @@ class ProfileCard extends StatelessWidget {
                     )
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.edit, color: Colors.white),
-                        SizedBox(width: 8),
+                      children: [
+                        const Icon(Icons.edit, color: Colors.white),
+                        const SizedBox(width: 8),
                         Text(
-                          "تعديل الملف الشخصي",
+                          'editProfile'.tr(),
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600),
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: GoogleFonts.cairo().fontFamily,
+                          ),
                         ),
                       ],
                     ),
@@ -102,13 +110,19 @@ class ProfileCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '$completed :الحصص المكتملة',
-                style: const TextStyle(color: Colors.grey),
+                '$completed :${'completedSessions'.tr()}',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontFamily: GoogleFonts.cairo().fontFamily,
+                ),
               ),
               const SizedBox(width: 16),
               Text(
-                '$active :الحصص المتبقية',
-                style: const TextStyle(color: Colors.grey),
+                '$active :${'remainingSessions'.tr()}',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontFamily: GoogleFonts.cairo().fontFamily,
+                ),
               ),
             ],
           ),

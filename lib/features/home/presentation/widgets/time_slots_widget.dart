@@ -1,18 +1,21 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:non_stop/core/constants/app_styles.dart';
+import 'package:non_stop/features/home/data/models/available_slots_response.dart';
 
 class TimeSlotsWidget extends StatelessWidget {
   const TimeSlotsWidget({
     super.key,
-    required this.times,
-    required this.selectedTimeSlot,
-    this.onTimeSlotSelected,
+    required this.slots,
+    required this.selectedSlotId,
+    this.onSlotSelected,
   });
 
-  final List<List<String>> times;
-  final String? selectedTimeSlot;
-  final Function(String)? onTimeSlotSelected;
+  final List<AvailableSlotModel> slots;
+  final int? selectedSlotId;
+  final Function(AvailableSlotModel)? onSlotSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class TimeSlotsWidget extends StatelessWidget {
                 ),
                 12.horizontalSpace,
                 Text(
-                  'الوقت المتاح',
+                  'availableTime'.tr(),
                   style: Styles.captionEmphasis.copyWith(
                     color: Colors.white,
                     fontSize: 16.sp,
@@ -60,12 +63,12 @@ class TimeSlotsWidget extends StatelessWidget {
                 spacing: 12.w,
                 runSpacing: 12.h,
                 alignment: WrapAlignment.center,
-                children: times.map((time) {
-                  final timeKey = '${time[0]}-${time[1]}';
-                  final isSelected = selectedTimeSlot == timeKey;
+                children: slots.map((slot) {
+                  final isSelected = selectedSlotId == slot.id;
+                  
                   return GestureDetector(
                     onTap: () {
-                      onTimeSlotSelected?.call(timeKey);
+                      onSlotSelected?.call(slot);
                     },
                     child: Container(
                       width: cardWidth,
@@ -74,59 +77,27 @@ class TimeSlotsWidget extends StatelessWidget {
                         vertical: 12.h,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.transparent,
+                        color: isSelected
+                            ? const Color(0xFFE57373).withOpacity(0.2)
+                            : Colors.transparent,
                         borderRadius: BorderRadius.circular(8.r),
                         border: Border.all(
                           color: isSelected
                               ? const Color(0xFFE57373)
                               : Colors.white,
-                          width: 1.w,
+                          width: isSelected ? 2.w : 1.w,
                         ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: Text(
-                              ' ${time[0]}صباحا',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
+                      child: Center(
+                        child: Text(
+                          slot.time ?? '',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.sp,
+                            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                            fontFamily: GoogleFonts.cairo().fontFamily,
                           ),
-
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 2.w),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.keyboard_arrow_left,
-                                  color: const Color(0xFFE57373),
-                                  size: 17.sp,
-                                ),
-                                Icon(
-                                  Icons.keyboard_arrow_left,
-                                  color: const Color(0xFFE57373),
-                                  size: 17.sp,
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          Flexible(
-                            child: Text(
-                              ' ${time[1]} صباحا',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 11.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   );

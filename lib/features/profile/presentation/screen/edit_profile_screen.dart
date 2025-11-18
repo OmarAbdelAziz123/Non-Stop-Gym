@@ -78,7 +78,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (_passwordController.text.isNotEmpty &&
         _passwordController.text != _passwordConfirmController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('كلمتا المرور غير متطابقتين')),
+        SnackBar(content: Text('passwordsDoNotMatch'.tr())),
       );
       return;
     }
@@ -156,7 +156,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             _passwordConfirmController.clear();
           });
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('تم تحديث الملف الشخصي بنجاح')),
+            SnackBar(content: Text('profileUpdatedSuccessfully'.tr())),
           );
         } else if (state is ProfileUpdateFailure) {
           ScaffoldMessenger.of(
@@ -195,7 +195,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: Column(
                   children: [
                     CustomAppBar(
-                      title: 'تعديل الملف الشخصي',
+                      title: 'editProfile'.tr(),
                       onBack: () => Navigator.of(context).pop(_hasUpdated),
                     ),
                     Expanded(
@@ -228,7 +228,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     const SizedBox(height: 12),
                                     ElevatedButton(
                                       onPressed: cubit.fetchProfile,
-                                      child: const Text('إعادة المحاولة'),
+                                      child: Text('retry'.tr()),
                                     ),
                                   ],
                                 ),
@@ -257,7 +257,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         Icons.camera_alt_outlined,
                                       ),
                                       label: Text(
-                                        'تغيير الصورة',
+                                        'changeImage'.tr(),
                                         style: TextStyle(
                                           color: const Color(0xff9F5A5B),
                                           fontFamily: GoogleFonts.cairo().fontFamily,
@@ -267,38 +267,38 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   ),
                                   CustomTextFormFieldWidget(
                                     controller: _nameController,
-                                    labelText: 'اسم المستخدم',
-                                    hintText: 'ادخل الاسم',
+                                    labelText: 'username'.tr(),
+                                    hintText: 'enterYourName'.tr(),
                                     validator: (value) {
                                       if (value == null ||
                                           value.trim().isEmpty) {
-                                        return 'الاسم مطلوب';
+                                        return 'nameRequired'.tr();
                                       }
                                       return null;
                                     },
                                   ),
                                   CustomTextFormFieldWidget(
                                     controller: _emailController,
-                                    labelText: 'البريد الإلكتروني',
+                                    labelText: 'emailOnly'.tr(),
                                     keyboardType: TextInputType.emailAddress,
-                                    hintText: 'ادخل البريد الإلكتروني',
+                                    hintText: 'enterYourEmail'.tr(),
                                     validator: (value) {
                                       if (value == null ||
                                           value.trim().isEmpty) {
-                                        return 'البريد الإلكتروني مطلوب';
+                                        return 'emailRequired'.tr();
                                       }
                                       return null;
                                     },
                                   ),
                                   CustomTextFormFieldWidget(
                                     controller: _phoneController,
-                                    labelText: 'رقم الهاتف',
+                                    labelText: 'phoneNumberOnly'.tr(),
                                     keyboardType: TextInputType.phone,
-                                    hintText: 'ادخل رقم الهاتف',
+                                    hintText: 'enterYourPhoneNumber'.tr(),
                                     validator: (value) {
                                       if (value == null ||
                                           value.trim().isEmpty) {
-                                        return 'رقم الهاتف مطلوب';
+                                        return 'phoneRequired'.tr();
                                       }
                                       return null;
                                     },

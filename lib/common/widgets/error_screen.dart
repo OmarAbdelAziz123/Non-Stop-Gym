@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// Alternative Error Screen with Card Design (Like the report screen)
 class ErrorScreenCard extends StatelessWidget {
@@ -16,12 +18,12 @@ class ErrorScreenCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final effectiveMessage = message ?? 'Page not found';
+    final effectiveMessage = message ?? 'pageNotFound'.tr();
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        title: const Text('Error'),
+        title: Text('error'.tr()),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
@@ -66,7 +68,7 @@ class ErrorScreenCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Something Went Wrong',
+                      'somethingWentWrong'.tr(),
                       style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: theme.colorScheme.onSurface,
@@ -91,7 +93,7 @@ class ErrorScreenCard extends StatelessWidget {
 
               /// Information Section
               Text(
-                'What happened?',
+                'whatHappened'.tr(),
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: theme.colorScheme.onSurface,
@@ -104,9 +106,8 @@ class ErrorScreenCard extends StatelessWidget {
               _buildInfoCard(
                 context,
                 icon: Icons.link_off_rounded,
-                title: 'Page not found',
-                description:
-                    'The page you\'re looking for doesn\'t exist or has been moved.',
+                title: 'pageNotFound'.tr(),
+                description: 'pageNotFoundDescription'.tr(),
               ),
 
               const SizedBox(height: 12),
@@ -114,8 +115,8 @@ class ErrorScreenCard extends StatelessWidget {
               _buildInfoCard(
                 context,
                 icon: Icons.help_outline_rounded,
-                title: 'Need help?',
-                description: 'Contact support if the problem persists.',
+                title: 'needHelp'.tr(),
+                description: 'needHelpDescription'.tr(),
               ),
 
               if (errorCode != null) ...[
@@ -123,7 +124,7 @@ class ErrorScreenCard extends StatelessWidget {
                 _buildInfoCard(
                   context,
                   icon: Icons.code_rounded,
-                  title: 'Error Code',
+                  title: 'errorCode'.tr(),
                   description: errorCode!,
                 ),
               ],
@@ -153,10 +154,11 @@ class ErrorScreenCard extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    onRetry != null ? 'Try Again' : 'Go Back',
-                    style: const TextStyle(
+                    onRetry != null ? 'tryAgain'.tr() : 'goBack'.tr(),
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
+                      fontFamily: GoogleFonts.cairo().fontFamily,
                     ),
                   ),
                 ),
@@ -182,9 +184,13 @@ class ErrorScreenCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  child: const Text(
-                    'Go to Home',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  child: Text(
+                    'goToHome'.tr(),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: GoogleFonts.cairo().fontFamily,
+                    ),
                   ),
                 ),
               ),

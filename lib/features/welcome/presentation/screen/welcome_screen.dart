@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
@@ -51,7 +52,7 @@ class WelcomeScreen extends StatelessWidget {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: ' مرحبا بك في نادي ',
+                                text: '${'welcomeToClub'.tr()} ',
                                 style: Styles.heading1.copyWith(
                                   color: AppColors.neutralColor100,
                                 ),
@@ -67,7 +68,7 @@ class WelcomeScreen extends StatelessWidget {
                         ),
                         6.verticalSpace,
                         Text(
-                          'اختر طريقة التسجيل المناسبة الخاصة بك',
+                          'chooseRegistrationMethod'.tr(),
                           style: Styles.contentRegular.copyWith(
                             color: AppColors.neutralColor100,
                           ),
@@ -87,7 +88,7 @@ class WelcomeScreen extends StatelessWidget {
                       onPressed: () {
                         context.pushNamed(Routes.loginScreen);
                       },
-                      text: 'تسجيل الدخول',
+                      text: 'login'.tr(),
                       textStyle: Styles.contentRegular.copyWith(
                         color: AppColors.neutralColor100,
                       ),
@@ -99,7 +100,7 @@ class WelcomeScreen extends StatelessWidget {
                       onPressed: () {
                         context.pushNamed(Routes.registerScreen);
                       },
-                      text: 'إنشاء حساب',
+                      text: 'createAccount'.tr(),
                       textStyle: Styles.contentRegular.copyWith(
                         color: Colors.white,
                       ),
@@ -116,7 +117,7 @@ class WelcomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    ' لا أريد إنشاء حساب الآن ',
+                    '${'dontWantToCreateAccountNow'.tr()} ',
                     style: Styles.contentRegular.copyWith(
                       color: AppColors.neutralColor100,
                     ),
@@ -136,7 +137,7 @@ class WelcomeScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          ' تسجيل كضيف',
+                          ' ${'registerAsGuest'.tr()}',
                           style: Styles.contentRegular.copyWith(
                             color: const Color(0xFF9F5A5B),
                             decoration: TextDecoration.underline,

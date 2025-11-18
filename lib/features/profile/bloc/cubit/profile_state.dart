@@ -46,3 +46,17 @@ final class ProfileChangePasswordFailure extends ProfileState {
 
   final String message;
 }
+
+final class ProfileBookingsLoading extends ProfileState {}
+
+final class ProfileBookingsSuccess extends ProfileState {
+  ProfileBookingsSuccess(this.bookings);
+
+  final List<BookingModel> bookings;
+}
+
+final class ProfileBookingsFailure extends ProfileState {
+  ProfileBookingsFailure(this.message);
+
+  final String message;
+}

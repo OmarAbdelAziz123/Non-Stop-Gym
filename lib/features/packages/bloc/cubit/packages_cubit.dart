@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:non_stop/core/errors/failures.dart' as errors;
 import 'package:non_stop/core/network/api_result.dart' as api_result;
@@ -39,7 +40,7 @@ class PackagesCubit extends Cubit<PackagesState> {
       return;
     }
 
-    emit(PackagesFailure('حدث خطأ غير متوقع'));
+    emit(PackagesFailure('unexpectedErrorOccurred'.tr()));
   }
 
   Future<void> subscribe({
@@ -57,7 +58,7 @@ class PackagesCubit extends Cubit<PackagesState> {
 
     if (result is api_result.Success<Map<String, dynamic>>) {
       subscribingSubscriptionId = null;
-      final message = result.data['message'] as String? ?? 'تم الاشتراك بنجاح';
+      final message = result.data['message'] as String? ?? 'subscriptionSuccess'.tr();
       emit(PackagesSubscribeSuccess(message));
       return;
     }
@@ -80,7 +81,7 @@ class PackagesCubit extends Cubit<PackagesState> {
     }
 
     subscribingSubscriptionId = null;
-    emit(PackagesSubscribeFailure('حدث خطأ غير متوقع'));
+    emit(PackagesSubscribeFailure('unexpectedErrorOccurred'.tr()));
   }
 
   Future<void> fetchUserSubscriptions() async {
@@ -103,7 +104,7 @@ class PackagesCubit extends Cubit<PackagesState> {
       return;
     }
 
-    emit(PackagesUserSubscriptionsFailure('حدث خطأ غير متوقع'));
+    emit(PackagesUserSubscriptionsFailure('unexpectedErrorOccurred'.tr()));
   }
 }
 

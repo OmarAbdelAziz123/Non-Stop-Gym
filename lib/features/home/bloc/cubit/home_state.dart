@@ -34,3 +34,31 @@ final class HomeSettingsFailure extends HomeState {
   final String message;
 }
 
+final class HomeSlotsLoading extends HomeState {}
+
+final class HomeSlotsSuccess extends HomeState {
+  HomeSlotsSuccess(this.slots);
+
+  final List<AvailableSlotModel> slots;
+}
+
+final class HomeSlotsFailure extends HomeState {
+  HomeSlotsFailure(this.message);
+
+  final String message;
+}
+
+final class HomeBookingLoading extends HomeState {}
+
+final class HomeBookingSuccess extends HomeState {
+  HomeBookingSuccess(this.message);
+
+  final String message;
+}
+
+final class HomeBookingFailure extends HomeState {
+  HomeBookingFailure(this.message);
+
+  final String message;
+}
+

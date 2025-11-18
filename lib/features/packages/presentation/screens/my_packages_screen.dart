@@ -285,7 +285,7 @@ class _MyPackagesScreenState extends State<MyPackagesScreen> {
                 if (isActive)
                   CustomButtonWidget(
                     color: hexToColor('#9F5A5B'),
-                    text: 'اشتراك في باقة جديدة',
+                    text: 'subscribeToNewPackage'.tr(),
                     textStyle: Styles.highlightBold.copyWith(
                       color: AppColors.neutralColor100,
                     ),
