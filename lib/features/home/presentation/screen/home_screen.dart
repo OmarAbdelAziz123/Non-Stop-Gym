@@ -16,6 +16,7 @@ import 'package:non_stop/features/home/bloc/cubit/home_cubit.dart';
 import 'package:non_stop/features/home/data/models/banner_response.dart';
 import 'package:non_stop/features/home/presentation/screen/gifts_tap.dart';
 import 'package:non_stop/features/home/presentation/screen/relax_tap.dart';
+import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -353,6 +354,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     for (var i = 0; i < 3; i++)
                       GestureDetector(
                         onTap: () {
+                          if (i == 1) {
+                          try {
+                          context
+                              .read<MainLayoutCubit>()
+                              .changeBottomNavBar(2);
+                        } catch (e) {
+                          Navigator.of(context).pop();
+                        }
+                          }
                           setState(() {
                             selectedTab = i;
                           });
