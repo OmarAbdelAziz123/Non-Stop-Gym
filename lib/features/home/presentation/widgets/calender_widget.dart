@@ -102,7 +102,7 @@ class CalenderWidget extends StatelessWidget {
                     ),
                     8.horizontalSpace,
                     Text(
-                      'اضغط على اليوم لمعرفة الوقت المتاح',
+                      'tapDayToSeeAvailableTime'.tr(),
                       style: Styles.captionEmphasis.copyWith(
                         color: Colors.white,
                       ),
@@ -121,6 +121,11 @@ class CalenderWidget extends StatelessWidget {
                 currentDay: DateTime.now(),
                 calendarFormat: CalendarFormat.month,
                 locale: 'ar',
+                enabledDayPredicate: (day) {
+                  final today = DateTime.now();
+                  final tomorrow = today.add(const Duration(days: 1));
+                  return isSameDay(day, today) || isSameDay(day, tomorrow);
+                },
                 onDaySelected: (selectedDay, focusedDay) {
                   homeCubit.chooseBookingDate(selectedDay);
                   homeCubit.updateFocusedDay(selectedDay);

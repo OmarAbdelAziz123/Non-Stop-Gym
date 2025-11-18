@@ -18,5 +18,19 @@ class HomeApiServices {
       endPoint: EndPoints.getSettings,
     );
   }
+
+  Future<Response?> getAvailableBookingSlots(String date) {
+    return _dioHelper.post(
+      endPoint: EndPoints.getAvailableBookingSlots,
+      data: {'date': date},
+    );
+  }
+
+  Future<Response?> bookBooking(int bookingDateId) {
+    return _dioHelper.post(
+      endPoint: EndPoints.bookBooking,
+      data: {'booking_date_id': bookingDateId},
+    );
+  }
 }
 

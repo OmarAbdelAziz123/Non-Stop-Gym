@@ -102,7 +102,7 @@ class CalenderOnProfileWidget extends StatelessWidget {
                     ),
                     8.horizontalSpace,
                     Text(
-                      'اضغط على اليوم لمعرفة الوقت المتاح',
+                      'tapDayToSeeAvailableTime'.tr(),
                       style: Styles.captionEmphasis.copyWith(
                         color: Colors.white,
                       ),

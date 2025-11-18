@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AvailableTimesWidget extends StatelessWidget {
   const AvailableTimesWidget({super.key});
@@ -15,11 +17,12 @@ class AvailableTimesWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '1 ريال',
+                'oneRiyal'.tr(),
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
+                  fontFamily: GoogleFonts.cairo().fontFamily,
                 ),
               ),
               Container(
@@ -33,8 +36,12 @@ class AvailableTimesWidget extends StatelessWidget {
                     Icon(Icons.access_time, color: Colors.white70, size: 16),
                     SizedBox(width: 4),
                     Text(
-                      'وقت متاح الان',
-                      style: TextStyle(color: Colors.white70, fontSize: 12),
+                      'timeAvailableNow'.tr(),
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 12,
+                        fontFamily: GoogleFonts.cairo().fontFamily,
+                      ),
                     ),
                   ],
                 ),
@@ -44,8 +51,12 @@ class AvailableTimesWidget extends StatelessWidget {
           SizedBox(height: 8),
 
           Text(
-            'لاستمتاع بجلسة احترافية علاجة - الدفع اونلاين',
-            style: TextStyle(color: Colors.white60, fontSize: 12),
+            'professionalSessionDescription'.tr(),
+            style: TextStyle(
+              color: Colors.white60,
+              fontSize: 12,
+              fontFamily: GoogleFonts.cairo().fontFamily,
+            ),
           ),
         ],
       ),

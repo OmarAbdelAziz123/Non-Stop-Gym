@@ -63,7 +63,7 @@ class MoreAboutUsScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'معلومات عنا',
+                        'aboutUs'.tr(),
                         style: Styles.heading2.copyWith(color: Colors.white),
                       ),
                       Container(
@@ -91,7 +91,7 @@ class MoreAboutUsScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(15.w),
                 child: Text(
-                  settings?.aboutUs ?? 'نحن نادي Non-stop مشروع رياضي متكامل يقع في برج العبد الكريم ويخدم موظفي وموظفات اكثر من ٢٠ شركه من مختلف القطاعات. تأسس النادي لتوفير بيئه مرنه وصحيه تساعد الموظفين علي تحقيق التوازن بين العمل والحياه. وتعزز من صحتهم الجسديه والذهنيه.',
+                  settings?.aboutUs ?? 'aboutUsFallback'.tr(),
                   style: Styles.contentRegular.copyWith(
                     color: AppColors.neutralColor200,
                   ),
@@ -104,7 +104,7 @@ class MoreAboutUsScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(15.w),
                 child: Text(
-                  settings?.ourVision ?? 'ان نكون الخيار الاول والمفضل للموظفين والموظفات في بيئه العمل العصريه، من خلال تقديم تجربه رياضيه تجمع بين الراحه، والتنوع، وتسهم في رفع جوده الحياه والصحه العامه.',
+                  settings?.ourVision ?? 'ourVisionFallback'.tr(),
                   style: Styles.contentRegular.copyWith(
                     color: AppColors.neutralColor200,
                   ),
@@ -117,7 +117,7 @@ class MoreAboutUsScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(15.w),
                 child: Text(
-                  settings?.ourValues ?? 'التميز والنزاهة والمجتمع والابتكار والتفاني في مساعدة أعضائنا على تحقيق أفضل ما لديهم.',
+                  settings?.ourValues ?? 'ourValuesFallback'.tr(),
                   style: Styles.contentRegular.copyWith(
                     color: AppColors.neutralColor200,
                   ),
@@ -130,7 +130,7 @@ class MoreAboutUsScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(15.w),
                 child: Text(
-                  settings?.ourGoals ?? 'توفير مرافق لياقة بدنية عالمية المستوى، وتعزيز أنماط الحياة الصحية، وبناء مجتمع لياقة بدنية قوي، وتحسين خدماتنا باستمرار.',
+                  settings?.ourGoals ?? 'ourGoalsFallback'.tr(),
                   style: Styles.contentRegular.copyWith(
                     color: AppColors.neutralColor200,
                   ),

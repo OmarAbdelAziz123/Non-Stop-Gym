@@ -18,12 +18,7 @@ import 'package:non_stop/features/home/presentation/widgets/time_slots_widget.da
 class RelaxTap extends StatelessWidget {
   const RelaxTap({
     super.key,
-    required this.times,
-    required this.selectedTimeSlot,
   });
-
-  final List<List<String>> times;
-  final String? selectedTimeSlot;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +28,11 @@ class RelaxTap extends StatelessWidget {
       buildWhen: (previous, current) =>
           current is HomeSettingsLoading ||
           current is HomeSettingsSuccess ||
-          current is HomeSettingsFailure,
+          current is HomeSettingsFailure ||
+          current is HomeSlotsLoading ||
+          current is HomeSlotsSuccess ||
+          current is HomeSlotsFailure ||
+          current is BookChangeDateState,
       builder: (context, state) {
         final settings = homeCubit.settings;
 
@@ -54,13 +53,124 @@ class RelaxTap extends StatelessWidget {
         ),
         CalenderWidget(homeCubit: homeCubit),
 
-        TimeSlotsWidget(times: times, selectedTimeSlot: selectedTimeSlot),
+        BlocBuilder<HomeCubit, HomeState>(
+          buildWhen: (previous, current) =>
+              current is HomeSlotsLoading ||
+              current is HomeSlotsSuccess ||
+              current is HomeSlotsFailure ||
+              current is BookChangeDateState ||
+              current is HomeBookingLoading ||
+              current is HomeBookingSuccess ||
+              current is HomeBookingFailure,
+          builder: (context, state) {
+            if (state is HomeSlotsLoading) {
+              return Padding(
+                padding: EdgeInsets.all(16.w),
+                child: const Center(
+                  child: CircularProgressIndicator(color: Colors.white),
+                ),
+              );
+            }
+
+            if (state is HomeSlotsFailure) {
+              return Padding(
+                padding: EdgeInsets.all(16.w),
+                child: Center(
+                  child: Text(
+                    state.message,
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontFamily: GoogleFonts.cairo().fontFamily,
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            final slots = homeCubit.availableSlots;
+            if (slots.isEmpty) {
+              return Padding(
+                padding: EdgeInsets.all(16.w),
+                child: Center(
+                  child: Text(
+                    'noSlotsAvailable'.tr(),
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 16.sp,
+                      fontFamily: GoogleFonts.cairo().fontFamily,
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            return Column(
+              children: [
+                TimeSlotsWidget(
+                  slots: slots,
+                  selectedSlotId: homeCubit.selectedSlot?.id,
+                  onSlotSelected: (slot) {
+                    homeCubit.selectSlot(slot);
+                  },
+                ),
+                // Show Book now button when a slot is selected
+                if (homeCubit.selectedSlot != null)
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                    child: BlocBuilder<HomeCubit, HomeState>(
+                      buildWhen: (previous, current) =>
+                          current is HomeBookingLoading ||
+                          current is HomeBookingSuccess ||
+                          current is HomeBookingFailure,
+                      builder: (context, bookingState) {
+                        final isLoading = bookingState is HomeBookingLoading;
+                        
+                        return CustomButtonWidget(
+                          onPressed: isLoading ? null : () {
+                            homeCubit.bookBooking();
+                          },
+                          text: isLoading ? 'bookingInProgress'.tr() : 'Book now'.tr(),
+                          color: const Color(0xFF9F5A5B),
+                          textColor: Colors.white,
+                          height: 56.h,
+                        );
+                      },
+                    ),
+                  ),
+                // Show success/error messages
+                BlocListener<HomeCubit, HomeState>(
+                  listenWhen: (previous, current) =>
+                      current is HomeBookingSuccess ||
+                      current is HomeBookingFailure,
+                  listener: (context, state) {
+                    if (state is HomeBookingSuccess) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.message),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    } else if (state is HomeBookingFailure) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.message),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  },
+                  child: const SizedBox.shrink(),
+                ),
+              ],
+            );
+          },
+        ),
         Image.asset("assets/pngs/about_us.png"),
         SizedBox(height: 8),
         Padding(
           padding: const EdgeInsets.all(15.0),
           child: Text(
-            settings?.aboutUs ?? 'نحن نادي Non-stop مشروع رياضي متكامل يقع في برج العبد الكريم ويخدم موظفي وموظفات اكثر من ٢٠ شركه من مختلف القطاعات. تأسس النادي لتوفير بيئه مرنه وصحيه تساعد الموظفين علي تحقيق التوازن بين العمل والحياه. وتعزز من صحتهم الجسديه والذهنيه.',
+            settings?.aboutUs ?? 'aboutUsFallback'.tr(),
             style: Styles.contentRegular.copyWith(
               color: AppColors.neutralColor200,
             ),
@@ -74,7 +184,7 @@ class RelaxTap extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(15.0),
           child: Text(
-            settings?.ourVision ?? 'ان نكون الخيار الاول والمفضل للموظفين والموظفات في بيئه العمل العصريه، من خلال تقديم تجربه رياضيه تجمع بين الراحه، والتنوع، وتسهم في رفع جوده الحياه والصحه العامه.',
+            settings?.ourVision ?? 'ourVisionFallback'.tr(),
             style: Styles.contentRegular.copyWith(
               color: AppColors.neutralColor200,
             ),
@@ -317,7 +427,11 @@ class RelaxTap extends StatelessWidget {
                         child: Text(
                           'facebook'.tr(),
                           textAlign: TextAlign.start,
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: GoogleFonts.cairo().fontFamily,
+                          ),
                         ),
                       ),
                       SizedBox(width: 8),
@@ -355,7 +469,11 @@ class RelaxTap extends StatelessWidget {
                         child: Text(
                           'instagram'.tr(),
                           textAlign: TextAlign.start,
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: GoogleFonts.cairo().fontFamily,
+                          ),
                         ),
                       ),
                       SizedBox(width: 8),
@@ -393,7 +511,11 @@ class RelaxTap extends StatelessWidget {
                         child: Text(
                           'whatsapp'.tr(),
                           textAlign: TextAlign.start,
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: GoogleFonts.cairo().fontFamily,
+                          ),
                         ),
                       ),
                       SizedBox(width: 8),

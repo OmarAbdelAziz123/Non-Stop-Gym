@@ -20,6 +20,9 @@ static const String getSettings = '/api/frontend/settings';
   static const String subscribe = '/api/frontend/user-subscriptions/subscribe';
   static const String getUserSubscription = '/api/frontend/user-subscription';
   static const String getUserSubscriptions = '/api/frontend/user-subscriptions';
+  static const String getAvailableBookingSlots = '/api/frontend/booking-dates/available';
+  static const String bookBooking = '/api/frontend/bookings';
+  static const String getUserBookings = '/api/frontend/bookings';
   /// Storage Keys
   static const String accessTokenKey = 'ACCESS_TOKEN';
   static const String refreshTokenKey = 'REFRESH_TOKEN';

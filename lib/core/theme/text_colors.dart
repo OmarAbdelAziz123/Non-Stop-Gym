@@ -14,23 +14,14 @@ abstract class Styles {
     String locale =
         AppConstants.navigatorKey.currentContext!.locale.languageCode;
 
-    if (locale == 'ar') {
-      return TextStyle(
-        fontFamily: 'Swissra',
-        fontSize: fontSize.sp,
-        fontWeight: fontWeight,
-        color: color,
-        letterSpacing: letterSpacing,
-      );
-    } else {
-      return TextStyle(
-        fontFamily: GoogleFonts.cairo().fontFamily,
-        fontSize: fontSize.sp,
-        fontWeight: fontWeight,
-        color: color,
-        letterSpacing: letterSpacing,
-      );
-    }
+    // Use GoogleFonts.cairo() for both Arabic and English
+    return TextStyle(
+      fontFamily: GoogleFonts.cairo().fontFamily,
+      fontSize: fontSize.sp,
+      fontWeight: fontWeight,
+      color: color,
+      letterSpacing: letterSpacing,
+    );
   }
 
   /// ==========================HEADING================================ ///

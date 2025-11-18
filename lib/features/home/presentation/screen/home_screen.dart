@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:non_stop/core/cache_helper/cache_helper.dart';
 import 'package:non_stop/core/cache_helper/cache_keys.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
@@ -51,6 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if (homeCubit.settings == null) {
       homeCubit.fetchSettings();
     }
+    // Fetch available slots for today on init
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      homeCubit.fetchAvailableSlots(DateTime.now());
+    });
   }
 
   @override
@@ -177,7 +182,10 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: cubit.fetchBanners,
               child: Text(
                 'retry'.tr(),
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: GoogleFonts.cairo().fontFamily,
+                ),
               ),
             ),
           ],
@@ -396,9 +404,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
               selectedTab == 0
-                  ? RelaxTap(times: times, selectedTimeSlot: selectedTimeSlot)
+                  ? const RelaxTap()
                   : selectedTab == 1
-                  ? RelaxTap(times: times, selectedTimeSlot: selectedTimeSlot)
+                  ? const RelaxTap()
                   // ? const SizedBox.shrink()
                   : GiftsTap(),
             ],

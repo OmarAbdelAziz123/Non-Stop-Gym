@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:non_stop/core/errors/failures.dart';
 import 'package:non_stop/core/network/api_result.dart';
 import 'package:non_stop/features/home/data/api_services/home_api_services.dart';
+import 'package:non_stop/features/home/data/models/available_slots_response.dart';
 import 'package:non_stop/features/home/data/models/banner_response.dart';
 import 'package:non_stop/features/home/data/models/settings_response.dart';
 
@@ -98,6 +99,88 @@ class HomeRepository {
       }
 
       final message = _extractErrorMessage(response.data) ?? 'Failed to load settings';
+      return ApiResult.failure(
+        NetworkFailure(
+          message,
+          statusCode: response.statusCode,
+        ),
+      );
+    } on DioException catch (error) {
+      final statusCode = error.response?.statusCode;
+      final message = _extractErrorMessage(error.response?.data) ??
+          error.message ??
+          'Unexpected error occurred';
+      return ApiResult.failure(
+        NetworkFailure(
+          message,
+          statusCode: statusCode,
+        ),
+      );
+    } catch (error) {
+      return ApiResult.failure(
+        UnknownFailure(error.toString()),
+      );
+    }
+  }
+
+  Future<ApiResult<List<AvailableSlotModel>>> getAvailableBookingSlots(String date) async {
+    try {
+      final response = await _homeApiServices.getAvailableBookingSlots(date);
+
+      if (response == null) {
+        return const ApiResult.failure(
+          NetworkFailure('No response from server'),
+        );
+      }
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final slotsResponse = AvailableSlotsResponse.fromJson(
+          response.data as Map<String, dynamic>,
+        );
+        return ApiResult.success(slotsResponse.data ?? []);
+      }
+
+      final message = _extractErrorMessage(response.data) ?? 'Failed to load available slots';
+      return ApiResult.failure(
+        NetworkFailure(
+          message,
+          statusCode: response.statusCode,
+        ),
+      );
+    } on DioException catch (error) {
+      final statusCode = error.response?.statusCode;
+      final message = _extractErrorMessage(error.response?.data) ??
+          error.message ??
+          'Unexpected error occurred';
+      return ApiResult.failure(
+        NetworkFailure(
+          message,
+          statusCode: statusCode,
+        ),
+      );
+    } catch (error) {
+      return ApiResult.failure(
+        UnknownFailure(error.toString()),
+      );
+    }
+  }
+
+  Future<ApiResult<Map<String, dynamic>>> bookBooking(int bookingDateId) async {
+    try {
+      final response = await _homeApiServices.bookBooking(bookingDateId);
+
+      if (response == null) {
+        return const ApiResult.failure(
+          NetworkFailure('No response from server'),
+        );
+      }
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final responseData = response.data as Map<String, dynamic>? ?? {};
+        return ApiResult.success(responseData);
+      }
+
+      final message = _extractErrorMessage(response.data) ?? 'Failed to book appointment';
       return ApiResult.failure(
         NetworkFailure(
           message,
