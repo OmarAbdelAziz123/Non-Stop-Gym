@@ -1,4 +1,6 @@
 import 'dart:math' as math;
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,7 +44,9 @@ class PhotoGalleryDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: Transform.rotate(
-                      angle: context.locale.languageCode == 'en' ? math.pi : 0, // 180 degrees (π radians) for English
+                      angle: context.locale.languageCode == 'en'
+                          ? math.pi
+                          : 0, // 180 degrees (π radians) for English
                       child: SvgPicture.asset(
                         "assets/svgs/Back _con.svg",
                         width: 24.w,
@@ -72,7 +76,7 @@ class PhotoGalleryDetailsScreen extends StatelessWidget {
                               width: 2,
                             ),
                             image: DecorationImage(
-                              image: NetworkImage(imagePath),
+                              image: CachedNetworkImageProvider(imagePath),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -93,8 +97,8 @@ class PhotoGalleryDetailsScreen extends StatelessWidget {
                       padding: EdgeInsets.all(16.w),
                       decoration: BoxDecoration(color: Colors.transparent),
                       child: Text(
-                      description,
-                      
+                        description,
+
                         style: Styles.contentEmphasis.copyWith(
                           color: Colors.white,
                         ),
@@ -105,11 +109,21 @@ class PhotoGalleryDetailsScreen extends StatelessWidget {
 
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20.r),
-                      child: Image.network(
-                        image2,
+                      child: CachedNetworkImage(
+                        imageUrl: image2,
                         width: double.infinity,
                         fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
+                        placeholder: (context, url) => Center(
+                          child: CircularProgressIndicator(color: Colors.white),
+                        ),
+                        // Container(
+                        //   width: double.infinity,
+                        //   decoration: BoxDecoration(
+                        //     color: const Color(0xff2A1A2C),
+                        //     borderRadius: BorderRadius.circular(12.r),
+                        //   ),
+                        // ),
+                        errorWidget: (context, error, stackTrace) {
                           return Container(
                             width: double.infinity,
                             decoration: BoxDecoration(

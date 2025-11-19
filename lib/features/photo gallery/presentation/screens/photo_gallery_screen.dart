@@ -8,10 +8,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:non_stop/core/constants/app_colors.dart';
+import 'package:non_stop/core/constants/app_styles.dart';
 import 'package:non_stop/core/extensions/navigation_extension.dart';
 import 'package:non_stop/core/routing/app_router.dart';
 import 'package:non_stop/core/routing/routes_name.dart';
-import 'package:non_stop/core/constants/app_styles.dart';
 import 'package:non_stop/core/widgets/button/custom_button_widget.dart';
 import 'package:non_stop/features/main%20layout/business_logic/main_layout_cubit.dart';
 import 'package:non_stop/features/photo%20gallery/bloc/cubit/gallery_cubit.dart';
@@ -163,157 +163,171 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
                         current is GalleryLoadMoreFailure ||
                         current is GalleryUploadLoading,
                     builder: (context, state) {
-                    if (state is GalleryLoading) {
+                      if (state is GalleryLoading) {
+                        return ListView(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          children: [
+                            20.verticalSpace,
+                            _buildSkeletonUserList(),
+                            50.verticalSpace,
+                            _buildAddPostSection(cubit),
+                          ],
+                        );
+                      }
+
+                      if (state is GalleryFailure) {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                state.message,
+                                style: Styles.featureSemibold.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              16.verticalSpace,
+                              ElevatedButton(
+                                onPressed: () {
+                                  cubit.getAllGalleries();
+                                },
+                                child: Text('retry'.tr()),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+
+                      final galleryItems = cubit.galleryItems;
+                      // final allUniqueUsers = _getUniqueUsers(galleryItems);
+                      // // Show 10 users per page: page 1 = 10 users, page 2 = 20 users, etc.
+                      // final displayedUsersCount = (cubit.currentPage * 10)
+                      //     .clamp(0, allUniqueUsers.length);
+                      // final displayedUsers = allUniqueUsers
+                      //     .take(displayedUsersCount)
+                      //     .toList();
+                      // print(displayedUsers.length);
+                      final displayedUsers = galleryItems;
                       return ListView(
+                        controller: _scrollController,
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         children: [
                           20.verticalSpace,
-                          _buildSkeletonUserList(),
+
+                          // Users horizontal list
+                          if (displayedUsers.isNotEmpty)
+                            SizedBox(
+                              height: 100.h,
+                              child: ListView.separated(
+                                controller: _horizontalScrollController,
+                                scrollDirection: Axis.horizontal,
+                                itemCount:
+                                    displayedUsers.length +
+                                    (cubit.isLoadingMore ? 1 : 0),
+                                separatorBuilder: (context, index) =>
+                                    12.horizontalSpace,
+                                itemBuilder: (context, index) {
+                                  // Show loading indicator at the end
+                                  if (index >= displayedUsers.length) {
+                                    return const Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  final user = displayedUsers[index];
+                                  return InkWell(
+                                    onTap: () {
+                                      // Filter gallery items by this user
+
+                                      context.pushNamed(
+                                        Routes.photoGalleryDetailsScreen,
+                                        arguments: PhotoGalleryDetailsArgs(
+                                          image:
+                                              displayedUsers[index]
+                                                  .user
+                                                  ?.image ??
+                                              'https://via.placeholder.com/150',
+                                          name: user.user?.name ?? 'no name',
+                                          description:
+                                              user.comment ?? 'no description',
+                                          image2: user.image ?? '',
+                                        ),
+                                      );
+                                    },
+
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 64.w,
+                                          height: 64.h,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              color: const Color(0xff9F5A5B),
+                                              width: 2,
+                                            ),
+                                          ),
+                                          child: ClipOval(
+                                            child:
+                                                user.image != null &&
+                                                    user.image!.isNotEmpty
+                                                ? CachedNetworkImage(
+                                                    imageUrl: user.image!,
+                                                    fit: BoxFit.cover,
+                                                    placeholder:
+                                                        (
+                                                          context,
+                                                          url,
+                                                        ) => Container(
+                                                          color:
+                                                              Colors.grey[800],
+                                                          child: const Center(
+                                                            child:
+                                                                CircularProgressIndicator(),
+                                                          ),
+                                                        ),
+                                                    errorWidget:
+                                                        (
+                                                          context,
+                                                          url,
+                                                          error,
+                                                        ) => Image.asset(
+                                                          "assets/pngs/image2.png",
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                  )
+                                                : Image.asset(
+                                                    "assets/pngs/image2.png",
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                          ),
+                                        ),
+                                        6.verticalSpace,
+                                        Text(
+                                          user.user?.name ?? 'no name',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily:
+                                                GoogleFonts.cairo().fontFamily,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+
                           50.verticalSpace,
                           _buildAddPostSection(cubit),
                         ],
                       );
-                    }
-
-                    if (state is GalleryFailure) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              state.message,
-                              style: Styles.featureSemibold.copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                            16.verticalSpace,
-                            ElevatedButton(
-                              onPressed: () {
-                                cubit.getAllGalleries();
-                              },
-                              child: Text('retry'.tr()),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-
-                    final galleryItems = cubit.galleryItems;
-                    final allUniqueUsers = _getUniqueUsers(galleryItems);
-                    // Show 10 users per page: page 1 = 10 users, page 2 = 20 users, etc.
-                    final displayedUsersCount = (cubit.currentPage * 10).clamp(0, allUniqueUsers.length);
-                    final displayedUsers = allUniqueUsers.take(displayedUsersCount).toList();
-
-                    return ListView(
-                      controller: _scrollController,
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      children: [
-                        20.verticalSpace,
-
-                        // Users horizontal list
-                        if (displayedUsers.isNotEmpty)
-                          SizedBox(
-                            height: 100.h,
-                            child: ListView.separated(
-                              controller: _horizontalScrollController,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: displayedUsers.length + (cubit.isLoadingMore ? 1 : 0),
-                              separatorBuilder: (context, index) =>
-                                  12.horizontalSpace,
-                              itemBuilder: (context, index) {
-                                // Show loading indicator at the end
-                                if (index >= displayedUsers.length) {
-                                  return const Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  );
-                                }
-                                final user = displayedUsers[index];
-                                return InkWell(
-                                  onTap: () {
-                                    // Filter gallery items by this user
-                                    final userItems = galleryItems
-                                        .where((item) =>
-                                            item.user?.id == user.id)
-                                        .toList();
-                                    if (userItems.isNotEmpty) {
-                                      final firstItem = userItems.first;
-                                      context.pushNamed(
-                                        Routes.photoGalleryDetailsScreen,
-                                        arguments: PhotoGalleryDetailsArgs(
-                                          image: user.image ?? 'https://via.placeholder.com/150',
-                                          name: user.name ?? 'no name',
-                                          description: firstItem.comment ?? 'no description',
-                                          image2: firstItem.image ?? '',
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        width: 64.w,
-                                        height: 64.h,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: const Color(0xff9F5A5B),
-                                            width: 2,
-                                          ),
-                                        ),
-                                        child: ClipOval(
-                                          child: user.image != null &&
-                                                  user.image!.isNotEmpty
-                                              ? CachedNetworkImage(
-                                                  imageUrl: user.image!,
-                                                  fit: BoxFit.cover,
-                                                  placeholder: (context, url) =>
-                                                      Container(
-                                                    color: Colors.grey[800],
-                                                    child: const Center(
-                                                      child:
-                                                          CircularProgressIndicator(),
-                                                    ),
-                                                  ),
-                                                  errorWidget:
-                                                      (context, url, error) =>
-                                                          Image.asset(
-                                                    "assets/pngs/image2.png",
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                )
-                                              : Image.asset(
-                                                  "assets/pngs/image2.png",
-                                                  fit: BoxFit.cover,
-                                                ),
-                                        ),
-                                      ),
-                                      6.verticalSpace,
-                                      Text(
-                                        user.name ?? 'no name',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily:
-                                              GoogleFonts.cairo().fontFamily,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-
-                        50.verticalSpace,
-                        _buildAddPostSection(cubit),
-                      ],
-                    );
                     },
                   ),
                 ),
@@ -332,9 +346,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
           alignment: Alignment.centerRight,
           child: Text(
             'addPost'.tr(),
-            style: Styles.highlightBold.copyWith(
-              color: Colors.white,
-            ),
+            style: Styles.highlightBold.copyWith(color: Colors.white),
           ),
         ),
         20.verticalSpace,
@@ -426,9 +438,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
                     },
               text: 'publish'.tr(),
               color: const Color(0xff9F5A5B),
-              textStyle: Styles.highlightBold.copyWith(
-                color: Colors.white,
-              ),
+              textStyle: Styles.highlightBold.copyWith(color: Colors.white),
               borderRadius: 12.r,
               height: 56.h,
               isLoading: isLoading,
@@ -528,11 +538,7 @@ class _ShimmerWrapperState extends State<_ShimmerWrapper>
             return LinearGradient(
               begin: Alignment(-1.0 - _controller.value * 2, 0.0),
               end: Alignment(1.0 - _controller.value * 2, 0.0),
-              colors: [
-                Colors.grey[800]!,
-                Colors.grey[700]!,
-                Colors.grey[800]!,
-              ],
+              colors: [Colors.grey[800]!, Colors.grey[700]!, Colors.grey[800]!],
               stops: const [0.0, 0.5, 1.0],
             ).createShader(bounds);
           },
