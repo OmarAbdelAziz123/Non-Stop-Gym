@@ -5,6 +5,7 @@ import 'package:non_stop/features/home/data/api_services/home_api_services.dart'
 import 'package:non_stop/features/home/data/models/available_slots_response.dart';
 import 'package:non_stop/features/home/data/models/banner_response.dart';
 import 'package:non_stop/features/home/data/models/settings_response.dart';
+import 'package:non_stop/features/home/data/models/faq_response.dart';
 
 class HomeRepository {
   HomeRepository(this._homeApiServices);
@@ -181,6 +182,48 @@ class HomeRepository {
       }
 
       final message = _extractErrorMessage(response.data) ?? 'Failed to book appointment';
+      return ApiResult.failure(
+        NetworkFailure(
+          message,
+          statusCode: response.statusCode,
+        ),
+      );
+    } on DioException catch (error) {
+      final statusCode = error.response?.statusCode;
+      final message = _extractErrorMessage(error.response?.data) ??
+          error.message ??
+          'Unexpected error occurred';
+      return ApiResult.failure(
+        NetworkFailure(
+          message,
+          statusCode: statusCode,
+        ),
+      );
+    } catch (error) {
+      return ApiResult.failure(
+        UnknownFailure(error.toString()),
+      );
+    }
+  }
+
+  Future<ApiResult<List<FaqModel>>> fetchFaqs() async {
+    try {
+      final response = await _homeApiServices.fetchFaqs();
+
+      if (response == null) {
+        return const ApiResult.failure(
+          NetworkFailure('No response from server'),
+        );
+      }
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final faqResponse = FaqResponse.fromJson(
+          response.data as Map<String, dynamic>,
+        );
+        return ApiResult.success(faqResponse.data ?? []);
+      }
+
+      final message = _extractErrorMessage(response.data) ?? 'Failed to load FAQs';
       return ApiResult.failure(
         NetworkFailure(
           message,

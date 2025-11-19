@@ -62,3 +62,17 @@ final class HomeBookingFailure extends HomeState {
   final String message;
 }
 
+final class HomeFaqsLoading extends HomeState {}
+
+final class HomeFaqsSuccess extends HomeState {
+  HomeFaqsSuccess(this.faqs);
+
+  final List<FaqModel> faqs;
+}
+
+final class HomeFaqsFailure extends HomeState {
+  HomeFaqsFailure(this.message);
+
+  final String message;
+}
+

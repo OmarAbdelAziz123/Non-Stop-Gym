@@ -32,5 +32,11 @@ class HomeApiServices {
       data: {'booking_date_id': bookingDateId},
     );
   }
+
+  Future<Response?> fetchFaqs() {
+    return _dioHelper.get(
+      endPoint: EndPoints.getFaqs,
+    );
+  }
 }
 

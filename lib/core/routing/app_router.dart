@@ -73,6 +73,7 @@ class AppRouter {
       case Routes.faqScreen:
         return transition(
           screen: const FaqScreen(),
+          cubit: HomeCubit(),
         );
       case Routes.mainlayoutScreen:
         return transition(screen: MainLayoutScreen(), cubit: MainLayoutCubit());
@@ -91,6 +92,8 @@ class AppRouter {
           screen: PhotoGalleryDetailsScreen(
             imagePath: args.image,
             name: args.name,
+            description: args.description,
+            image2: args.image2,
           ),
         );
       case Routes.myPackagesScreen:
@@ -152,6 +155,7 @@ class AppRouter {
 class PhotoGalleryDetailsArgs {
   final String image;
   final String name;
-
-  PhotoGalleryDetailsArgs({required this.image, required this.name});
+  final String description;
+  final String image2;
+  PhotoGalleryDetailsArgs({required this.image, required this.name, required this.description, required this.image2});
 }
