@@ -423,6 +423,10 @@
   "enterYourName": "ادخل الاسم",
   "enterYourEmail": "ادخل البريد الإلكتروني",
   "enterYourPhoneNumber": "ادخل رقم الهاتف",
-  "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين"
-  
+  "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين",
+  "noFaqsAvailable": "لا توجد أسئلة شائعة متاحة",
+  "noGalleryItems": "لا توجد عناصر معرض متاحة",
+  "pleaseSelectImage": "يرجى اختيار صورة",
+  "pleaseEnterComment": "يرجى إدخال تعليق",
+  "galleryItemAddedSuccessfully": "تم إضافة عنصر المعرض بنجاح"
 }

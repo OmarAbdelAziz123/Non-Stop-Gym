@@ -8,11 +8,14 @@ import 'package:non_stop/core/theme/text_colors.dart';
 class PhotoGalleryDetailsScreen extends StatelessWidget {
   final String name;
   final String imagePath;
-
+  final String description;
+  final String image2;
   const PhotoGalleryDetailsScreen({
     super.key,
     required this.name,
     required this.imagePath,
+    required this.description,
+    required this.image2,
   });
 
   @override
@@ -69,7 +72,7 @@ class PhotoGalleryDetailsScreen extends StatelessWidget {
                               width: 2,
                             ),
                             image: DecorationImage(
-                              image: AssetImage(imagePath),
+                              image: NetworkImage(imagePath),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -90,7 +93,8 @@ class PhotoGalleryDetailsScreen extends StatelessWidget {
                       padding: EdgeInsets.all(16.w),
                       decoration: BoxDecoration(color: Colors.transparent),
                       child: Text(
-                        "ما كنت أتوقع الجيم يصير مكاني المفضل، بس كل تمرينة تثبت لي إن التعب يستاهل، شكراً للجيم اللي غيّرني للأفضل 💪🤍",
+                      description,
+                      
                         style: Styles.contentEmphasis.copyWith(
                           color: Colors.white,
                         ),
@@ -101,8 +105,8 @@ class PhotoGalleryDetailsScreen extends StatelessWidget {
 
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20.r),
-                      child: Image.asset(
-                        "assets/pngs/gallery_details.png",
+                      child: Image.network(
+                        image2,
                         width: double.infinity,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {

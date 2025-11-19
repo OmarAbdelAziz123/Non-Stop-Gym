@@ -6,6 +6,7 @@ import 'package:non_stop/core/services/di/dependency_injection.dart';
 import 'package:non_stop/features/home/data/models/available_slots_response.dart';
 import 'package:non_stop/features/home/data/models/banner_response.dart';
 import 'package:non_stop/features/home/data/models/settings_response.dart';
+import 'package:non_stop/features/home/data/models/faq_response.dart';
 import 'package:non_stop/features/home/data/repos/home_repository.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -26,6 +27,7 @@ class HomeCubit extends Cubit<HomeState> {
   SettingsData? settings;
   List<AvailableSlotModel> availableSlots = [];
   AvailableSlotModel? selectedSlot;
+  List<FaqModel> faqs = [];
 
   void updateFocusedDay(DateTime day) {
     final firstDay = DateTime.now();
@@ -171,5 +173,28 @@ class HomeCubit extends Cubit<HomeState> {
     }
 
     emit(HomeSettingsFailure('unexpectedErrorOccurred'.tr()));
+  }
+
+  Future<void> fetchFaqs() async {
+    emit(HomeFaqsLoading());
+
+    final api_result.ApiResult<List<FaqModel>> result =
+        await _homeRepository.fetchFaqs();
+
+    if (result is api_result.Success<List<FaqModel>>) {
+      faqs = result.data;
+      emit(HomeFaqsSuccess(faqs));
+      return;
+    }
+
+    if (result is api_result.Failure<List<FaqModel>>) {
+      final error = result.errorHandler;
+      final message =
+          error is errors.Failure ? error.message : error.toString();
+      emit(HomeFaqsFailure(message));
+      return;
+    }
+
+    emit(HomeFaqsFailure('unexpectedErrorOccurred'.tr()));
   }
 }

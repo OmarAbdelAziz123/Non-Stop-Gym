@@ -416,5 +416,9 @@
   "enterYourName": "Enter your name",
   "enterYourEmail": "Enter your email",
   "enterYourPhoneNumber": "Enter your phone number",
-  "passwordsDoNotMatch": "Passwords do not match"
+  "passwordsDoNotMatch": "Passwords do not match",
+  "noGalleryItems": "No gallery items available",
+  "pleaseSelectImage": "Please select an image",
+  "pleaseEnterComment": "Please enter a comment",
+  "galleryItemAddedSuccessfully": "Gallery item added successfully"
 }
