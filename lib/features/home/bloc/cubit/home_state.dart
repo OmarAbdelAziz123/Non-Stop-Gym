@@ -76,3 +76,17 @@ final class HomeFaqsFailure extends HomeState {
   final String message;
 }
 
+final class HomeNotificationsLoading extends HomeState {}
+
+final class HomeNotificationsSuccess extends HomeState {
+  HomeNotificationsSuccess(this.unreadCount);
+
+  final int unreadCount;
+}
+
+final class HomeNotificationsFailure extends HomeState {
+  HomeNotificationsFailure(this.message);
+
+  final String message;
+}
+

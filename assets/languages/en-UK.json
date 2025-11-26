@@ -420,5 +420,10 @@
   "noGalleryItems": "No gallery items available",
   "pleaseSelectImage": "Please select an image",
   "pleaseEnterComment": "Please enter a comment",
-  "galleryItemAddedSuccessfully": "Gallery item added successfully"
+  "galleryItemAddedSuccessfully": "Gallery item added successfully",
+  "deleteAllNotifications": "Delete All Notifications",
+  "areYouSureDeleteAllNotifications": "Are you sure you want to delete all notifications?",
+  "delete": "Delete",
+  "allNotificationsDeletedSuccessfully": "All notifications deleted successfully",
+  "noNotifications": "No notifications available"
 }

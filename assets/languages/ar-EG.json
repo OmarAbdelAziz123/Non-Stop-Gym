@@ -428,5 +428,10 @@
   "noGalleryItems": "لا توجد عناصر معرض متاحة",
   "pleaseSelectImage": "يرجى اختيار صورة",
   "pleaseEnterComment": "يرجى إدخال تعليق",
-  "galleryItemAddedSuccessfully": "تم إضافة عنصر المعرض بنجاح"
+  "galleryItemAddedSuccessfully": "تم إضافة عنصر المعرض بنجاح",
+  "deleteAllNotifications": "حذف جميع الإشعارات",
+  "areYouSureDeleteAllNotifications": "هل أنت متأكد أنك تريد حذف جميع الإشعارات؟",
+  "delete": "حذف",
+  "allNotificationsDeletedSuccessfully": "تم حذف جميع الإشعارات بنجاح",
+  "noNotifications": "لا توجد إشعارات متاحة"
 }

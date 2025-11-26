@@ -8,16 +8,23 @@ import 'package:non_stop/features/home/data/models/banner_response.dart';
 import 'package:non_stop/features/home/data/models/settings_response.dart';
 import 'package:non_stop/features/home/data/models/faq_response.dart';
 import 'package:non_stop/features/home/data/repos/home_repository.dart';
+import 'package:non_stop/features/notification/data/models/notification_response.dart';
+import 'package:non_stop/features/notification/data/repos/notification_repository.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit({HomeRepository? homeRepository})
-      : _homeRepository = homeRepository ?? getIt<HomeRepository>(),
+  HomeCubit({
+    HomeRepository? homeRepository,
+    NotificationRepository? notificationRepository,
+  })  : _homeRepository = homeRepository ?? getIt<HomeRepository>(),
+        _notificationRepository =
+            notificationRepository ?? getIt<NotificationRepository>(),
         super(HomeInitial());
 
   final HomeRepository _homeRepository;
+  final NotificationRepository _notificationRepository;
 
   DateTime focusedDay = DateTime.now();
   DateTime selectedDate = DateTime.now();
@@ -28,6 +35,7 @@ class HomeCubit extends Cubit<HomeState> {
   List<AvailableSlotModel> availableSlots = [];
   AvailableSlotModel? selectedSlot;
   List<FaqModel> faqs = [];
+  int unreadNotificationCount = 0;
 
   void updateFocusedDay(DateTime day) {
     final firstDay = DateTime.now();
@@ -196,5 +204,28 @@ class HomeCubit extends Cubit<HomeState> {
     }
 
     emit(HomeFaqsFailure('unexpectedErrorOccurred'.tr()));
+  }
+
+  Future<void> fetchNotifications() async {
+    emit(HomeNotificationsLoading());
+
+    final api_result.ApiResult<NotificationData> result =
+        await _notificationRepository.getNotifications(perPage: 100, page: 1);
+
+    if (result is api_result.Success<NotificationData>) {
+      final data = result.data;
+      if (data.items != null) {
+        // Count unread notifications (is_read == false)
+        unreadNotificationCount = data.items!
+            .where((item) => item.isRead == false)
+            .length;
+        emit(HomeNotificationsSuccess(unreadNotificationCount));
+        return;
+      }
+    }
+
+    // On failure, just set count to 0
+    unreadNotificationCount = 0;
+    emit(HomeNotificationsSuccess(0));
   }
 }

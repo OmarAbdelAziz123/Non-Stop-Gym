@@ -6,12 +6,16 @@ class CustomAppBar extends StatelessWidget {
   final String title;
   final bool hasLeading;
   final VoidCallback? onBack;
+  final Widget? actionIcon;
+  final VoidCallback? onActionPressed;
 
   const CustomAppBar({
     super.key,
     required this.title,
     this.hasLeading = true,
     this.onBack,
+    this.actionIcon,
+    this.onActionPressed,
   });
 
   @override
@@ -65,21 +69,34 @@ class CustomAppBar extends StatelessWidget {
               ),
             ),
 
-            IconButton(
-              onPressed: () {},
-              icon: Container(
-                padding: EdgeInsets.all(12.sp),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.r),
-                  color: Colors.white.withOpacity(0.1),
+            if (actionIcon != null)
+              IconButton(
+                onPressed: onActionPressed,
+                icon: Container(
+                  padding: EdgeInsets.all(12.sp),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.r),
+                    color: Colors.white.withOpacity(0.1),
+                  ),
+                  child: actionIcon!,
                 ),
-                child: SvgPicture.asset(
-                  "assets/svgs/Notification.svg",
-                  width: 20.w,
-                  height: 20.h,
+              )
+            else
+              IconButton(
+                onPressed: () {},
+                icon: Container(
+                  padding: EdgeInsets.all(12.sp),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.r),
+                    color: Colors.white.withOpacity(0.1),
+                  ),
+                  child: SvgPicture.asset(
+                    "assets/svgs/Notification.svg",
+                    width: 20.w,
+                    height: 20.h,
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),

@@ -25,6 +25,9 @@ static const String getSettings = '/api/frontend/settings';
   static const String getUserBookings = '/api/frontend/bookings';
   static const String getFaqs = '/api/frontend/faqs';
   static const String getGallery = '/api/frontend/gallery';
+  static const String getNotifications = '/api/frontend/notifications';
+  static const String deleteAllNotifications = '/api/frontend/notifications';
+  static const String markAllNotificationsRead = '/api/frontend/notifications/mark-all-read';
   /// Storage Keys
   static const String accessTokenKey = 'ACCESS_TOKEN';
   static const String refreshTokenKey = 'REFRESH_TOKEN';

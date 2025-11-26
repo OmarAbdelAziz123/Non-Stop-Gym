@@ -58,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Fetch available slots for today on init
     WidgetsBinding.instance.addPostFrameCallback((_) {
       homeCubit.fetchAvailableSlots(DateTime.now());
+      homeCubit.fetchNotifications();
     });
   }
 
@@ -279,21 +280,60 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       const Spacer(),
-                      IconButton(
-                        icon: Container(
-                          padding: EdgeInsets.all(12.sp),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.r),
-                            color: Colors.white.withValues(alpha: 0.1),
-                          ),
-                          child: SvgPicture.asset(
-                            "assets/svgs/Notification.svg",
-                            width: 20.w,
-                            height: 20.h,
-                          ),
-                        ),
-                        onPressed: () {
-                          context.pushNamed(Routes.notificationScreen);
+                      BlocBuilder<HomeCubit, HomeState>(
+                        buildWhen: (previous, current) =>
+                            current is HomeNotificationsSuccess ||
+                            current is HomeNotificationsLoading,
+                        builder: (context, state) {
+                          final unreadCount = context.read<HomeCubit>().unreadNotificationCount;
+                          return Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              IconButton(
+                                icon: Container(
+                                  padding: EdgeInsets.all(12.sp),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                    color: Colors.white.withValues(alpha: 0.1),
+                                  ),
+                                  child: SvgPicture.asset(
+                                    "assets/svgs/Notification.svg",
+                                    width: 20.w,
+                                    height: 20.h,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  context.pushNamed(Routes.notificationScreen);
+                                },
+                              ),
+                              if (unreadCount > 0)
+                                Positioned(
+                                  right: 8.w,
+                                  top: 8.h,
+                                  child: Container(
+                                    padding: EdgeInsets.all(4.sp),
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xff9F5A5B),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    constraints: BoxConstraints(
+                                      minWidth: 16.sp,
+                                      minHeight: 16.sp,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        unreadCount > 99 ? '99+' : unreadCount.toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          );
                         },
                       ),
                     ],

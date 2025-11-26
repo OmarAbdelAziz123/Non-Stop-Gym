@@ -10,6 +10,8 @@ import 'package:non_stop/features/packages/data/api_services/packages_api_servic
 import 'package:non_stop/features/packages/data/repos/packages_repository.dart';
 import 'package:non_stop/features/photo gallery/data/api_services/gallery_api_services.dart';
 import 'package:non_stop/features/photo gallery/data/repos/gallery_repository.dart';
+import 'package:non_stop/features/notification/data/api_services/notification_api_services.dart';
+import 'package:non_stop/features/notification/data/repos/notification_repository.dart';
 
 final getIt = GetIt.instance;
 
@@ -56,6 +58,14 @@ Future<void> setupDependencyInjection() async {
 
   getIt.registerLazySingleton<GalleryRepository>(
     () => GalleryRepository(getIt()),
+  );
+
+  getIt.registerLazySingleton<NotificationApiServices>(
+    () => NotificationApiServices(getIt()),
+  );
+
+  getIt.registerLazySingleton<NotificationRepository>(
+    () => NotificationRepository(getIt()),
   );
 
   // getIt.registerLazySingleton<MyBookingRepos>(() => MyBookingRepos(getIt()));
